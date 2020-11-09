@@ -1,4 +1,3 @@
-
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
@@ -10,6 +9,8 @@
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 
+(org-babel-load-file (concat user-emacs-directory "config.org"))
+
 (let ((default-directory "~/.emacs.d/elpa"))
   (normal-top-level-add-subdirs-to-load-path))
 
@@ -18,21 +19,6 @@
 (setq default-tab-width 4)
 ;; ?? (setq-default tab-width 8) ;; but maintain correct appearance
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-
-;;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
-;; Unfill Paragraph: https://www.emacswiki.org/emacs/UnfillParagraph
-;; Alternative - Unfill Region (not implemented): https://www.emacswiki.org/emacs/UnfillRegion
-(defun unfill-paragraph (&optional region)
-  "Takes a multi-line paragraph and makes it into a single line of text."
-  (interactive (progn (barf-if-buffer-read-only) '(t)))
-  (let ((fill-column (point-max))
-        ;; This would override `fill-column' if it's an integer.
-        (emacs-lisp-docstring-fill-column t))
-    (fill-paragraph nil region)))
-;; Handy key definition
-(define-key global-map "\M-Q" 'unfill-paragraph)
-
 
 (transient-mark-mode 1)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -47,6 +33,8 @@
 (setq scroll-margin 0
       scroll-conservatively 100000
       scroll-preserve-screen-position 1)
+
+(global-prettify-symbols-mode 1)
 
 ;; mode line settings
 (line-number-mode t)
@@ -83,35 +71,6 @@
 ;;            (figwheel-sidecar.repl-api/start-figwheel!)
 ;;           (figwheel-sidecar.repl-api/cljs-repl))")
 
-;; simplenote
-(require 'simplenote2)
-;; login/password
-(simplenote2-setup)
-
-;; mu4e
-;; make sure mu4e is in your load-path
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
-
-;; mu4e-maildir
-
-;; these must start with a "/", and must exist
-;; (i.e.. /home/user/Maildir/sent must exist)
-;; you use e.g. 'mu mkdir' to make the Maildirs if they don't already exist
-;; below are the defaults; if they do not exist yet, mu4e offers to
-;; create them. they can also functions; see their docstrings.
-(setq mu4e-sent-folder   "/Sent-1")
-(setq mu4e-drafts-folder "/Drafts-1")
-(setq mu4e-trash-folder  "/Trash")
-
-;; smtp mail setting; these are the same that `gnus' uses.
-;; Port 465?
-;; (setq
-;;    message-send-mail-function   'smtpmail-send-it
-;;    smtpmail-default-smtp-server "mail.runbox.com"
-;;    smtpmail-smtp-server         "mail.runbox.com"
-;;   smtpmail-local-domain        "example.com")
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -122,6 +81,9 @@
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
  '(doc-view-dvipdfm-program "nil")
+ '(elfeed-feeds
+   (quote
+    ("https://tirkarthi.github.io/" "http://rss.slashdot.org/Slashdot/slashdot")))
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure" "##Atari"))))
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
@@ -156,11 +118,15 @@
      ("\\.pdf\\'" . default))))
  '(package-archives
    (quote
-    (("gnu" . "http://elpa.gnu.org/packages/")
-     ("melpa" . "http://melpa.org/packages/"))))
+    (("gnu" . "https://elpa.gnu.org/packages/")
+     ("melpa" . "https://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (multiple-cursors cider cljsbuild-mode clojure-cheatsheet clojure-mode websocket use-package spinner simplenote2 queue pkg-info oauth2 markdown-preview-eww markdown-mode emojify circe alert)))
+    (writegood-mode synonymous simplenote2 4clojure magit sx elfeed multiple-cursors cider cljsbuild-mode clojure-cheatsheet clojure-mode websocket use-package spinner queue pkg-info oauth2 markdown-preview-eww markdown-mode emojify circe alert)))
+ '(safe-local-variable-values
+   (quote
+    ((cider-refresh-after-fn . "server.repl/post-refresh")
+     (cider-refresh-before-fn . "server.repl/pre-refresh"))))
  '(send-mail-function (quote smtpmail-send-it))
  '(setq erc-autojoin-channels-alist)
  '(simplenote2-markdown-notes-mode (quote markdown-mode))
@@ -169,6 +135,7 @@
  '(smtp-service "465")
  '(smtpmail-smtp-server "smtp.googlemail.com")
  '(smtpmail-smtp-service 25)
+ '(tls-checktrust nil)
  '(windmove-wrap-around t))
 
 (custom-set-faces
@@ -182,3 +149,4 @@
 (windmove-default-keybindings)
 
 (setq browse-url-browser-function 'eww-browse-url)
+(put 'upcase-region 'disabled nil)

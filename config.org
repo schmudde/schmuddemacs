@@ -1,0 +1,128 @@
+Welcome to Schmuddemacs!
+
+My GNU Emacs configuration file is written to help me remember all the small decisions I made along the way and as a guide for any souls who might stumble upon this page.
+
+Software updates will inevitably break existing configurations. I have often revisited a relevant snippet of Emacs Lisp code with a pithy comment and felt lost. The /Literate Programming/ style offers more context. After all, code was written primarily for humans to read, including all future Schmuddes, and only incidentally for machines to interpret.
+
+Code evaluation is provided by ~org-babel~, which provides a method for extracting and evaluating Emacs Lisp expressions inside an org-mode file.
+
+The move to Org Mode is currently a work in progress!
+
+* Package Overview
+
+** Essential Utilities
+
+- magit, use-package
+- also: projectile - helm - helm-projectile - helm-rg - avy - company - smartparens
+
+** Editing Utilities
+
+Multiple Cursors
+
+;;; not essential but most likely will install after a couple weeks - hydra - yasnippet(I see enough patterns that I create snippets for) - iedit - ob-restclient(I do all my api testing with)
+
+
+* Interface Improvements
+
+I like having the day, date, and time displayed in my modeline. (Note that it’s pointless to display seconds here, since the modeline does not automatically update every second, for efficiency purposes)
+
+#+BEGIN_SRC emacs-lisp
+(setq display-time-day-and-date t)
+(display-time-mode 1)
+#+END_SRC
+
+* Editing Helpers
+
+Enable the upcase-region function. I still have no idea why this is disabled by default.
+
+#+BEGIN_SRC emacs-lisp
+(put 'upcase-region 'disabled nil)
+#+END_SRC
+
+Whenever we visit a buffer that has no active edits, but the file has changed on disk, automatically reload it.
+
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode t)
+#+END_SRC
+
+Whenever the cursor is on a paren, highlight the matching paren.
+
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode t)
+#+END_SRC
+
+* Programming
+
+Tell Python mode to use Python 3
+
+#+BEGIN_SRC emacs-lisp
+(setq python-shell-interpreter "python3")
+#+END_SRC
+
+* Fill Paragraphs
+
+Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
+Unfill Paragraph: https://www.emacswiki.org/emacs/UnfillParagraph
+Alternative - Unfill Region (not implemented): https://www.emacswiki.org/emacs/UnfillRegion
+
+#+BEGIN_SRC emacs-lisp
+(defun unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max))
+        ;; This would override `fill-column' if it's an integer.
+        (emacs-lisp-docstring-fill-column t))
+    (fill-paragraph nil region)))
+#+END_SRC
+
+Handy key definition
+
+#+BEGIN_SRC emacs-lisp
+(define-key global-map "\M-Q" 'unfill-paragraph)
+#+END_SRC
+
+* eMail
+
+#+BEGIN_SRC emacs-lisp
+;; mu4e
+;; make sure mu4e is in your load-path
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+(require 'mu4e)
+
+;; mu4e-maildir
+
+;; these must start with a "/", and must exist
+;; (i.e.. /home/user/Maildir/sent must exist)
+;; you use e.g. 'mu mkdir' to make the Maildirs if they don't already exist
+;; below are the defaults; if they do not exist yet, mu4e offers to
+;; create them. they can also functions; see their docstrings.
+(setq mu4e-sent-folder   "/Sent-1")
+(setq mu4e-drafts-folder "/Drafts-1")
+(setq mu4e-trash-folder  "/Trash")
+
+;; smtp mail setting; these are the same that `gnus' uses.
+;; Port 465?
+;; (setq
+;;    message-send-mail-function   'smtpmail-send-it
+;;    smtpmail-default-smtp-server "mail.runbox.com"
+;;    smtpmail-smtp-server         "mail.runbox.com"
+;;   smtpmail-local-domain        "example.com")
+#+END_SRC
+
+;; Email configuration is all in an external, optional file.
+
+;; (let ((mail-conf (expand-file-name "~/.emacs-mail.el")))
+;;  (when (file-exists-p mail-conf)
+;;    (load-file mail-conf)))
+
+* Resources
+
+[[https://orgmode.org/manual/Handling-Links.html][Handling Links]]: org-toggle-link-display: C-c C-l (with point on existing link)
+
+- Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
+- [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
+- [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
+
+* Miscellaneous Notes
+
+(setq initial-scratch-message "Welcome in Emacs") ; print a default message in the empty scratch buffer opened at startup

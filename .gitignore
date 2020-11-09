@@ -3,7 +3,14 @@
 .mc-lists.el
 elpa/
 eshell/
+games/
 ido.last
 network-security.data
 request/
 url/
+#init.el#
+config.el
+auto-save-list
+.cache
+.sx
+init.el
