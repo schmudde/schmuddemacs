@@ -8,7 +8,7 @@ Code evaluation is provided by ~org-babel~, which provides a method for extracti
 
 The move to Org Mode is currently a work in progress!
 
-[[btf-logo.png]]
+[[under-construction.gif]]
 
 * Package Overview
 
