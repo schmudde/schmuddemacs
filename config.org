@@ -8,18 +8,20 @@ Code evaluation is provided by ~org-babel~, which provides a method for extracti
 
 The move to Org Mode is currently a work in progress!
 
+[[btf-logo.png]]
+
 * Package Overview
 
 ** Essential Utilities
 
 - magit, use-package
-- also: projectile - helm - helm-projectile - helm-rg - avy - company - smartparens
+- TODO: also: projectile - helm - helm-projectile - helm-rg - avy - company - smartparens
 
 ** Editing Utilities
 
-Multiple Cursors
+- Multiple Cursors
 
-;;; not essential but most likely will install after a couple weeks - hydra - yasnippet(I see enough patterns that I create snippets for) - iedit - ob-restclient(I do all my api testing with)
+;;; TODO: - hydra - yasnippet(I see enough patterns that I create snippets for) - iedit - ob-restclient(I do all my api testing with)
 
 
 * Interface Improvements
@@ -29,6 +31,12 @@ I like having the day, date, and time displayed in my modeline. (Note that it’
 #+BEGIN_SRC emacs-lisp
 (setq display-time-day-and-date t)
 (display-time-mode 1)
+#+END_SRC
+
+For the time being, simply use one of the default color themes. Can use ~M+x customize-theme~ to change themes.
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'wheatgrass)
 #+END_SRC
 
 * Editing Helpers
@@ -61,9 +69,7 @@ Tell Python mode to use Python 3
 
 * Fill Paragraphs
 
-Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph
-Unfill Paragraph: https://www.emacswiki.org/emacs/UnfillParagraph
-Alternative - Unfill Region (not implemented): https://www.emacswiki.org/emacs/UnfillRegion
+[[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~.
 
 #+BEGIN_SRC emacs-lisp
 (defun unfill-paragraph (&optional region)
@@ -75,13 +81,15 @@ Alternative - Unfill Region (not implemented): https://www.emacswiki.org/emacs/U
     (fill-paragraph nil region)))
 #+END_SRC
 
-Handy key definition
+Handy key definition for ~unfill-paragraph~.
 
 #+BEGIN_SRC emacs-lisp
 (define-key global-map "\M-Q" 'unfill-paragraph)
 #+END_SRC
 
 * eMail
+
+TODO
 
 #+BEGIN_SRC emacs-lisp
 ;; mu4e
@@ -117,11 +125,12 @@ Handy key definition
 
 * Resources
 
-[[https://orgmode.org/manual/Handling-Links.html][Handling Links]]: org-toggle-link-display: C-c C-l (with point on existing link)
+TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-mode: ~org-toggle-link-display~: ~C-c C-l~ (with point on existing link)
 
 - Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
-- [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
-- [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
+- Collections of configs
+    - [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
+    - [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
 
 * Miscellaneous Notes
 
