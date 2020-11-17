@@ -15,7 +15,22 @@ The move to Org Mode is currently a work in progress!
 ** Essential Utilities
 
 - magit, use-package
-- TODO: also: projectile - helm - helm-projectile - helm-rg - avy - company - smartparens
+- TODO: also: projectile - helm-rg - avy - company - smartparens
+
+- [[https://github.com/abo-abo/swiper][ivy]]: a completion system. I opted for ivy because it is cider and other packages recommend it.
+- [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x.
+- [[https://github.com/bbatsov/projectile][projectile]] to help navigate between files in a project.
+- [[https://emacs-helm.github.io/helm/][helm]]
+    - An Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
+    - [[https://github.com/bbatsov/helm-projectile][helm projectile]]: ~helm-projectile-grep~, ~helm-projectile-find-file~
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(require 'helm)
+
+(setq-default helm-M-x-fuzzy-match t)
+(global-set-key "\C-x\C-m" 'helm-M-x)
+(global-set-key "\C-c\C-m" 'helm-M-x)
+#+END_SRC
 
 ** Editing Utilities
 
@@ -23,8 +38,19 @@ The move to Org Mode is currently a work in progress!
 
 ;;; TODO: - hydra - yasnippet(I see enough patterns that I create snippets for) - iedit - ob-restclient(I do all my api testing with)
 
+** Programming Utilities
+
+[[https://github.com/Fuco1/smartparens][Smartparens]]: is minor mode for Emacs that deals with parens pairs
+and tries to be smart about it (donate [[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CEYP5YVHDRX8C][here]]).
+
+Clojure: [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], [[https://github.com/clojure-emacs/cider][cider]] and [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]], the main packages for Clojure development.
 
 * Interface Improvements
+
+I use the Emacs Web Wowser quite a bit, so I want to customize the search engine. When in EWW: ~M-x customize-mode~ &rarr; /Eww Search Prefix/ &rarr; ~https://html.duckduckgo.com/html?q=~
+
+"/usr/share/applications/firefox.desktop"
+
 
 I like having the day, date, and time displayed in my modeline. (Note that it’s pointless to display seconds here, since the modeline does not automatically update every second, for efficiency purposes)
 
@@ -59,9 +85,26 @@ Whenever the cursor is on a paren, highlight the matching paren.
 (show-paren-mode t)
 #+END_SRC
 
+[[https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Mark][The Mark and the Region]]
+
+#+BEGIN_SRC emacs-lisp
+(transient-mark-mode 1)
+(delete-selection-mode t) ;; delete the selection with a keypress
+#+END_SRC
+
+** [[https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Indentation][Indentation]]
+
+#+BEGIN_SRC emacs-lisp
+;; keep my code tidy
+(setq-default indent-tabs-mode nil)
+(setq default-tab-width 4)
+;; ?? (setq-default tab-width 8) ;; but maintain correct appearance
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
 * Programming
 
-Tell Python mode to use Python 3
+Tell ~python-mode~ to use Python 3
 
 #+BEGIN_SRC emacs-lisp
 (setq python-shell-interpreter "python3")
@@ -88,6 +131,8 @@ Handy key definition for ~unfill-paragraph~.
 #+END_SRC
 
 * eMail
+
+~mu4e~/[[https://old.reddit.com/r/emacs/comments/jvnzxl/mu4e_dashboard_using_orgmode_with_mu4e_links/][dashboard]] with ~offlineimap~
 
 TODO
 
@@ -128,10 +173,13 @@ TODO
 TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-mode: ~org-toggle-link-display~: ~C-c C-l~ (with point on existing link)
 
 - Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
+- [[https://dev.to/matheusemm/simple-emacs-configuration-for-clojure-development-11i3][Simple Emacs configuration for Clojure development]]
 - Collections of configs
     - [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
     - [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
 
 * Miscellaneous Notes
 
-(setq initial-scratch-message "Welcome in Emacs") ; print a default message in the empty scratch buffer opened at startup
+I find printing a default message in the empty scratch buffer opened at startup occasionally useful for testing.
+
+~(setq initial-scratch-message "Welcome in Emacs")~

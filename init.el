@@ -14,17 +14,7 @@
 (let ((default-directory "~/.emacs.d/elpa"))
   (normal-top-level-add-subdirs-to-load-path))
 
-;; keep my code tidy
-(setq-default indent-tabs-mode nil)
-(setq default-tab-width 4)
-;; ?? (setq-default tab-width 8) ;; but maintain correct appearance
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-(transient-mark-mode 1)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-
-;; delete the selection with a keypress
-(delete-selection-mode t)
 
 ;; warn when opening files bigger than 100MB
 (setq large-file-warning-threshold 100000000)
@@ -109,7 +99,7 @@
  '(erc-stamp-mode t)
  '(erc-track-minor-mode t)
  '(erc-track-mode t)
- '(eww-search-prefix "https://www.google.com/search?q=")
+ '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
  '(org-file-apps
    (quote
     ((auto-mode . emacs)
@@ -122,7 +112,7 @@
      ("melpa" . "https://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (writegood-mode synonymous simplenote2 4clojure magit sx elfeed multiple-cursors cider cljsbuild-mode clojure-cheatsheet clojure-mode websocket use-package spinner queue pkg-info oauth2 markdown-preview-eww markdown-mode emojify circe alert)))
+    (htmlize smartparens multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
  '(safe-local-variable-values
    (quote
     ((cider-refresh-after-fn . "server.repl/post-refresh")
