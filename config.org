@@ -12,13 +12,15 @@ The move to Org Mode is currently a work in progress!
 
 * Package Overview
 
+Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is available in [[https://melpa.org/#/snow][MELPA]] or on [[https://github.com/alphapapa/snow.el][GitHub]]. Download the file, ~curl -O https://raw.githubusercontent.com/alphapapa/snow.el/master/snow.el~, open it in a buffer, ~eval-buffer~, and ~M-x snow RET~.
+
 ** Essential Utilities
 
 - magit, use-package
-- TODO: also: projectile - helm-rg - avy - company - smartparens
+- TODO: also: - helm-rg - avy - company - [[https://depp.brause.cc/nov.el/][nov.el]]
 
 - [[https://github.com/abo-abo/swiper][ivy]]: a completion system. I opted for ivy because it is cider and other packages recommend it.
-- [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x.
+- [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
 - [[https://github.com/bbatsov/projectile][projectile]] to help navigate between files in a project.
 - [[https://emacs-helm.github.io/helm/][helm]]
     - An Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
@@ -34,14 +36,26 @@ The move to Org Mode is currently a work in progress!
 
 ** Editing Utilities
 
-- Multiple Cursors
+Multiple Cursors
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-}") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
+#+END_SRC
+
+undo-tree
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(global-undo-tree-mode)
+(global-set-key (kbd "M-/") 'undo-tree-visualize)
+#+END_SRC
 
 ;;; TODO: - hydra - yasnippet(I see enough patterns that I create snippets for) - iedit - ob-restclient(I do all my api testing with)
 
 ** Programming Utilities
 
-[[https://github.com/Fuco1/smartparens][Smartparens]]: is minor mode for Emacs that deals with parens pairs
-and tries to be smart about it (donate [[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CEYP5YVHDRX8C][here]]).
+- Paredit (installed) vs. [[https://github.com/Fuco1/smartparens][Smartparens]] (a minor mode for Emacs that deals with parens pairs
+and tries to be smart about it (donate [[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CEYP5YVHDRX8C][here]]))
 
 Clojure: [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], [[https://github.com/clojure-emacs/cider][cider]] and [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]], the main packages for Clojure development.
 
@@ -110,6 +124,18 @@ Tell ~python-mode~ to use Python 3
 (setq python-shell-interpreter "python3")
 #+END_SRC
 
+Load ~ob-shell~ for literate programming in org-babel
+
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages '((shell . t)))
+#+END_SRC
+
+
+** Clojure
+
+https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html
+
 * Fill Paragraphs
 
 [[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~.
@@ -131,6 +157,9 @@ Handy key definition for ~unfill-paragraph~.
 #+END_SRC
 
 * eMail
+
+- [[https://github.com/Ebert-Hanke/emacs#email-in-emacs][Guide to Guides]]
+- [[https://github.com/munen/mu4e-views][mu4e Views]]
 
 ~mu4e~/[[https://old.reddit.com/r/emacs/comments/jvnzxl/mu4e_dashboard_using_orgmode_with_mu4e_links/][dashboard]] with ~offlineimap~
 
@@ -172,11 +201,16 @@ TODO
 
 TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-mode: ~org-toggle-link-display~: ~C-c C-l~ (with point on existing link)
 
-- Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
-- [[https://dev.to/matheusemm/simple-emacs-configuration-for-clojure-development-11i3][Simple Emacs configuration for Clojure development]]
-- Collections of configs
-    - [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
-    - [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
+- Inspiring literate GNU Emacs Configuration File
+    - Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
+    - Alain M. Lafon's [[https://github.com/munen/emacs.d][Play Emacs Like an Instrument]]
+    - Collections of configs
+        - [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
+        - [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
+- Inspiring Blog Posts
+    - [[https://dev.to/matheusemm/simple-emacs-configuration-for-clojure-development-11i3][Simple Emacs configuration for Clojure development]]
+    - [[https://karthinks.com/software/batteries-included-with-emacs/][Batteries Included With Emacs]]
+- [[https://github.com/alphapapa/unpackaged.el][Unpackaged]]: A collection of useful Emacs Lisp code that isn’t substantial enough to be packaged.
 
 * Miscellaneous Notes
 

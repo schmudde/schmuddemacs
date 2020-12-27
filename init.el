@@ -112,7 +112,7 @@
      ("melpa" . "https://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (htmlize smartparens multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
+    (paredit go htmlize smartparens multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
  '(safe-local-variable-values
    (quote
     ((cider-refresh-after-fn . "server.repl/post-refresh")
