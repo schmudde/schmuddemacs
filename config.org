@@ -6,6 +6,8 @@ Software updates will inevitably break existing configurations. I have often rev
 
 Code evaluation is provided by ~org-babel~, which provides a method for extracting and evaluating Emacs Lisp expressions inside an org-mode file.
 
+This is currently loaded by my ~init.el~ using ~(org-babel-load-file (concat user-emacs-directory "config.org"))~. This README is a symlink to ~config.org~.
+
 The move to Org Mode is currently a work in progress!
 
 [[under-construction.gif]]
