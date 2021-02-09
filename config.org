@@ -124,11 +124,29 @@ Tell ~python-mode~ to use Python 3
 (setq python-shell-interpreter "python3")
 #+END_SRC
 
-Load ~ob-shell~ for literate programming in org-babel
+Load ~ob-shell~ for literate programming in org-babel. ~emacs-lisp~ already works by default.
 
 #+BEGIN_SRC emacs-lisp
 (org-babel-do-load-languages
- 'org-babel-load-languages '((shell . t)))
+ 'org-babel-load-languages '((emacs-lisp . t)
+                             (clojure . t)
+                             (python . t)
+                             (shell . t)))
+#+END_SRC
+
+For example:
+
+#+BEGIN_SRC python :tangle no
+return 3 + 7
+#+END_SRC
+
+#+RESULTS:
+: 10
+
+Stop Emacs asking for confirmation to evaluate:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-confirm-babel-evaluate nil)
 #+END_SRC
 
 
