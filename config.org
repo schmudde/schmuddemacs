@@ -56,10 +56,29 @@ undo-tree
 
 ** Programming Utilities
 
-- Paredit (installed) vs. [[https://github.com/Fuco1/smartparens][Smartparens]] (a minor mode for Emacs that deals with parens pairs
-and tries to be smart about it (donate [[https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CEYP5YVHDRX8C][here]]))
+restclient: An interactive HTTP client for Emacs
+[[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][
+Smartparens (installed) vs. Paredit]]
 
-Clojure: [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], [[https://github.com/clojure-emacs/cider][cider]] and [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]], the main packages for Clojure development.
+"By default smartparens is much less strict about the 'balancedness' of the buffer and it usually allows you to delete whatever you please. However, there are settings (like smartparens-strict-mode) you can use to have it behave more like paredit."
+
+*** Clojure
+
+[[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]].
+
+For [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]:
+
+#+BEGIN_SRC clojure
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+#+END_SRC
 
 * Interface Improvements
 
@@ -120,10 +139,22 @@ Whenever the cursor is on a paren, highlight the matching paren.
 
 * Programming
 
+** Settings
+
 Tell ~python-mode~ to use Python 3
 
 #+BEGIN_SRC emacs-lisp
 (setq python-shell-interpreter "python3")
+#+END_SRC
+
+** Literate Programming in org-babel
+
+Documentation: [[https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html][Clojure in Org Mode Babel]]
+
+Stop Emacs asking for confirmation to evaluate:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-confirm-babel-evaluate nil)
 #+END_SRC
 
 Load ~ob-shell~ for literate programming in org-babel. ~emacs-lisp~ already works by default.
@@ -136,7 +167,7 @@ Load ~ob-shell~ for literate programming in org-babel. ~emacs-lisp~ already work
                              (shell . t)))
 #+END_SRC
 
-For example:
+Python example:
 
 #+BEGIN_SRC python :tangle no
 return 3 + 7
@@ -144,17 +175,6 @@ return 3 + 7
 
 #+RESULTS:
 : 10
-
-Stop Emacs asking for confirmation to evaluate:
-
-#+BEGIN_SRC emacs-lisp
-(setq org-confirm-babel-evaluate nil)
-#+END_SRC
-
-
-** Clojure
-
-https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html
 
 * Fill Paragraphs
 
@@ -231,9 +251,13 @@ TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-m
     - [[https://dev.to/matheusemm/simple-emacs-configuration-for-clojure-development-11i3][Simple Emacs configuration for Clojure development]]
     - [[https://karthinks.com/software/batteries-included-with-emacs/][Batteries Included With Emacs]]
 - [[https://github.com/alphapapa/unpackaged.el][Unpackaged]]: A collection of useful Emacs Lisp code that isn’t substantial enough to be packaged.
+- Org Mode Babel: [[https://github.com/grettke/help/blob/master/Org-Mode_Fundamentals.md][tangling/evaluating/weaving]]
+
 
 * Miscellaneous Notes
 
 I find printing a default message in the empty scratch buffer opened at startup occasionally useful for testing.
 
 ~(setq initial-scratch-message "Welcome in Emacs")~
+
+[[https://readme-jokes.vercel.app/api][We got jokes]]
