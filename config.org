@@ -260,4 +260,8 @@ I find printing a default message in the empty scratch buffer opened at startup 
 
 ~(setq initial-scratch-message "Welcome in Emacs")~
 
-[[https://readme-jokes.vercel.app/api][We got jokes]]
+[[https://github.com/github/markup][Github markup]] uses [[https://github.com/wallyqs/org-ruby][org-ruby]] to convert org-mode to HTML. It supports footnotes and some custom markup.
+
+[[https://melpa.org/#/org2blog][file:https://melpa.org/packages/org2blog-badge.svg]]
+
+[[https://readme-jokes.vercel.app/api]]
