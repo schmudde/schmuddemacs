@@ -10,7 +10,7 @@ This is currently loaded by my ~init.el~ using ~(org-babel-load-file (concat use
 
 The move to Org Mode is currently a work in progress!
 
-[[under-construction.gif][under construction]]
+[[under-construction.gif]]
 
 * Package Overview
 
@@ -261,3 +261,5 @@ I find printing a default message in the empty scratch buffer opened at startup 
 ~(setq initial-scratch-message "Welcome in Emacs")~
 
 [[https://github.com/github/markup][Github markup]] uses [[https://github.com/wallyqs/org-ruby][org-ruby]] to convert org-mode to HTML. It supports footnotes and some custom markup.
+
+[[file:https://readme-jokes.vercel.app/api]]
