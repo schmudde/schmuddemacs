@@ -112,7 +112,7 @@
      ("melpa" . "https://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
+    (magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
  '(safe-local-variable-values
    (quote
     ((cider-refresh-after-fn . "server.repl/post-refresh")
@@ -133,7 +133,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(menu ((t (:background "brightwhite" :foreground "blue" :inverse-video t))))
+ '(tty-menu-enabled-face ((t (:background "blue" :foreground "brightblack" :weight bold)))))
 
 (define-key input-decode-map "\e[1;2A" [S-up])
 (windmove-default-keybindings)

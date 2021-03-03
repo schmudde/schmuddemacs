@@ -86,8 +86,7 @@ I use the Emacs Web Wowser quite a bit, so I want to customize the search engine
 
 "/usr/share/applications/firefox.desktop"
 
-
-I like having the day, date, and time displayed in my modeline. (Note that it’s pointless to display seconds here, since the modeline does not automatically update every second, for efficiency purposes)
+I like having the day, date, and time displayed in my modeline.
 
 #+BEGIN_SRC emacs-lisp
 (setq display-time-day-and-date t)
@@ -99,6 +98,13 @@ For the time being, simply use one of the default color themes. Can use ~M+x cus
 #+BEGIN_SRC emacs-lisp
 (load-theme 'wheatgrass)
 #+END_SRC
+
+I like to use the ~menu-bar-mode~ (~F10~) when I forget commands. But the default colors don't really work. They are in two different places:
+
+1. ~M-x customize-face RET menu RET~ to set the menu bar itself
+2. Use TTY settings to set the colors of the pull downs themselves:
+    - With ~customize-face~: ~tty-menu-disabled-face~, ~tty-menu-enabled-face~, ~tty-menu-selected-face~
+    - Or in Lisp: ~(set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")~
 
 * Editing Helpers
 
