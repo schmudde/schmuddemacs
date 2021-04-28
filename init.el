@@ -47,13 +47,6 @@
                    (abbreviate-file-name (buffer-file-name))
                                   "%b"))))
 
-
-;; set up ido mode
-(require `ido)
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-
 ;; figwheel for cider
 ;; (require 'cider)
 ;; (setq cider-cljs-lein-repl
@@ -100,6 +93,13 @@
  '(erc-track-minor-mode t)
  '(erc-track-mode t)
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
+ '(ledger-reports
+   (quote
+    (("test" "ledger ")
+     ("bal" "%(binary) -f %(ledger-file) bal")
+     ("reg" "%(binary) -f %(ledger-file) reg")
+     ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
+     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
  '(org-file-apps
    (quote
     ((auto-mode . emacs)
@@ -112,7 +112,7 @@
      ("melpa" . "https://melpa.org/packages/"))))
  '(package-selected-packages
    (quote
-    (magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
+    (ledger-mode magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
  '(safe-local-variable-values
    (quote
     ((cider-refresh-after-fn . "server.repl/post-refresh")

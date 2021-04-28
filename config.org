@@ -16,16 +16,23 @@ The move to Org Mode is currently a work in progress!
 
 Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is available in [[https://melpa.org/#/snow][MELPA]] or on [[https://github.com/alphapapa/snow.el][GitHub]]. Download the file, ~curl -O https://raw.githubusercontent.com/alphapapa/snow.el/master/snow.el~, open it in a buffer, ~eval-buffer~, and ~M-x snow RET~.
 
-** Essential Utilities
+** Movement Utilities
 
-- magit, use-package
-- TODO: also: - helm-rg - avy - company - [[https://depp.brause.cc/nov.el/][nov.el]]
+- TODO: also: avy - company - [[https://depp.brause.cc/nov.el/][nov.el]]
 
-- [[https://github.com/abo-abo/swiper][ivy]]: a completion system. I opted for ivy because it is cider and other packages recommend it.
 - [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
 - [[https://github.com/bbatsov/projectile][projectile]] to help navigate between files in a project.
-- [[https://emacs-helm.github.io/helm/][helm]]
-    - An Emacs framework for incremental completions and narrowing selections. It helps to rapidly complete file names, buffer names, or any other Emacs interactions requiring selecting an item from a list of possible choices.
+
+*** Completion Frameworks
+
+**** Helm: filter-as-you-type completion                        :considering:
+
+For in-depth searching and completion.
+
+- Install via the package manager
+- ~C-x c~: prefix for all Helm commands
+- see also:
+    - helm-rg
     - [[https://github.com/bbatsov/helm-projectile][helm projectile]]: ~helm-projectile-grep~, ~helm-projectile-find-file~
 
 #+BEGIN_SRC emacs-lisp :tangle no
@@ -36,27 +43,46 @@ Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is av
 (global-set-key "\C-c\C-m" 'helm-M-x)
 #+END_SRC
 
+**** IDO                                                          :installed:
+
+[[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]
+
+Improvements over Emacs' TAB-based completion.
+
+- ~C-s~ and ~C-r~: Move to the next and previous match
+- ~C-d~ Open ~M-x dired~ buffer in current directory
+
+#+BEGIN_SRC emacs-lisp
+(require `ido)
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+#+END_SRC
+
+~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
+
 ** Editing Utilities
 
-Multiple Cursors
+;; TODO: - hydra - yasnippet (I see enough patterns that I create snippets for) - iedit, [[https://github.com/abo-abo/plain-org-wiki][plain-org-wiki]]
+
+*** Multiple Cursors                                              :installed:
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-}") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
 #+END_SRC
 
-undo-tree
+*** undo-tree                                                   :considering:
 
 #+BEGIN_SRC emacs-lisp :tangle no
 (global-undo-tree-mode)
 (global-set-key (kbd "M-/") 'undo-tree-visualize)
 #+END_SRC
 
-;;; TODO: - hydra - yasnippet(I see enough patterns that I create snippets for) - iedit - ob-restclient(I do all my api testing with)
-
 ** Programming Utilities
 
-restclient: An interactive HTTP client for Emacs
+*** Restclient                                                    :installed:
+*** Smartparens                                                   :installed:
 [[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][
 Smartparens (installed) vs. Paredit]]
 
@@ -64,9 +90,12 @@ Smartparens (installed) vs. Paredit]]
 
 *** Clojure
 
-[[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]].
+- :considering:
+    - ~helm-cider~
+    - ~ivy-cider~
 
-For [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]:
+**** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]]                                       :installed:
+**** [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]                                                 :installed:
 
 #+BEGIN_SRC clojure
 (require 'clj-refactor)
@@ -99,7 +128,7 @@ For the time being, simply use one of the default color themes. Can use ~M+x cus
 (load-theme 'wheatgrass)
 #+END_SRC
 
-I like to use the ~menu-bar-mode~ (~F10~) when I forget commands. But the default colors don't really work. They are in two different places:
+I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget commands. But the default colors don't really work. They are in two different places:
 
 1. ~M-x customize-face RET menu RET~ to set the menu bar itself
 2. Use TTY settings to set the colors of the pull downs themselves:
@@ -250,6 +279,7 @@ TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-m
 - Inspiring literate GNU Emacs Configuration File
     - Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
     - Alain M. Lafon's [[https://github.com/munen/emacs.d][Play Emacs Like an Instrument]]
+    - Colin McLear's [[https://github.com/mclear-tools/dotemacs][Emacs for Academic Writing]], [[https://github.com/mclear-tools/dotemacs][post]]
     - Collections of configs
         - [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
         - [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
@@ -258,7 +288,6 @@ TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-m
     - [[https://karthinks.com/software/batteries-included-with-emacs/][Batteries Included With Emacs]]
 - [[https://github.com/alphapapa/unpackaged.el][Unpackaged]]: A collection of useful Emacs Lisp code that isn’t substantial enough to be packaged.
 - Org Mode Babel: [[https://github.com/grettke/help/blob/master/Org-Mode_Fundamentals.md][tangling/evaluating/weaving]]
-
 
 * Miscellaneous Notes
 
@@ -269,3 +298,5 @@ I find printing a default message in the empty scratch buffer opened at startup 
 [[https://github.com/github/markup][Github markup]] uses [[https://github.com/wallyqs/org-ruby][org-ruby]] to convert org-mode to HTML. It supports footnotes and some custom markup.
 
 [[file:https://readme-jokes.vercel.app/api]]
+
+TODO: [[https://www.emacswiki.org/emacs/InfoPath][Set info-path for org-mode documentation]] (currently broken)
