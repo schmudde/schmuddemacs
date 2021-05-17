@@ -61,6 +61,10 @@ Improvements over Emacs' TAB-based completion.
 
 ~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
 
+*** Markdown Mode                                                 :installed:
+
+- ~[[https://elpa.gnu.org/packages/adaptive-wrap.html][adaptive-wrap]]~: ensures that outlines wrap lines correctly with ~wrap-prefix~. (installed)
+
 ** Editing Utilities
 
 ;; TODO: - hydra - yasnippet (I see enough patterns that I create snippets for) - iedit, [[https://github.com/abo-abo/plain-org-wiki][plain-org-wiki]]
@@ -174,6 +178,10 @@ Whenever the cursor is on a paren, highlight the matching paren.
 
 * Programming
 
+** SX                                                           :considering:
+
+Stack Exchange
+
 ** Settings
 
 Tell ~python-mode~ to use Python 3
@@ -233,8 +241,19 @@ Handy key definition for ~unfill-paragraph~.
 
 * eMail
 
+TODO. NOTE: Delete ~/mail (1.7 GB), Nov 2019
+
+~sudo apt-get install mu4e~
+
 - [[https://github.com/Ebert-Hanke/emacs#email-in-emacs][Guide to Guides]]
 - [[https://github.com/munen/mu4e-views][mu4e Views]]
+- [[http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/][Link to A Complete Guide to Email in Emacs using Mu and Mu4e]]
+
+- [[https://github.com/cemkeylan/mu-wizard/][mu4e wizard]], https://www.reddit.com/r/emacs/comments/l47xk4/emacs_version_of_muttwizard_muwizard_easily_setup/
+
+- [Stack Exchange overview](https://emacs.stackexchange.com/questions/12927/reading-and-writing-email-with-emacs)
+- [Emacs, Notmuch and Offlineimap](https://chrisdone.com/posts/emacs-mail/)
+
 
 ~mu4e~/[[https://old.reddit.com/r/emacs/comments/jvnzxl/mu4e_dashboard_using_orgmode_with_mu4e_links/][dashboard]] with ~offlineimap~
 
@@ -243,8 +262,9 @@ TODO
 #+BEGIN_SRC emacs-lisp
 ;; mu4e
 ;; make sure mu4e is in your load-path
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-(require 'mu4e)
+
+; (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
+;; (require 'mu4e)
 
 ;; mu4e-maildir
 
@@ -253,9 +273,11 @@ TODO
 ;; you use e.g. 'mu mkdir' to make the Maildirs if they don't already exist
 ;; below are the defaults; if they do not exist yet, mu4e offers to
 ;; create them. they can also functions; see their docstrings.
-(setq mu4e-sent-folder   "/Sent-1")
-(setq mu4e-drafts-folder "/Drafts-1")
-(setq mu4e-trash-folder  "/Trash")
+
+
+;; (setq mu4e-sent-folder   "/Sent-1")
+;; (setq mu4e-drafts-folder "/Drafts-1")
+;; (setq mu4e-trash-folder  "/Trash")
 
 ;; smtp mail setting; these are the same that `gnus' uses.
 ;; Port 465?
