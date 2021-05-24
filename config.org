@@ -241,58 +241,48 @@ Handy key definition for ~unfill-paragraph~.
 
 * eMail
 
-TODO. NOTE: Delete ~/mail (1.7 GB), Nov 2019
+** Using mu-wizard                                                :installed:
 
-~sudo apt-get install mu4e~
+Dependencies
+
+1. [[https://github.com/cemkeylan/mu-wizard/][mu-wizard]]: shell script to setup mu4e for Emacs
+2. [[https://www.passwordstore.org/#extensions][pass]] (via ~apt~) for passwords
+3. isync (via ~apt~) for offline mail storage (see also [[http://isync.sourceforge.net/][mbsync isync to pull]])
+4. mu (install ~mu4e~ via ~apt~) (or maildir-utils depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]])
+5. msmtp (via ~apt~) for sending mails
+6. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
+7. [[https://github.com/jwiegley/use-package][use-package]] (via MELPA)
+
+Commands
+
+1. ~muw add~
+2. ~muw sync personal~ where ~personal~ is an account name
+3. ~muw mu-init~ to setup database store
+4. ~mu index~ to index for search (Xapian)
+
+Lisp Code
+
+#+BEGIN_SRC emacs-lisp
+(load-file "~/.config/mu4e/mu4e-config.el")
+
+(add-to-list 'load-path "~/.config/mu4e")
+(require 'mu4e-config)
+
+(use-package mu4e-config
+  :after mu4e
+  :load-path "~/.config/mu4e")
+#+END_SRC
+
+Run in Emacs with ~mu4e~.
+
+** Other Approaches
 
 - [[https://github.com/Ebert-Hanke/emacs#email-in-emacs][Guide to Guides]]
 - [[https://github.com/munen/mu4e-views][mu4e Views]]
 - [[http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/][Link to A Complete Guide to Email in Emacs using Mu and Mu4e]]
-
 - [[https://github.com/cemkeylan/mu-wizard/][mu4e wizard]], https://www.reddit.com/r/emacs/comments/l47xk4/emacs_version_of_muttwizard_muwizard_easily_setup/
-
-- [Stack Exchange overview](https://emacs.stackexchange.com/questions/12927/reading-and-writing-email-with-emacs)
-- [Emacs, Notmuch and Offlineimap](https://chrisdone.com/posts/emacs-mail/)
-
-
-~mu4e~/[[https://old.reddit.com/r/emacs/comments/jvnzxl/mu4e_dashboard_using_orgmode_with_mu4e_links/][dashboard]] with ~offlineimap~
-
-TODO
-
-#+BEGIN_SRC emacs-lisp
-;; mu4e
-;; make sure mu4e is in your load-path
-
-; (add-to-list 'load-path "/usr/share/emacs/site-lisp/mu4e")
-;; (require 'mu4e)
-
-;; mu4e-maildir
-
-;; these must start with a "/", and must exist
-;; (i.e.. /home/user/Maildir/sent must exist)
-;; you use e.g. 'mu mkdir' to make the Maildirs if they don't already exist
-;; below are the defaults; if they do not exist yet, mu4e offers to
-;; create them. they can also functions; see their docstrings.
-
-
-;; (setq mu4e-sent-folder   "/Sent-1")
-;; (setq mu4e-drafts-folder "/Drafts-1")
-;; (setq mu4e-trash-folder  "/Trash")
-
-;; smtp mail setting; these are the same that `gnus' uses.
-;; Port 465?
-;; (setq
-;;    message-send-mail-function   'smtpmail-send-it
-;;    smtpmail-default-smtp-server "mail.runbox.com"
-;;    smtpmail-smtp-server         "mail.runbox.com"
-;;   smtpmail-local-domain        "example.com")
-#+END_SRC
-
-;; Email configuration is all in an external, optional file.
-
-;; (let ((mail-conf (expand-file-name "~/.emacs-mail.el")))
-;;  (when (file-exists-p mail-conf)
-;;    (load-file mail-conf)))
+- [[https://emacs.stackexchange.com/questions/12927/reading-and-writing-email-with-emacs][Stack Exchange overview]]
+- [[https://chrisdone.com/posts/emacs-mail/][Emacs, Notmuch and Offlineimap]]
 
 * Resources
 
