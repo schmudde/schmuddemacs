@@ -113,6 +113,18 @@ Smartparens (installed) vs. Paredit]]
 (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 #+END_SRC
 
+** Productivity
+
+*** Calendar with [[https://github.com/kiwanami/emacs-calfw][Calfw]]                                           :installed:
+
+#+BEGIN_SRC emacs-lisp
+  (require 'calfw-ical)
+  ;; IndieWeb @ https://events.indieweb.org/
+  (cfw:open-ical-calendar "https://events.indieweb.org/ics/events.ics")
+
+  (cfw:open-ical-calendar "https://dweb.events/feed.ics")
+#+END_SRC
+
 * Interface Improvements
 
 I use the Emacs Web Wowser quite a bit, so I want to customize the search engine. When in EWW: ~M-x customize-mode~ &rarr; /Eww Search Prefix/ &rarr; ~https://html.duckduckgo.com/html?q=~
@@ -247,7 +259,10 @@ Dependencies
 
 1. [[https://github.com/cemkeylan/mu-wizard/][mu-wizard]]: shell script to setup mu4e for Emacs
 2. [[https://www.passwordstore.org/#extensions][pass]] (via ~apt~) for passwords
-3. isync (via ~apt~) for offline mail storage (see also [[http://isync.sourceforge.net/][mbsync isync to pull]])
+3. isync (via ~apt~) for offline mail storage
+    - see also [[http://isync.sourceforge.net/][isync main]], [[https://wiki.archlinux.org/title/Isync][isync on Arch Linux]]
+    - ~mbsync -a~: update each folder
+    - while isync is the project name, mbsync is the current executable name; this change was necessary because of massive changes in the user interface.
 4. mu (install ~mu4e~ via ~apt~) (or maildir-utils depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]])
 5. msmtp (via ~apt~) for sending mails
 6. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
@@ -271,16 +286,33 @@ Lisp Code
 (use-package mu4e-config
   :after mu4e
   :load-path "~/.config/mu4e")
+
+;; mu4e does not by default rename files when moving them to a new directory and this then causes problems for mbsync.
+;; `Maildir error: duplicate UID xx`
+
+(setq mu4e-change-filenames-when-moving t)
 #+END_SRC
 
 Run in Emacs with ~mu4e~.
+
+#+BEGIN_SRC shell :results drawer
+mu info
+#+END_SRC
+
+#+RESULTS:
+:RESULTS:
+database-path      : /home/schmudde/.cache/mu/xapian
+messages in store  : 24753
+schema-version     : 451
+created            : Sun 23 May 2021 07:47:45 PM CDT
+maildir            : /home/schmudde/.local/share/mail
+:END:
 
 ** Other Approaches
 
 - [[https://github.com/Ebert-Hanke/emacs#email-in-emacs][Guide to Guides]]
 - [[https://github.com/munen/mu4e-views][mu4e Views]]
 - [[http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/][Link to A Complete Guide to Email in Emacs using Mu and Mu4e]]
-- [[https://github.com/cemkeylan/mu-wizard/][mu4e wizard]], https://www.reddit.com/r/emacs/comments/l47xk4/emacs_version_of_muttwizard_muwizard_easily_setup/
 - [[https://emacs.stackexchange.com/questions/12927/reading-and-writing-email-with-emacs][Stack Exchange overview]]
 - [[https://chrisdone.com/posts/emacs-mail/][Emacs, Notmuch and Offlineimap]]
 

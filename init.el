@@ -65,12 +65,11 @@
  '(doc-view-dvipdf-program "nil")
  '(doc-view-dvipdfm-program "nil")
  '(elfeed-feeds
-   (quote
-    ("https://tirkarthi.github.io/" "http://rss.slashdot.org/Slashdot/slashdot")))
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#clojure" "##Atari"))))
+   '("https://tirkarthi.github.io/" "http://rss.slashdot.org/Slashdot/slashdot"))
+ '(erc-autojoin-channels-alist '(("freenode.net" "#clojure" "##Atari")))
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
- '(erc-autojoin-timing (quote ident))
+ '(erc-autojoin-timing 'ident)
  '(erc-button-mode t)
  '(erc-fill-mode t)
  '(erc-irccontrols-mode t)
@@ -94,32 +93,27 @@
  '(erc-track-mode t)
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
  '(ledger-reports
-   (quote
-    (("test" "ledger ")
+   '(("test" "ledger ")
      ("bal" "%(binary) -f %(ledger-file) bal")
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
-     ("account" "%(binary) -f %(ledger-file) reg %(account)"))))
+     ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(org-file-apps
-   (quote
-    ((auto-mode . emacs)
+   '((auto-mode . emacs)
      ("\\.mm\\'" . default)
      ("\\.x?html?\\'" . default)
-     ("\\.pdf\\'" . default))))
+     ("\\.pdf\\'" . default)))
  '(package-archives
-   (quote
-    (("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa" . "https://melpa.org/packages/"))))
+   '(("gnu" . "https://elpa.gnu.org/packages/")
+     ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   (quote
-    (use-package adaptive-wrap ledger-mode magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert)))
+   '(calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
-   (quote
-    ((cider-refresh-after-fn . "server.repl/post-refresh")
-     (cider-refresh-before-fn . "server.repl/pre-refresh"))))
- '(send-mail-function (quote smtpmail-send-it))
+   '((cider-refresh-after-fn . "server.repl/post-refresh")
+     (cider-refresh-before-fn . "server.repl/pre-refresh")))
+ '(send-mail-function 'smtpmail-send-it)
  '(setq erc-autojoin-channels-alist)
- '(simplenote2-markdown-notes-mode (quote markdown-mode))
+ '(simplenote2-markdown-notes-mode 'markdown-mode)
  '(smtp-default-server "mail.runbox.com" nil nil "Runbox Secure/Encrypted SMTP")
  '(smtp-server nil)
  '(smtp-service "465")
