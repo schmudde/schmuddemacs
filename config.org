@@ -115,6 +115,26 @@ Smartparens (installed) vs. Paredit]]
 
 ** Productivity
 
+*** [[https://git.zx2c4.com/password-store/tree/contrib/emacs][password-store]]                                                :installed:
+
+Works with the [[https://www.passwordstore.org/][pass]] Linux password manager, which must be installed for this to work.
+
+Examples:
+
+#+BEGIN_SRC
+M-x password-store-insert
+Password entry: foo-account
+Password: ........
+Confirm password: ........
+#+END_SRC
+
+Copied password for foo-account to the kill ring. Will clear in 45 seconds.
+
+#+BEGIN_SRC
+M-x password-store-copy
+Password entry: services/github
+#+END_SRC
+
 *** Calendar with [[https://github.com/kiwanami/emacs-calfw][Calfw]]                                           :installed:
 
 #+BEGIN_SRC emacs-lisp
