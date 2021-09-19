@@ -140,9 +140,9 @@ Password entry: services/github
 #+BEGIN_SRC emacs-lisp
   (require 'calfw-ical)
   ;; IndieWeb @ https://events.indieweb.org/
-  (cfw:open-ical-calendar "https://events.indieweb.org/ics/events.ics")
+  ;; (cfw:open-ical-calendar "https://events.indieweb.org/ics/events.ics")
 
-  (cfw:open-ical-calendar "https://dweb.events/feed.ics")
+  ;; (cfw:open-ical-calendar "https://dweb.events/feed.ics")
 #+END_SRC
 
 * Interface Improvements
@@ -293,7 +293,7 @@ Commands
 1. ~muw add~
 2. ~muw sync personal~ where ~personal~ is an account name
 3. ~muw mu-init~ to setup database store
-4. ~mu index~ to index for search (Xapian)
+4. ~mu index~ to index for search (Xapian), also to rebuild the index
 
 Lisp Code
 
@@ -308,12 +308,15 @@ Lisp Code
   :load-path "~/.config/mu4e")
 
 ;; mu4e does not by default rename files when moving them to a new directory and this then causes problems for mbsync.
-;; `Maildir error: duplicate UID xx`
-
 (setq mu4e-change-filenames-when-moving t)
 #+END_SRC
 
-Run in Emacs with ~mu4e~.
+If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
+
+- ~ls -lR cur | grep -o 'U=.*:' | sort | uniq -d~: find the duplicates in ~cur~
+- ~find . -name "*U=2:*" -exec ls -l {} \;~ &rArr; ~./cur/1419106858.5661_2.pcuds06,U=2:2,S~ &amp; ~/cur/1423819205.29514_1.pcuds06,U=2:2,S~
+- ~mv ./cur/1423819205.29514_1.pcuds06,U=2:2,S ./cur/1423819205.29514_1.pcuds06~: This deduplicates the problematic UID and forces mbsync to create new UID for the second message at its next run.
+- ~mbsync -a | grep -i error | wc -l~
 
 #+BEGIN_SRC shell :results drawer
 mu info
