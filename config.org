@@ -1,3 +1,8 @@
+#+TITLE: Schmuddemacs
+#+AUTHOR: David Schmudde
+#+LANGUAGE: en
+#+STARTUP: align indent fold
+
 Welcome to Schmuddemacs!
 
 My GNU Emacs configuration file is written to help me remember all the small decisions I made along the way and as a guide for any souls who might stumble upon this page.
@@ -84,6 +89,12 @@ Improvements over Emacs' TAB-based completion.
 #+END_SRC
 
 ** Programming Utilities
+
+I want to select forms and delete them in Paredit. Setting it to /C-del/ is actually a little tricky. First, I need to find the function key sequences for xterm for /C-del/: ~(define-key map "\e[3;5​~" [C-delete])~ in ~/usr/share/emacs/27.1/lisp/term~. Then set the key:
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "\e[3;5~") 'paredit-delete-region)
+#+END_SRC
 
 *** Restclient                                                    :installed:
 *** Smartparens                                                   :installed:
@@ -191,6 +202,19 @@ Whenever the cursor is on a paren, highlight the matching paren.
 (show-paren-mode t)
 #+END_SRC
 
+Remove [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Bidirectional-Editing.html][Bidirectional Editing]], text and code by [[https://github.com/munen/emacs.d][Munen]]
+
+Emacs supports editing text written in scripts, such as Arabic, Farsi, and Hebrew, whose natural ordering of horizontal text for display is from right to left. However, digits and Latin text embedded in these scripts are still displayed left to right.
+
+Whilst this is a great feature, it adds to the amount of line scans that Emacs has to do to render a line. Too many line scans will cause Emacs to hang. Since I personally do not work with right-to-left languages, I’m defaulting to displaying all paragraphs in a left-to-right manner.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default bidi-paragraph-direction 'left-to-right)
+
+(if (version<= "27.1" emacs-version)
+    (setq bidi-inhibit-bpa t))
+#+END_SRC
+
 [[https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Mark][The Mark and the Region]]
 
 #+BEGIN_SRC emacs-lisp
@@ -283,7 +307,9 @@ Dependencies
     - see also [[http://isync.sourceforge.net/][isync main]], [[https://wiki.archlinux.org/title/Isync][isync on Arch Linux]]
     - ~mbsync -a~: update each folder
     - while isync is the project name, mbsync is the current executable name; this change was necessary because of massive changes in the user interface.
-4. mu (install ~mu4e~ via ~apt~) (or maildir-utils depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]])
+4. mu (install ~mu4e~ via ~apt~)
+    - Mu4e and mu need to stay in sync, so it's best to use the package manager for both.
+    - Maildir-utils might be better depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]]
 5. msmtp (via ~apt~) for sending mails
 6. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
 7. [[https://github.com/jwiegley/use-package][use-package]] (via MELPA)
@@ -309,7 +335,17 @@ Lisp Code
 
 ;; mu4e does not by default rename files when moving them to a new directory and this then causes problems for mbsync.
 (setq mu4e-change-filenames-when-moving t)
+(setq mu4e-compose-format-flowed t) ; Plain text eMails should flow correctly for recipients
+
+;; custom preferences
+(setq mu4e-update-interval (* 7 60)) ; refresh every 420 seconds/7 minutes
+(setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")
+(setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
+                               ("/personal/INBOX" . ?i)))
+(global-set-key (kbd "C-c m") 'mu4e)
 #+END_SRC
+
+~mu4e-view-go-to-url~
 
 If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
 
@@ -333,6 +369,7 @@ maildir            : /home/schmudde/.local/share/mail
 
 ** Other Approaches
 
+- System Crafters videos: [[https://youtu.be/WiyqU7gmKsk][A good intro to eMail in Emacs video]], [[https://www.youtube.com/watch?v=yZRyEhi4y44][Streamline Your E-mail Management with mu4e]]
 - [[https://github.com/Ebert-Hanke/emacs#email-in-emacs][Guide to Guides]]
 - [[https://github.com/munen/mu4e-views][mu4e Views]]
 - [[http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/][Link to A Complete Guide to Email in Emacs using Mu and Mu4e]]
@@ -366,4 +403,17 @@ I find printing a default message in the empty scratch buffer opened at startup 
 
 [[file:https://readme-jokes.vercel.app/api]]
 
-TODO: [[https://www.emacswiki.org/emacs/InfoPath][Set info-path for org-mode documentation]] (currently broken)
+** org-mode tips
+
+[[https://orgmode.org/manual/Escape-Character.html][Escape Character]]
+
+You may sometimes want to write text that looks like Org syntax, but should really read as plain text. Org may use a specific escape character in some situations, i.e., a backslash in macros (see Macro Replacement) and links (see Link Format), or a comma in source and example blocks (see Literal Examples). In the general case, however, we suggest to use the zero width space. You can insert one with any of the following:
+
+- ~C-x 8 <RET> zero width space <RET>~
+- ~C-x 8 <RET> 200B <RET>~
+
+** TODO:
+
+- [[https://www.emacswiki.org/emacs/InfoPath][Set info-path for org-mode documentation]] (currently broken)
+- [[https://awesomeopensource.com/project/nobiot/org-transclusion?mode=...][Transclusions]]
+- [[https://github.com/munen/emacs.d#translations][Translations]]
