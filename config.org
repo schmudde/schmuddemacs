@@ -90,10 +90,19 @@ Improvements over Emacs' TAB-based completion.
 
 ** Programming Utilities
 
-I want to select forms and delete them in Paredit. Setting it to /C-del/ is actually a little tricky. First, I need to find the function key sequences for xterm for /C-del/: ~(define-key map "\e[3;5​~" [C-delete])~ in ~/usr/share/emacs/27.1/lisp/term~. Then set the key:
+I want to select forms and delete them in Paredit.
+
+~C-h b~: input decoding map translations:
+
+- Key: ~M-[ 3 ; 5 ~~
+- Binding: ~<C-delete>~
+
+For example, ~M-O A~ will move the cursor ~<up>~.
+
+For the binding, I have tried ~(kbd "\e[3;5~")~ from the function key sequences for xterm for /C-del/: ~(define-key map "\e[3;5​~" [C-delete])~ in ~/usr/share/emacs/27.1/lisp/term~ as well as ~(kbd "M-[ 3 ; 5 ~")~ from the input decoding map translations above.
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "\e[3;5~") 'paredit-delete-region)
+(global-set-key (kbd "<C-delete>") 'paredit-delete-region)
 #+END_SRC
 
 *** Restclient                                                    :installed:
@@ -222,7 +231,7 @@ Whilst this is a great feature, it adds to the amount of line scans that Emacs h
 (delete-selection-mode t) ;; delete the selection with a keypress
 #+END_SRC
 
-** [[https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Indentation][Indentation]]
+[[https://www.gnu.org/software/emacs/manual/html_mono/emacs.html#Indentation][Indentation]]
 
 #+BEGIN_SRC emacs-lisp
 ;; keep my code tidy
@@ -230,6 +239,12 @@ Whilst this is a great feature, it adds to the amount of line scans that Emacs h
 (setq default-tab-width 4)
 ;; ?? (setq-default tab-width 8) ;; but maintain correct appearance
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
+[[https://github.com/munen/emacs.d#translations][dict.cc elisp wrapper]] by Alain M. Lafon. Just eval ~(dict)~ to translate a word at a point.
+
+#+BEGIN_SRC emacs-lisp
+(load "~/.emacs.d/dict")
 #+END_SRC
 
 * Programming
@@ -277,7 +292,7 @@ return 3 + 7
 
 * Fill Paragraphs
 
-[[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~.
+[[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~ (~M-q~).
 
 #+BEGIN_SRC emacs-lisp
 (defun unfill-paragraph (&optional region)
@@ -316,10 +331,24 @@ Dependencies
 
 Commands
 
-1. ~muw add~
+1. ~muw add~: a script that walks you through adding a new eMail config to
 2. ~muw sync personal~ where ~personal~ is an account name
 3. ~muw mu-init~ to setup database store
 4. ~mu index~ to index for search (Xapian), also to rebuild the index
+
+Gmail
+
+Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
+
+#+BEGIN_SRC shell :results drawer
+muw list
+#+END_SRC
+
+#+RESULTS:
+:results:
+personal
+yorba
+:end:
 
 Lisp Code
 
@@ -340,12 +369,11 @@ Lisp Code
 ;; custom preferences
 (setq mu4e-update-interval (* 7 60)) ; refresh every 420 seconds/7 minutes
 (setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")
-(setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
-                               ("/personal/INBOX" . ?i)))
+;; (setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
+;;                               ("/personal/INBOX" . ?i)))
 (global-set-key (kbd "C-c m") 'mu4e)
+(local-set-key (kbd "<f5>") 'mu4e-view-save-attachment)
 #+END_SRC
-
-~mu4e-view-go-to-url~
 
 If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
 
@@ -359,13 +387,15 @@ mu info
 #+END_SRC
 
 #+RESULTS:
-:RESULTS:
+:results:
 database-path      : /home/schmudde/.cache/mu/xapian
-messages in store  : 24753
+messages in store  : 25529
 schema-version     : 451
-created            : Sun 23 May 2021 07:47:45 PM CDT
+created            : Mon 04 Oct 2021 04:08:51 PM CEST
 maildir            : /home/schmudde/.local/share/mail
-:END:
+personal-addresses : d@schmud.de
+                     schmudde@yorba.co
+:end:
 
 ** Other Approaches
 
@@ -375,6 +405,7 @@ maildir            : /home/schmudde/.local/share/mail
 - [[http://cachestocaches.com/2017/3/complete-guide-email-emacs-using-mu-and-/][Link to A Complete Guide to Email in Emacs using Mu and Mu4e]]
 - [[https://emacs.stackexchange.com/questions/12927/reading-and-writing-email-with-emacs][Stack Exchange overview]]
 - [[https://chrisdone.com/posts/emacs-mail/][Emacs, Notmuch and Offlineimap]]
+- [[https://rakhim.org/fastmail-setup-with-emacs-mu4e-and-mbsync-on-macos/][Fastmail setup with Emacs, mu4e and mbsync on macOS]]
 
 * Resources
 
@@ -387,6 +418,7 @@ TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-m
     - Collections of configs
         - [[https://github.com/emacs-tw/awesome-emacs][Awesome Emacs]]
         - [[https://github.com/caisah/emacs.dz][Starter packs/defaults]]
+        - [[https://www.reddit.com/r/emacs/comments/qa6tgk/your_first_taste_of_emacs_the_beginners_guide_i/][Beginner's Guide I Wish I Had]]
 - Inspiring Blog Posts
     - [[https://dev.to/matheusemm/simple-emacs-configuration-for-clojure-development-11i3][Simple Emacs configuration for Clojure development]]
     - [[https://karthinks.com/software/batteries-included-with-emacs/][Batteries Included With Emacs]]
@@ -403,6 +435,12 @@ I find printing a default message in the empty scratch buffer opened at startup 
 
 [[file:https://readme-jokes.vercel.app/api]]
 
+** Key Bindings
+
+[[https://www.masteringemacs.org/article/mastering-key-bindings-emacs][Mastering Key Bindings in Emacs]]
+
+> One important point to note is that you must surround function and navigation keys with < and >. Those keys include F-keys, arrow keys and home row keys, like so: <home>, <f8> and <down>. But if you want represent the key C-c p then write (kbd "C-c p").
+
 ** org-mode tips
 
 [[https://orgmode.org/manual/Escape-Character.html][Escape Character]]
@@ -412,8 +450,11 @@ You may sometimes want to write text that looks like Org syntax, but should real
 - ~C-x 8 <RET> zero width space <RET>~
 - ~C-x 8 <RET> 200B <RET>~
 
-** TODO:
+** TODO
 
 - [[https://www.emacswiki.org/emacs/InfoPath][Set info-path for org-mode documentation]] (currently broken)
 - [[https://awesomeopensource.com/project/nobiot/org-transclusion?mode=...][Transclusions]]
-- [[https://github.com/munen/emacs.d#translations][Translations]]
+- Translation
+    - https://www.emacswiki.org/emacs/TextTranslator
+    - https://github.com/atykhonov/google-translate
+    - https://github.com/lorniu/go-translate
