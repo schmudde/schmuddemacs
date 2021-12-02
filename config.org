@@ -241,11 +241,31 @@ Whilst this is a great feature, it adds to the amount of line scans that Emacs h
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+** Translations
+
 [[https://github.com/munen/emacs.d#translations][dict.cc elisp wrapper]] by Alain M. Lafon. Just eval ~(dict)~ to translate a word at a point.
 
 #+BEGIN_SRC emacs-lisp
 (load "~/.emacs.d/dict")
 #+END_SRC
+
+Multi-Language Options:
+
+- https://www.emacswiki.org/emacs/TextTranslator
+- [[https://github.com/atykhonov/google-translate][Emacs interface to Google Translate]]
+- [[https://github.com/lorniu/go-translate][Go-Translate]] (used here)
+
+#+begin_src emacs-lisp
+(require 'go-translate)
+  (setq gts-translate-list '(("it" "en")))
+  (setq gts-default-translator
+       (gts-translator
+        :picker (gts-prompt-picker)
+        :engines (list (gts-google-engine) (gts-google-rpc-engine))
+        :render (gts-buffer-render)))
+#+end_src
+
+And start your translate with command ~gts-do-translate~.
 
 * Programming
 
@@ -273,12 +293,16 @@ Stop Emacs asking for confirmation to evaluate:
 
 Load ~ob-shell~ for literate programming in org-babel. ~emacs-lisp~ already works by default.
 
+Add ~(require 'org-tempo)~ to enable ~<s TAB~ code block shortcut.
+
 #+BEGIN_SRC emacs-lisp
 (org-babel-do-load-languages
  'org-babel-load-languages '((emacs-lisp . t)
                              (clojure . t)
                              (python . t)
                              (shell . t)))
+
+(require 'org-tempo)
 #+END_SRC
 
 Python example:
@@ -454,7 +478,3 @@ You may sometimes want to write text that looks like Org syntax, but should real
 
 - [[https://www.emacswiki.org/emacs/InfoPath][Set info-path for org-mode documentation]] (currently broken)
 - [[https://awesomeopensource.com/project/nobiot/org-transclusion?mode=...][Transclusions]]
-- Translation
-    - https://www.emacswiki.org/emacs/TextTranslator
-    - https://github.com/atykhonov/google-translate
-    - https://github.com/lorniu/go-translate

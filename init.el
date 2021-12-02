@@ -107,9 +107,10 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient smartparens go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
-   '((cider-refresh-after-fn . "server.repl/post-refresh")
+   '((eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
+     (cider-refresh-after-fn . "server.repl/post-refresh")
      (cider-refresh-before-fn . "server.repl/pre-refresh")))
  '(send-mail-function 'smtpmail-send-it)
  '(setq erc-autojoin-channels-alist)
