@@ -70,6 +70,14 @@ Improvements over Emacs' TAB-based completion.
 
 - ~[[https://elpa.gnu.org/packages/adaptive-wrap.html][adaptive-wrap]]~: ensures that outlines wrap lines correctly with ~wrap-prefix~. (installed)
 
+*** TODO org-transclusion                                     :considering:
+[[https://github.com/nobiot/org-transclusion][org-transclusion]]
+
+*** TODO zk.el                                                :considering:
+
+- https://github.com/localauthor/zk
+- [[https://melpa.org/#/zk][MELPA]], [[https://www.youtube.com/watch?v=BixlUK4QTNk][Video]]
+
 ** Editing Utilities
 
 ;; TODO: - hydra - yasnippet (I see enough patterns that I create snippets for) - iedit, [[https://github.com/abo-abo/plain-org-wiki][plain-org-wiki]]
@@ -197,8 +205,15 @@ If ~em~ is run without arguments, try to start an ~emacsclient~. The bash script
 #!/bin/sh
 if [ "$#" -eq 0 ]
 then
-     echo "Starting an Emacs client ..." >&2
-     emacsclient -nw
+    echo "Starting an Emacs client ..." >&2
+    if emacsclient -nw 2> /dev/null
+    then
+        echo "Opened $@ in Emacs client" >&2
+        emacsclient -nw
+    else
+        echo "Starting new Emacs process ..." >&2
+        emacs -nw
+    fi
 fi
 #+end_src
 
@@ -208,7 +223,7 @@ If no Emacs process exists, ~emacsclient~ will not run. The next test conditions
 2. If there are arguments to ~em~, try starting an ~emacsclient~ with those arguments.
 3. If there are arguments to ~em~ and no Emacs process, start an Emacs process with those arguments.
 
-#+begin_src bash :results silent :tangle em
+#+begin_src bash :results silent
 #!/bin/sh
 if [ "$#" -eq 0 ]
 then
@@ -301,17 +316,30 @@ Whilst this is a great feature, it adds to the amount of line scans that Emacs h
 
 ** Translations
 
-[[https://github.com/munen/emacs.d#translations][dict.cc elisp wrapper]] by Alain M. Lafon. Just ~M-x dict~ to translate a word at a point.
-
-#+BEGIN_SRC emacs-lisp
-(load "~/.emacs.d/dict")
-#+END_SRC
-
 Multi-Language Options:
 
 - https://www.emacswiki.org/emacs/TextTranslator
 - [[https://github.com/atykhonov/google-translate][Emacs interface to Google Translate]]
 - [[https://github.com/lorniu/go-translate][Go-Translate]] (used here)
+
+*** Italian
+
+[[https://github.com/muqiuhan/emacs-comment-trans.el][Emacs Coment Translate]] 0.5.0
+
+#+begin_src emacs-lisp
+  (load "~/.emacs.d/site-lisp/comment-translate.el")
+
+  (setq-default translate-shell-path "/usr/bin/trans"
+                target-language "it"
+                source-language "en"
+                comment-translate-selected-color "red")
+
+  (defvar default-translate-languages '(("it" "en")
+                                        ("en" "it"))
+    "Translate source-language to target-language list by default.")
+
+  (global-set-key (kbd "C-c s t") 'translate-select-string)
+#+end_src
 
 #+begin_src emacs-lisp
 (require 'go-translate)
@@ -324,6 +352,15 @@ Multi-Language Options:
 #+end_src
 
 And start your translate with command ~gts-do-translate~.
+
+*** German
+
+
+[[https://github.com/munen/emacs.d#translations][dict.cc elisp wrapper]] by Alain M. Lafon. Just ~M-x dict~ to translate a word at a point.
+
+#+BEGIN_SRC emacs-lisp
+(load "~/.emacs.d/dict")
+#+END_SRC
 
 * Programming
 
@@ -409,6 +446,8 @@ Handy key definition for ~unfill-paragraph~.
 
 * eMail
 
+All about [[[https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html][contexts]]: It can be useful to switch between different sets of settings in mu4e; a typical example is the case where you have different e-mail accounts for private and work email, each with their own values for folders, e-mail addresses, mailservers and so on. Use ~;~ to switch contexts in mu4e.
+
 ** Using mu-wizard                                                :installed:
 
 Dependencies
@@ -461,16 +500,20 @@ Lisp Code
 
 ;; mu4e does not by default rename files when moving them to a new directory and this then causes problems for mbsync.
 (setq mu4e-change-filenames-when-moving t)
-(setq mu4e-compose-format-flowed t) ; Plain text eMails should flow correctly for recipients
+
+; mu4e defaults to plain text eMails with the original 79 character limit.
+; Set this so plain text eMails should flow correctly for recipients
+(setq mu4e-compose-format-flowed t)
 
 ;; custom preferences
 (setq mu4e-update-interval (* 7 60)) ; refresh every 420 seconds/7 minutes
-(setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")
 ;; (setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
 ;;                               ("/personal/INBOX" . ?i)))
 (global-set-key (kbd "C-c m") 'mu4e)
 (local-set-key (kbd "<f5>") 'mu4e-view-save-attachment)
 #+END_SRC
+
+Other than ~"~/.config/mu4e/mu4e-config.el"~, configuration files are also found in ~"~/.config/mu4e/accounts/personal.el"~. This is where I've moved ~(setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")~
 
 If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
 
@@ -486,7 +529,7 @@ mu info
 #+RESULTS:
 :results:
 database-path      : /home/schmudde/.cache/mu/xapian
-messages in store  : 25529
+messages in store  : 26279
 schema-version     : 451
 created            : Mon 04 Oct 2021 04:08:51 PM CEST
 maildir            : /home/schmudde/.local/share/mail
@@ -522,6 +565,9 @@ TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-m
     - [[https://karthinks.com/software/batteries-included-with-emacs/][Batteries Included With Emacs]]
 - [[https://github.com/alphapapa/unpackaged.el][Unpackaged]]: A collection of useful Emacs Lisp code that isn’t substantial enough to be packaged.
 - Org Mode Babel: [[https://github.com/grettke/help/blob/master/Org-Mode_Fundamentals.md][tangling/evaluating/weaving]]
+- Documentation
+    - [[https://emacsdocs.org/][Emacs Docs]]
+    - [[https://emacs.sexy/][Emacs is Sexy]]
 
 * Miscellaneous Notes
 

@@ -98,7 +98,8 @@
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
- '(org-agenda-files '("~/Dropbox/org/inbox.org"))
+ '(org-agenda-files '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"))
+ '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-file-apps
    '((auto-mode . emacs)
      ("\\.mm\\'" . default)
@@ -108,7 +109,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(pinboard pocket-reader ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
      (cider-refresh-after-fn . "server.repl/post-refresh")
