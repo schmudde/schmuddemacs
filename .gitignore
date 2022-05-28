@@ -17,3 +17,6 @@ init.el
 bookmarks
 snow.el
 transient/history.el
+/%backup%~
+/site-lisp/
+/tramp

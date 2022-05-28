@@ -324,7 +324,7 @@ Multi-Language Options:
 
 *** Italian
 
-[[https://github.com/muqiuhan/emacs-comment-trans.el][Emacs Coment Translate]] 0.5.0
+[[https://github.com/muqiuhan/emacs-comment-trans.el][Emacs Comment Translate]] 0.5.0 has a dependency on translate-shell, which can be installed via ~sudo apt install translate-shell~.
 
 #+begin_src emacs-lisp
   (load "~/.emacs.d/site-lisp/comment-translate.el")
@@ -361,6 +361,22 @@ And start your translate with command ~gts-do-translate~.
 #+BEGIN_SRC emacs-lisp
 (load "~/.emacs.d/dict")
 #+END_SRC
+
+** Text Expansion
+
+/[[https://www.masteringemacs.org/article/text-expansion-hippie-expand][Hippie Expand]]/ > /Dynamic Abbrev/
+
+#+begin_src emacs-lisp
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
+#+end_src
+
+~M-/~ expands the things it has seen in:
+
+- File Names and Paths in any buffer
+- A repeated line from earlier
+- Lisp lists
+- Switches/keywords in ~eshell~/~shell~
+- Stuff from the Kill Ring
 
 * Programming
 
