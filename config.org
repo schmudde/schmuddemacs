@@ -99,6 +99,9 @@ Improvements over Emacs' TAB-based completion.
 ** Programming Utilities
 
 *** Restclient                                                     :installed:
+
+Also installed: ~ob-restclient.el~ for Emacs Restclient support in [[https://github.com/alf/ob-restclient.el][org-babel]]. Header arguments for ~:results~: ~raw|value|pure|table~
+
 *** Clojure
 
 - :considering:
@@ -416,6 +419,7 @@ Add ~(require 'org-tempo)~ to enable ~<s TAB~ code block shortcut.
  'org-babel-load-languages '((emacs-lisp . t)
                              (clojure . t)
                              (python . t)
+                             (restclient . t)
                              (shell . t)))
 
 (require 'org-tempo)
@@ -527,6 +531,9 @@ Lisp Code
 ;;                               ("/personal/INBOX" . ?i)))
 (global-set-key (kbd "C-c m") 'mu4e)
 (local-set-key (kbd "<f5>") 'mu4e-view-save-attachment)
+
+;; Let's turn this into a task in org mode!
+(global-set-key (kbd "C-c i") 'mu4e-org-store-and-capture)
 #+END_SRC
 
 Other than ~"~/.config/mu4e/mu4e-config.el"~, configuration files are also found in ~"~/.config/mu4e/accounts/personal.el"~. This is where I've moved ~(setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")~
