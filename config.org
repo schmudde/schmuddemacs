@@ -267,6 +267,15 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
     - With ~customize-face~: ~tty-menu-disabled-face~, ~tty-menu-enabled-face~, ~tty-menu-selected-face~
     - Or in Lisp: ~(set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")~
 
+** [[https://github.com/justbur/emacs-which-key][which-key]]                                                     :installed:
+
+~C-x~ and wait for the default of 1 second the minibuffer will expand with all of the available key bindings that follow ~C-x~ (or as many as space allows given your settings). This includes prefixes like ~C-x 8~ which are shown in a different face.
+
+#+begin_src emacs-lisp
+(which-key-mode)
+(which-key-setup-side-window-right)
+#+end_src
+
 * Editing Helpers
 
 Enable the upcase-region function. I still have no idea why this is disabled by default.
@@ -382,7 +391,6 @@ And start your translate with command ~gts-do-translate~.
 - Stuff from the Kill Ring
 
 * Programming
-
 ** SX                                                           :considering:
 
 Stack Exchange
@@ -394,6 +402,21 @@ Tell ~python-mode~ to use Python 3
 #+BEGIN_SRC emacs-lisp
 (setq python-shell-interpreter "python3")
 #+END_SRC
+
+** [[https://www.emacswiki.org/emacs/HideShow][Hide Show]]
+
+ (global-set-key (kbd "M-+") 'hs-show-block)
+ (global-set-key (kbd "M-*") 'hs-show-all)
+ (global-set-key (kbd "M--") 'hs-hide-block)
+ (global-set-key (kbd "M-Ç") 'hs-hide-level)
+ (global-set-key (kbd "M-:") 'hs-hide-all)
+
+Load it in ~clojure-mode~ or ~cider-mode~:
+
+#+begin_src emacs-lisp
+  (add-hook 'clojure-mode-hook 'hs-minor-mode)
+  (add-hook 'cider-mode-hook 'hs-minor-mode)
+#+end_src
 
 ** Literate Programming in org-babel
 
@@ -482,8 +505,9 @@ Dependencies
     - Mu4e and mu need to stay in sync, so it's best to use the package manager for both.
     - Maildir-utils might be better depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]]
 5. msmtp (via ~apt~) for sending mails
-6. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
-7. [[https://github.com/jwiegley/use-package][use-package]] (via MELPA)
+6. altermime (via ~apt~) for [[https://emacs.stackexchange.com/a/23815][deleting attachments]]
+7. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
+8. [[https://github.com/jwiegley/use-package][use-package]] (via MELPA)
 
 Commands
 
@@ -551,6 +575,17 @@ mu info
 
 #+RESULTS:
 :results:
+maildir           : /home/schmudde/.local/share/mail
+database-path     : /home/schmudde/.cache/mu/xapian
+schema-version    : 452
+max-message-size  : 100000000
+batch-size        : 250000
+messages in store : 31024
+created           : Sat 23 Jul 2022 06:35:11 PM CEST
+personal-address  : d@schmud.de
+personal-address  : schmudde@yorba.co
+:end:
+
 database-path      : /home/schmudde/.cache/mu/xapian
 messages in store  : 26279
 schema-version     : 451
@@ -558,7 +593,33 @@ created            : Mon 04 Oct 2021 04:08:51 PM CEST
 maildir            : /home/schmudde/.local/share/mail
 personal-addresses : d@schmud.de
                      schmudde@yorba.co
-:end:
+
+It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
+
+Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
+
+#+begin_src emacs-lisp
+(defun my-remove-attachment (msg num)
+  "Remove attachment."
+  (let* ((attach (mu4e~view-get-attach msg num))
+         (path (mu4e-msg-field msg :path))
+         (filename (and attach (plist-get attach :name)))
+         (cmd (format "altermime --input='%s' --remove='%s'"  path filename)))
+    (when (and filename
+               (yes-or-no-p
+                (format "Yo, with attachments I flow - you sure you want to remove '%s', bro?" filename)))
+      (shell-command cmd)
+      (message cmd))))
+
+(add-to-list 'mu4e-view-attachment-actions
+             '("remove-attachment" . my-remove-attachment))
+#+end_src
+
+** Recovery After OS Upgrade
+
+~Error (mu4e): expected schema-version 452, but got 451; please use 'mu init'~
+
+When the database schema of mu changes, run ~muw mu-init~ to reindex the database. For example, when upgrading from 1.6.1 to 1.6.2+.
 
 ** Other Approaches
 
