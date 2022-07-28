@@ -87,6 +87,7 @@ Improvements over Emacs' TAB-based completion.
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-}") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-x C-m C-c") 'mc/edit-lines)
 #+END_SRC
 
 *** undo-tree                                                   :considering:
@@ -404,6 +405,8 @@ Tell ~python-mode~ to use Python 3
 #+END_SRC
 
 ** [[https://www.emacswiki.org/emacs/HideShow][Hide Show]]
+
+Considering these bindings:
 
  (global-set-key (kbd "M-+") 'hs-show-block)
  (global-set-key (kbd "M-*") 'hs-show-all)
