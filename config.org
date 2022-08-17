@@ -494,6 +494,11 @@ Handy key definition for ~unfill-paragraph~.
 
 All about [[[https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html][contexts]]: It can be useful to switch between different sets of settings in mu4e; a typical example is the case where you have different e-mail accounts for private and work email, each with their own values for folders, e-mail addresses, mailservers and so on. Use ~;~ to switch contexts in mu4e.
 
+Staying up-to-date with mu/mu4e:
+
+- [[https://github.com/djcb/mu/releases][Release log]]
+- [[https://github.com/emacsmirror/mu4e/blob/master/NEWS.org][NEWS (user visible changes & bigger non-visible ones)]]
+
 ** Using mu-wizard                                                :installed:
 
 Dependencies
@@ -552,6 +557,8 @@ Lisp Code
 ; Set this so plain text eMails should flow correctly for recipients
 (setq mu4e-compose-format-flowed t)
 
+;; (setq mu4e-view-use-old t)
+
 ;; custom preferences
 (setq mu4e-update-interval (* 7 60)) ; refresh every 420 seconds/7 minutes
 ;; (setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
@@ -564,13 +571,6 @@ Lisp Code
 #+END_SRC
 
 Other than ~"~/.config/mu4e/mu4e-config.el"~, configuration files are also found in ~"~/.config/mu4e/accounts/personal.el"~. This is where I've moved ~(setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")~
-
-If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
-
-- ~ls -lR cur | grep -o 'U=.*:' | sort | uniq -d~: find the duplicates in ~cur~
-- ~find . -name "*U=2:*" -exec ls -l {} \;~ &rArr; ~./cur/1419106858.5661_2.pcuds06,U=2:2,S~ &amp; ~/cur/1423819205.29514_1.pcuds06,U=2:2,S~
-- ~mv ./cur/1423819205.29514_1.pcuds06,U=2:2,S ./cur/1423819205.29514_1.pcuds06~: This deduplicates the problematic UID and forces mbsync to create new UID for the second message at its next run.
-- ~mbsync -a | grep -i error | wc -l~
 
 #+BEGIN_SRC shell :results drawer
 mu info
@@ -597,6 +597,75 @@ maildir            : /home/schmudde/.local/share/mail
 personal-addresses : d@schmud.de
                      schmudde@yorba.co
 
+** Attachments
+
+MIME-part actions allow you to act upon MIME-parts in a message - such as attachments. For now, these actions are defined and documented in ~mu4e-view-mime-part-action~.
+
+- ~e~, ~mu4e-view-save-attachments~: extract (save) mime parts from current mu4e gnus view buffer. (asks for numbers).
+- ~a~: execute some custom action on the message
+- ~A~, ~mu4e-view-mime-part-action~: execute some custom action on the message's MIME-parts '3 A o' opens the third MIME-part.
+- The gnus-based view is deceitful.
+    - The ~o~ binding works when the cursor is over the attachment.
+    - Move the cursor over the file with the cursor S-return runs the command ~mu4e~view-save-attach-from-binding~
+
+Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Aimé Bertrand wrote and updated [[https://macowners.club/posts/mu4e-save-attachments-faster-with-ivy/#edits][Mu4E - Save attachments faster with ivy]]. Here are the functions they provide using the new ~gnus-article-mode~.
+
+#+begin_src emacs-lisp
+  (defun timu/mu4e-view-save-attachments ()
+    "Save All Attachements in a selected directory using completion.
+  This is a modified version of `mu4e-view-save-attachments'."
+    (interactive)
+    (cl-assert (and (eq major-mode 'mu4e-view-mode)
+                    (derived-mode-p 'gnus-article-mode)))
+    (let* ((parts (mu4e~view-gather-mime-parts))
+           (handles '())
+           (files '())
+           dir)
+      (dolist (part parts)
+        (let ((fname (cdr (assoc 'filename (assoc "attachment" (cdr part))))))
+          (when fname
+            (push `(,fname . ,(cdr part)) handles)
+            (push fname files))))
+      (if files
+          (progn
+            (setq dir (read-directory-name "Save to directory: "))
+            (cl-loop for (f . h) in handles
+                     when (member f files)
+                     do (mm-save-part-to-file h (expand-file-name f dir))))
+        (mu4e-message "No attached files found"))))
+
+  (global-set-key (kbd "C-c A") 'timu/mu4e-view-save-attachments)
+#+end_src
+
+#+begin_src emacs-lisp
+  (defun timu/mu4e-view-save-attachment ()
+    "Save one attachement in a selected directory using completion.
+  This is a modified version of `mu4e-view-save-attachments'."
+    (interactive)
+    (cl-assert (and (eq major-mode 'mu4e-view-mode)
+                    (derived-mode-p 'gnus-article-mode)))
+    (let* ((parts (mu4e~view-gather-mime-parts))
+           (handles '())
+           (files '())
+           dir)
+      (dolist (part parts)
+        (let ((fname (cdr (assoc 'filename (assoc "attachment" (cdr part))))))
+          (when fname
+            (push `(,fname . ,(cdr part)) handles)
+            (push fname files))))
+      (if files
+          (progn
+            (setq files (completing-read-multiple "Save part(s): " files)
+                  dir (read-directory-name "Save to directory: "))
+            (cl-loop for (f . h) in handles
+                     when (member f files)
+                     do (mm-save-part-to-file h (expand-file-name f dir))))
+        (mu4e-message "No attached files found"))))
+
+  (global-set-key (kbd "C-c D") 'timu/mu4e-view-save-attachment)
+#+end_src
+
+
 It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
 
 Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
@@ -618,11 +687,42 @@ Note: the header listing the attachments is not updated but when you leave the e
              '("remove-attachment" . my-remove-attachment))
 #+end_src
 
-** Recovery After OS Upgrade
+Where are attachments, anyway?
 
-~Error (mu4e): expected schema-version 452, but got 451; please use 'mu init'~
+#+BEGIN_SRC emacs-lisp
+mu4e-attachment-dir
+#+END_SRC
 
-When the database schema of mu changes, run ~muw mu-init~ to reindex the database. For example, when upgrading from 1.6.1 to 1.6.2+.
+#+RESULTS:
+: /home/schmudde/
+
+While I'm making attachments better, mark the file(s) in dired you would like to attach and press ~C-c RET C-a~ or use ~gnus-dired-attach~ on each file. Via the docs: File: mu4e.info, Node: Dired.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+#+END_SRC
+
+** org-msg                                                     :considering:
+
+OrgMsg is a GNU/Emacs global minor mode mixing up Org mode and your Mail User Agent Mode to compose and reply to emails in a HTML friendly style.
+
+** Troubleshooting, Breaking Changes, and Recovery
+
+The server protocol (as used by mu4e) often does not offer compatibility between minor release numbers (1.4 vs 1.6 vs 1.8) nor within development series (such as 1.7). However, within a stable release (such as all 1.6.x) the protocol won’t change (except if required to fix some severe bug; this never happened in practice). To understand what's happening within each release, refer to [[https://github.com/emacsmirror/mu4e/blob/master/NEWS.org][NEWS (user visible changes & bigger non-visible ones)]].
+
+*Recovery Tips*
+
+- ~Error (mu4e): expected schema-version 452, but got 451; please use 'mu init'~
+- When the database schema of mu changes, run ~muw mu-init~ to reindex the database. For example, when upgrading from 1.6.1 to 1.6.2+.
+
+*UID Errors*
+
+If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
+
+- ~ls -lR cur | grep -o 'U=.*:' | sort | uniq -d~: find the duplicates in ~cur~
+- ~find . -name "*U=2:*" -exec ls -l {} \;~ &rArr; ~./cur/1419106858.5661_2.pcuds06,U=2:2,S~ &amp; ~/cur/1423819205.29514_1.pcuds06,U=2:2,S~
+- ~mv ./cur/1423819205.29514_1.pcuds06,U=2:2,S ./cur/1423819205.29514_1.pcuds06~: This deduplicates the problematic UID and forces mbsync to create new UID for the second message at its next run.
+- ~mbsync -a | grep -i error | wc -l~
 
 ** Other Approaches
 
