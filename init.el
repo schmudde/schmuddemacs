@@ -60,6 +60,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
+ '(cider-boot-command "boot" nil nil "tried `boot dev`. no luck")
  '(desktop-restore-in-current-display t)
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
@@ -105,11 +106,12 @@
      ("\\.mm\\'" . default)
      ("\\.x?html?\\'" . default)
      ("\\.pdf\\'" . default)))
+ '(org-todo-keywords '((sequence "TODO" "DOING" "DONE")))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(which-key pinboard pocket-reader ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
      (cider-refresh-after-fn . "server.repl/post-refresh")

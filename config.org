@@ -277,6 +277,15 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
 (which-key-setup-side-window-right)
 #+end_src
 
+* Org Agenda
+
+#+begin_src emacs-lisp
+org-todo-keywords
+#+end_src
+
+#+RESULTS:
+| sequence | TODO | DOING | DONE |
+
 * Editing Helpers
 
 Enable the upcase-region function. I still have no idea why this is disabled by default.
@@ -470,7 +479,7 @@ From the documentation, [[https://www.orgmode.org/worg/org-contrib/babel/languag
 (require 'cider)
 #+END_SRC
 
-* Fill Paragraphs
+* Fill Paragraphs and Word Frequency
 
 [[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~ (~M-q~).
 
@@ -490,14 +499,45 @@ Handy key definition for ~unfill-paragraph~.
 (define-key global-map "\M-Q" 'unfill-paragraph)
 #+END_SRC
 
+A very basic word count analysis [[https://www.emacswiki.org/emacs/WordCount][from the EmacsWiki]] that I need to enhance.
+
+#+begin_src emacs-lisp
+  (defun word-count-analysis (start end)
+    "Count how many times each word is used in the region.
+  Punctuation is ignored."
+    (interactive "r")
+    (let (words)
+      (save-excursion
+        (goto-char start)
+        (while (re-search-forward "\\w+" end t)
+          (let* ((word (intern (match-string 0)))
+                 (cell (assq word words)))
+            (if cell
+                (setcdr cell (1+ (cdr cell)))
+              (setq words (cons (cons word 1) words))))))
+      (when (interactive-p)
+        (message "%S" words))
+      words))
+#+end_src
+
 * eMail
 
-All about [[[https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html][contexts]]: It can be useful to switch between different sets of settings in mu4e; a typical example is the case where you have different e-mail accounts for private and work email, each with their own values for folders, e-mail addresses, mailservers and so on. Use ~;~ to switch contexts in mu4e.
+All about [[[https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html][contexts]]: I have different e-mail accounts for private and work email, each with their own values for folders, e-mail addresses, mailservers and so on. Use ~;~ to switch contexts in mu4e.
 
-Staying up-to-date with mu/mu4e:
+~M-x mu4e-news~ (currently version 1.6) to see the [[https://github.com/emacsmirror/mu4e/blob/master/NEWS.org][NEWS (user visible changes & bigger non-visible ones)]]. See also the [[https://github.com/djcb/mu/releases][Release log]].
 
-- [[https://github.com/djcb/mu/releases][Release log]]
-- [[https://github.com/emacsmirror/mu4e/blob/master/NEWS.org][NEWS (user visible changes & bigger non-visible ones)]]
+#+begin_src bash :results drawer
+mu --version
+#+end_src
+
+#+RESULTS:
+:results:
+mu (mail indexer/searcher) version 1.6.10
+Copyright (C) 2008-2021 Dirk-Jan C. Binnema
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+:end:
 
 ** Using mu-wizard                                                :installed:
 
@@ -665,8 +705,9 @@ Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Ai
   (global-set-key (kbd "C-c D") 'timu/mu4e-view-save-attachment)
 #+end_src
 
-
 It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
+
+But the update to v1.6 of mu/mu4e breaks the delete function. And the built-in function, ~gnus-mime-delete-part~, gives this error message: /The current group does not support deleting of parts/. It seems like an issue with [[https://mail.gnu.org/archive/html/emacs-diffs/2021-01/msg00681.html][a setting]]: ~(when (gnus-group-read-only-p) (error "The current group does not support deleting of parts"))~?
 
 Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
 
