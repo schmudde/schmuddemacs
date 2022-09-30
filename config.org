@@ -80,7 +80,29 @@ Improvements over Emacs' TAB-based completion.
 
 ** Editing Utilities
 
-;; TODO: - hydra - yasnippet (I see enough patterns that I create snippets for) - iedit, [[https://github.com/abo-abo/plain-org-wiki][plain-org-wiki]]
+*** [[https://joaotavora.github.io/yasnippet/index.html][YASnippet]]                                                   :installed:
+
+Expanding a YASnippet requires the ~yas-minor-mode~ + ~xxx-mode~ (major mode). The ~xxx-mode~ must match a directory in:
+
+#+begin_src emacs-lisp :tangle no
+yas-snippet-dirs
+#+end_src
+
+#+RESULTS:
+| /home/schmudde/.emacs.d/snippets |
+
+For example, the currently supported modes include:
+
+#+begin_src bash
+ls /home/schmudde/.emacs.d/snippets
+#+end_src
+
+#+RESULTS:
+| clojure-mode  |
+| markdown-mode |
+| org-mode      |
+
+[[https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets][The project repo]] is a great snippet resource. Add them and then evaluate ~yas-reload-all~.
 
 *** Multiple Cursors                                              :installed:
 
@@ -171,6 +193,8 @@ Copied password for foo-account to the kill ring. Will clear in 45 seconds.
 M-x password-store-copy
 Password entry: services/github
 #+END_SRC
+
+List passwords on the command line using ~pass~ and then use ~password-store-edit~ -> ~muw/schmudde@yorba.co~ to update the password.
 
 *** Calendar with [[https://github.com/kiwanami/emacs-calfw][Calfw]]                                           :installed:
 
@@ -566,7 +590,8 @@ Commands
 
 Gmail
 
-Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
+1. Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
+2. If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to [[https://support.google.com/accounts/answer/185833][use an App Password]].
 
 #+BEGIN_SRC shell :results drawer
 muw list
@@ -637,16 +662,23 @@ maildir            : /home/schmudde/.local/share/mail
 personal-addresses : d@schmud.de
                      schmudde@yorba.co
 
-** Attachments
+** Attachments (MIME parts)
 
-MIME-part actions allow you to act upon MIME-parts in a message - such as attachments. For now, these actions are defined and documented in ~mu4e-view-mime-part-action~.
+MIME-part actions allow you to act upon MIME-parts in a message - such as attachments. For now, these actions are defined and documented in ~mu4e-view-mime-part-action~, bound to ~A~.
 
+
+- Preferred (see scripts below)
+    - ~C-c D~: ~timu/mu4e-view-save-attachment~
+    - ~C-c A~: ~timu/mu4e-view-save-attachments~
 - ~e~, ~mu4e-view-save-attachments~: extract (save) mime parts from current mu4e gnus view buffer. (asks for numbers).
 - ~a~: execute some custom action on the message
-- ~A~, ~mu4e-view-mime-part-action~: execute some custom action on the message's MIME-parts '3 A o' opens the third MIME-part.
+- ~A~, ~mu4e-view-mime-part-action~: execute some custom action on the message's MIME-parts ~3 A o~ opens the third MIME-part.
 - The gnus-based view is deceitful.
     - The ~o~ binding works when the cursor is over the attachment.
     - Move the cursor over the file with the cursor S-return runs the command ~mu4e~view-save-attach-from-binding~
+- While the cursor is on the MIME part, the options change a bit
+    - ~i~: open in internal editor (useful for text MIME parts when the rendering sucks)
+    - ~e~: open in external editor
 
 Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Aimé Bertrand wrote and updated [[https://macowners.club/posts/mu4e-save-attachments-faster-with-ivy/#edits][Mu4E - Save attachments faster with ivy]]. Here are the functions they provide using the new ~gnus-article-mode~.
 
