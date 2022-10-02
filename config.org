@@ -739,25 +739,55 @@ Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Ai
 
 It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
 
-But the update to v1.6 of mu/mu4e breaks the delete function. And the built-in function, ~gnus-mime-delete-part~, gives this error message: /The current group does not support deleting of parts/. It seems like an issue with [[https://mail.gnu.org/archive/html/emacs-diffs/2021-01/msg00681.html][a setting]]: ~(when (gnus-group-read-only-p) (error "The current group does not support deleting of parts"))~?
+But the gnus-based message view update in v1.6 of mu/mu4e provides a broken built-in function, ~gnus-mime-delete-part~, that gives this error message: /The current group does not support deleting of parts/. It seems like an issue with [[https://mail.gnu.org/archive/html/emacs-diffs/2021-01/msg00681.html][a setting]]: ~(when (gnus-group-read-only-p) (error "The current group does not support deleting of parts"))~?
 
-Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
+Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a solution]]. Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
 
 #+begin_src emacs-lisp
-(defun my-remove-attachment (msg num)
-  "Remove attachment."
-  (let* ((attach (mu4e~view-get-attach msg num))
-         (path (mu4e-msg-field msg :path))
-         (filename (and attach (plist-get attach :name)))
-         (cmd (format "altermime --input='%s' --remove='%s'"  path filename)))
-    (when (and filename
-               (yes-or-no-p
-                (format "Yo, with attachments I flow - you sure you want to remove '%s', bro?" filename)))
-      (shell-command cmd)
-      (message cmd))))
+  (defun my-mime-part-filename (num)
+    "Filename of MIME part numbered num in gnus-article-mode."
+    ;; Check whether the specified part exists.
+    (when (> num (length gnus-article-mime-handle-alist))
+      (error "No such part"))
+    ;; Move point to MIME part
+    (when (gnus-article-goto-part num)
+      ;; Get handle for MIME part at point
+      (let ((handle (get-text-property (point) 'gnus-data)))
+        (when handle
+          ;; Return file name of handle
+          (mm-handle-filename handle)
+          ))))
 
-(add-to-list 'mu4e-view-attachment-actions
-             '("remove-attachment" . my-remove-attachment))
+  (defun my-delete-attachment (num)
+    "Remove email attachment from mu4e using altermime."
+    (let* ((path (mu4e-message-field (mu4e-message-at-point) :path))
+           (filename (my-mime-part-filename num))
+           (cmd (format "altermime --input='%s' --remove='%s'"  path filename)))
+      (when (and filename
+                 (yes-or-no-p
+                  (format "Remove '%s'?" filename)))
+        (shell-command cmd)
+        (mu4e-message cmd)
+        )))
+
+  (defun my-delete-all-attachments (msg)
+    "Remove all email attachments in mu4e using altermime."
+    (let* ((path (mu4e-message-field msg :path))
+           (subject (mu4e-message-field msg :subject))
+           (cmd (format "altermime --input='%s' --removeall"  path)))
+      (when (yes-or-no-p
+             (format "Remove all attachments from '%s'?" subject))
+        (shell-command cmd)
+        (mu4e-message cmd)
+        )))
+
+  (add-to-list 'mu4e-view-mime-part-actions
+               '(:name "delete-attachment"
+                       :handler my-delete-attachment
+                       :receives index))
+
+  (add-to-list 'mu4e-headers-actions
+               '("Delete-all-attachments" . my-delete-all-attachments))
 #+end_src
 
 Where are attachments, anyway?
@@ -774,6 +804,17 @@ While I'm making attachments better, mark the file(s) in dired you would like to
 #+BEGIN_SRC emacs-lisp
 (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 #+END_SRC
+
+Where do attachments open?
+
+#+begin_src bash
+xdg-mime query default application/pdf
+#+end_src
+
+#+RESULTS:
+: okularApplication_pdf.desktop
+
+Unfortunately it's not that easy. PDFs currently open in my eReader.
 
 ** org-msg                                                     :considering:
 
