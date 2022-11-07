@@ -24,11 +24,41 @@ Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is av
 ** Movement Utilities
 
 - TODO: also: avy - company - [[https://depp.brause.cc/nov.el/][nov.el]]
-
 - [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
-- [[https://github.com/bbatsov/projectile][projectile]] to help navigate between files in a project.
 
 *** Completion Frameworks
+
+**** IDO                                                          :installed:
+
+[[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]
+
+Improvements over Emacs' TAB-based completion.
+
+- ~C-s~ and ~C-r~: Move to the next and previous match
+- ~C-d~ Open ~M-x dired~ buffer in current directory
+
+#+BEGIN_SRC emacs-lisp
+  (require `ido)
+  (setq ido-enable-flex-matching t)
+  (setq ido-everywhere t)
+  (ido-mode 1)
+#+END_SRC
+
+~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
+**** [[https://github.com/bbatsov/projectile][Projectile]]                                                :installed:
+
+Navigate between files in a project. From the README:
+
+- ~C-c p f~: open a file to add a project
+- ~C-c p p~: switch to another project
+
+#+begin_src emacs-lisp
+  (projectile-mode +1)
+  ;; Recommended keymap prefix on Windows/Linux
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+#+end_src
+
+To get the most of Projectile you also need to enable (and potentially install) some minibuffer completion framework (e.g. ido, ivy or selectrum). See this section of the documentation for more details.
 
 **** Helm: filter-as-you-type completion                        :considering:
 
@@ -48,25 +78,8 @@ For in-depth searching and completion.
 (global-set-key "\C-c\C-m" 'helm-M-x)
 #+END_SRC
 
-**** IDO                                                          :installed:
-
-[[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]
-
-Improvements over Emacs' TAB-based completion.
-
-- ~C-s~ and ~C-r~: Move to the next and previous match
-- ~C-d~ Open ~M-x dired~ buffer in current directory
-
-#+BEGIN_SRC emacs-lisp
-(require `ido)
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-#+END_SRC
-
-~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
-
 *** Markdown Mode                                                 :installed:
+[[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]
 
 - ~[[https://elpa.gnu.org/packages/adaptive-wrap.html][adaptive-wrap]]~: ensures that outlines wrap lines correctly with ~wrap-prefix~. (installed)
 
@@ -310,6 +323,10 @@ org-todo-keywords
 #+RESULTS:
 | sequence | TODO | DOING | DONE |
 
+#+begin_src emacs-lisp
+(global-set-key (kbd "<f3>") 'org-agenda)
+#+end_src
+
 * Editing Helpers
 
 Enable the upcase-region function. I still have no idea why this is disabled by default.
@@ -425,6 +442,37 @@ And start your translate with command ~gts-do-translate~.
 - Stuff from the Kill Ring
 
 * Programming
+
+** LSP Mode                                                      :installed:
+
+lsp-mode ~use-package~ copied from Juan. He uses ~(setq lsp-clojure-custom-server-command ("bash" "-c" "clojure-lsp")~ to explore a Clojure codebase without having to start a REPL. He can essentially do anything besides evaluation. ~clojure-lsp~ uses ~clj-kondo~ under the hood to do the linting.
+
+- ~i~: when it's your own project
+- ~n~: when it's a library. It may even write the stuff to a .jar
+
+#+begin_src emacs-lisp
+  (use-package lsp-mode
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook ((clojure-mode . lsp)
+           (typescript-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :commands lsp)
+
+  ;;(use-package lsp-ui
+  ;;  :commands lsp-ui-mode)
+#+end_src
+
+** Typescript                                                    :installed:
+
+~typescript-mode~:
+
+Use ~ts-ls~ as language server
+
+#+begin_src :tangle variable :
+
+#+end_src
+
 ** SX                                                           :considering:
 
 Stack Exchange
@@ -850,7 +898,7 @@ If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tip
 
 * Resources
 
-TIP: [[https://orgmode.org/manual/Handling-Links.html][Handling Links]] in org-mode: ~org-toggle-link-display~: ~C-c C-l~ (with point on existing link)
+Install the missing manual because of an ~Info-find-file: Info file emacs does not exist~ error. Run ~apt-get install emacs-common-non-dfsg~ [Emacs 26.1]+ package (Debian).
 
 - Inspiring literate GNU Emacs Configuration File
     - Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
