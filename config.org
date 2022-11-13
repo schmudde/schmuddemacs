@@ -445,10 +445,30 @@ And start your translate with command ~gts-do-translate~.
 
 ** LSP Mode                                                      :installed:
 
-lsp-mode ~use-package~ copied from Juan. He uses ~(setq lsp-clojure-custom-server-command ("bash" "-c" "clojure-lsp")~ to explore a Clojure codebase without having to start a REPL. He can essentially do anything besides evaluation. ~clojure-lsp~ uses ~clj-kondo~ under the hood to do the linting.
+Install the [[https://clojure-lsp.io/][clojure-lsp]] GraalVM native executable for Linux
 
+- Script: ~sudo bash < <(curl -s https://raw.githubusercontent.com/clojure-lsp/clojure-lsp/master/install)~ will install ~clojure-lsp~ in ~/usr/local/bin~
+- Native binary (recommended): The binaries are available on [[https://github.com/clojure-lsp/clojure-lsp/releases][Github releases]] as ~clojure-lsp-native-<os>-<arch>.zip~, after downloading you just need to unzip it. Tried: [[https://github.com/clojure-lsp/clojure-lsp/releases/download/2022.11.03-00.14.57/clojure-lsp-native-linux-amd64.zip][clojure-lsp-native-linux-amd64.zip]]
+
+#+begin_src bash
+whereis clojure-lsp
+#+end_src
+
+#+RESULTS: clojure-lsp-path
+: clojure-lsp: /usr/local/bin/clojure-lsp
+
+To configure Emacs to use the nREPL-enabled executable, run ~(setq lsp-clojure-custom-server-command '("/usr/local/bin/clojure-lsp"))~. Look for lsp-mode variable to customize server path. Usually, you may find the variable by doing: ~M-x customize-group~ RET ~lsp-clojure-mode~.
+
+Now it's possible to explore a Clojure codebase without having to start a REPL. You can essentially do anything besides evaluation. ~clojure-lsp~ uses ~clj-kondo~ under the hood to do the linting.
+
+Other commands
+
+- Restart the clojure-lsp server, execute: ~lsp-workspace-restart~.
+- Server info: ~lsp-clojure-server-info~
+- To connect the nREPL client, run ~cider-connect-clj~, with "localhost" and the port.
 - ~i~: when it's your own project
 - ~n~: when it's a library. It may even write the stuff to a .jar
+- ~lsp-describe-session~: what projects does the server work with?
 
 #+begin_src emacs-lisp
   (use-package lsp-mode
@@ -714,6 +734,9 @@ personal-addresses : d@schmud.de
 
 MIME-part actions allow you to act upon MIME-parts in a message - such as attachments. For now, these actions are defined and documented in ~mu4e-view-mime-part-action~, bound to ~A~.
 
+mu4e v1.6 uses the gnus-based message viewer as the default, which includes support for S/MIME.
+
+For .pdfs: ~open-with~ function mapped to ~A~ /attachment number/ ~w~ ~okular~.
 
 - Preferred (see scripts below)
     - ~C-c D~: ~timu/mu4e-view-save-attachment~

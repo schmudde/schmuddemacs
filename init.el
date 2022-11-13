@@ -99,6 +99,7 @@
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
+ '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
  '(org-agenda-files '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"))
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-file-apps
