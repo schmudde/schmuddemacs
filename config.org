@@ -26,9 +26,9 @@ Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is av
 - TODO: also: avy - company - [[https://depp.brause.cc/nov.el/][nov.el]]
 - [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
 
-*** Completion Frameworks
+** Completion Frameworks
 
-**** IDO                                                          :installed:
+*** IDO                                                         :installed:
 
 [[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]
 
@@ -45,7 +45,7 @@ Improvements over Emacs' TAB-based completion.
 #+END_SRC
 
 ~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
-**** [[https://github.com/bbatsov/projectile][Projectile]]                                                :installed:
+*** [[https://github.com/bbatsov/projectile][Projectile]]                                                  :installed:
 
 Navigate between files in a project. From the README:
 
@@ -60,7 +60,7 @@ Navigate between files in a project. From the README:
 
 To get the most of Projectile you also need to enable (and potentially install) some minibuffer completion framework (e.g. ido, ivy or selectrum). See this section of the documentation for more details.
 
-**** Helm: filter-as-you-type completion                        :considering:
+*** Helm: filter-as-you-type completion                       :considering:
 
 For in-depth searching and completion.
 
@@ -78,112 +78,52 @@ For in-depth searching and completion.
 (global-set-key "\C-c\C-m" 'helm-M-x)
 #+END_SRC
 
-*** Markdown Mode                                                 :installed:
-[[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]
+** Note Management
 
-- ~[[https://elpa.gnu.org/packages/adaptive-wrap.html][adaptive-wrap]]~: ensures that outlines wrap lines correctly with ~wrap-prefix~. (installed)
+*** [[https://jblevins.org/projects/deft/][deft]]                                                        :installed:
 
-*** TODO org-transclusion                                     :considering:
-[[https://github.com/nobiot/org-transclusion][org-transclusion]]
+How many research files do I have? List (single-column: ~-1~, hide-control-chars: ~-q~) and count the new lines.
 
+#+begin_src shell
+ls -1q ~/.deft | wc -l
+#+end_src
+
+#+RESULTS:
+: 158
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "<f8>") 'deft)
+#+end_src
+
+Set ~deft-extensions~, ~deft-recursive~, and ~deft-directory~ in ~M-x customize-group~: ~deft~.
+
+[[https://jonathanchu.is/posts/setting-up-deft-mode-in-emacs-with-org-mode/][Note]]: Optionally, you can set deft-auto-save-interval to 0. Its default value is 1.0, which means it saves every second. This is very useful to many, meaning you don’t ever have to manually save your notes since Deft automatically does it for you; however, with my custom emacs config, I prefer to turn this off completely and manually save my notes file because I have a before-save-hook that deletes trailing whitespace. This made typing notes a bit annoying and would often remove whitespace if I was in the middle of writing a sentence, where I didn’t want it to do that yet.
+
+*** TODO [[https://protesilaos.com/codelog/2022-06-18-denote-demo/][denote]]                                               :considering:
+
+Denote is a simple note-taking tool for Emacs. It is based on the idea that notes should follow a predictable and descriptive file-naming scheme. The file name must offer a clear indication of what the note is about, without reference to any other metadata. Denote basically streamlines the creation of such files while providing facilities to link between them.
+
+*** TODO Querying Org Files                                   :considering:
+
+- https://github.com/alphapapa/org-ql
+- https://github.com/alphapapa/org-rifle
+
+*** TODO [[https://www.eliasstorms.net/zetteldeft/zetteldeft.html][Zettledeft]]                                           :considering:
+
+Why Zetteldeft links?
+
+A question often asked, and rightfully so, is why zetteldeft doesn’t use any of the built-in emacs types of links, such as provided by org-mode, for example.
+
+- Zetteldeft is not limited to Org-mode, but can be used in and from any mode.
+- Org-mode links depend on filenames and might break when files are moved or the filename changes.
+- I want to prevent lock in as much as possible. Many people use a Markdown-based system, and you could perfectly use Zetteldeft together with other applications that make Markdown notes (theoretically at least – I haven’t tested this myself)
+
+*** TODO [[https://github.com/nobiot/org-transclusion][org-transclusion]]                                     :considering:
 *** TODO zk.el                                                :considering:
 
+- zk-index and zk-desktop, interfaces for the zk note-taking package: https://www.youtube.com/watch?v=7qNT87dphiA
 - https://github.com/localauthor/zk
 - [[https://melpa.org/#/zk][MELPA]], [[https://www.youtube.com/watch?v=BixlUK4QTNk][Video]]
-
-** Editing Utilities
-
-*** [[https://joaotavora.github.io/yasnippet/index.html][YASnippet]]                                                   :installed:
-
-Expanding a YASnippet requires the ~yas-minor-mode~ + ~xxx-mode~ (major mode). The ~xxx-mode~ must match a directory in:
-
-#+begin_src emacs-lisp :tangle no
-yas-snippet-dirs
-#+end_src
-
-#+RESULTS:
-| /home/schmudde/.emacs.d/snippets |
-
-For example, the currently supported modes include:
-
-#+begin_src bash
-ls /home/schmudde/.emacs.d/snippets
-#+end_src
-
-#+RESULTS:
-| clojure-mode  |
-| markdown-mode |
-| org-mode      |
-
-[[https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets][The project repo]] is a great snippet resource. Add them and then evaluate ~yas-reload-all~.
-
-*** Multiple Cursors                                              :installed:
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-}") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-x C-m C-c") 'mc/edit-lines)
-#+END_SRC
-
-*** undo-tree                                                   :considering:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-(global-undo-tree-mode)
-(global-set-key (kbd "M-/") 'undo-tree-visualize)
-#+END_SRC
-
-** Programming Utilities
-
-*** Restclient                                                     :installed:
-
-Also installed: ~ob-restclient.el~ for Emacs Restclient support in [[https://github.com/alf/ob-restclient.el][org-babel]]. Header arguments for ~:results~: ~raw|value|pure|table~
-
-*** Clojure
-
-- :considering:
-    - ~helm-cider~
-    - ~ivy-cider~
-
-**** Smartparens                                             :considering:
-[[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][
-Smartparens (installed) vs. Paredit]]
-
-"By default smartparens is much less strict about the 'balancedness' of the buffer and it usually allows you to delete whatever you please. However, there are settings (like smartparens-strict-mode) you can use to have it behave more like paredit."
-
-**** Paredit                                                      :installed:
-
-I want to select forms and delete them in Paredit. Setting the delete key has been a bit tricky.
-
-~C-h b~: input decoding map translations:
-
-- Key: ~M-[ 3 ; 5 ~~
-- Binding: ~<C-delete>~
-
-For example, ~M-O A~ will move the cursor ~<up>~.
-
-For the binding, I have tried ~(kbd "\e[3;5~")~ from the function key sequences for xterm for /C-del/: ~(define-key map "\e[3;5​~" [C-delete])~ in ~/usr/share/emacs/27.1/lisp/term~ as well as ~(kbd "M-[ 3 ; 5 ~")~ from the input decoding map translations above.
-
-#+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-delete>") 'paredit-delete-region)
-(add-hook 'cider-mode-hook #'enable-paredit-mode)
-(add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
-(define-key org-mode-map (kbd "M-P") 'paredit-mode) ;; toggle paredit mode manually
-#+END_SRC
-
-**** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]]                                       :installed:
-**** [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]                                                 :installed:
-
-#+BEGIN_SRC clojure
-(require 'clj-refactor)
-
-(defun my-clojure-mode-hook ()
-    (clj-refactor-mode 1)
-    (yas-minor-mode 1) ; for adding require/use/import statements
-    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
-    (cljr-add-keybindings-with-prefix "C-c C-m"))
-
-(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
-#+END_SRC
 
 ** Productivity
 
@@ -316,6 +256,8 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
 
 * Org Agenda
 
+[[/home/schmudde/Dropbox/notes/emacs-modes.org::72][org-capture shortcuts]]
+
 #+begin_src emacs-lisp
 org-todo-keywords
 #+end_src
@@ -377,6 +319,10 @@ Whilst this is a great feature, it adds to the amount of line scans that Emacs h
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+** Markdown Mode                                                 :installed:
+[[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]
+
+- ~[[https://elpa.gnu.org/packages/adaptive-wrap.html][adaptive-wrap]]~: ensures that outlines wrap lines correctly with ~wrap-prefix~. (installed)
 ** Translations
 
 Multi-Language Options:
@@ -441,8 +387,141 @@ And start your translate with command ~gts-do-translate~.
 - Switches/keywords in ~eshell~/~shell~
 - Stuff from the Kill Ring
 
+** Fill Paragraphs and Word Frequency
+
+[[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~ (~M-q~).
+
+#+BEGIN_SRC emacs-lisp
+(defun unfill-paragraph (&optional region)
+  "Takes a multi-line paragraph and makes it into a single line of text."
+  (interactive (progn (barf-if-buffer-read-only) '(t)))
+  (let ((fill-column (point-max))
+        ;; This would override `fill-column' if it's an integer.
+        (emacs-lisp-docstring-fill-column t))
+    (fill-paragraph nil region)))
+#+END_SRC
+
+Handy key definition for ~unfill-paragraph~.
+
+#+BEGIN_SRC emacs-lisp
+(define-key global-map "\M-Q" 'unfill-paragraph)
+#+END_SRC
+
+A very basic word count analysis [[https://www.emacswiki.org/emacs/WordCount][from the EmacsWiki]] that I need to enhance.
+
+#+begin_src emacs-lisp
+  (defun word-count-analysis (start end)
+    "Count how many times each word is used in the region.
+  Punctuation is ignored."
+    (interactive "r")
+    (let (words)
+      (save-excursion
+        (goto-char start)
+        (while (re-search-forward "\\w+" end t)
+          (let* ((word (intern (match-string 0)))
+                 (cell (assq word words)))
+            (if cell
+                (setcdr cell (1+ (cdr cell)))
+              (setq words (cons (cons word 1) words))))))
+      (when (interactive-p)
+        (message "%S" words))
+      words))
+#+end_src
+** Editing Utilities
+
+*** [[https://joaotavora.github.io/yasnippet/index.html][YASnippet]]                                                   :installed:
+
+Expanding a YASnippet requires the ~yas-minor-mode~ + ~xxx-mode~ (major mode). The ~xxx-mode~ must match a directory in:
+
+#+begin_src emacs-lisp :tangle no
+yas-snippet-dirs
+#+end_src
+
+#+RESULTS:
+| /home/schmudde/.emacs.d/snippets |
+
+For example, the currently supported modes include:
+
+#+begin_src bash
+ls /home/schmudde/.emacs.d/snippets
+#+end_src
+
+#+RESULTS:
+| clojure-mode  |
+| markdown-mode |
+| org-mode      |
+
+[[https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets][The project repo]] is a great snippet resource. Add them and then evaluate ~yas-reload-all~.
+
+*** Multiple Cursors                                              :installed:
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-}") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-x C-m C-c") 'mc/edit-lines)
+#+END_SRC
+
+*** undo-tree                                                   :considering:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+(global-undo-tree-mode)
+(global-set-key (kbd "M-/") 'undo-tree-visualize)
+#+END_SRC
+
 * Programming
 
+** Programming Utilities
+
+*** Restclient                                                     :installed:
+
+Also installed: ~ob-restclient.el~ for Emacs Restclient support in [[https://github.com/alf/ob-restclient.el][org-babel]]. Header arguments for ~:results~: ~raw|value|pure|table~
+
+*** Clojure
+
+- :considering:
+    - ~helm-cider~
+    - ~ivy-cider~
+
+**** Smartparens                                             :considering:
+[[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][
+Smartparens (installed) vs. Paredit]]
+
+"By default smartparens is much less strict about the 'balancedness' of the buffer and it usually allows you to delete whatever you please. However, there are settings (like smartparens-strict-mode) you can use to have it behave more like paredit."
+
+**** Paredit                                                      :installed:
+
+I want to select forms and delete them in Paredit. Setting the delete key has been a bit tricky.
+
+~C-h b~: input decoding map translations:
+
+- Key: ~M-[ 3 ; 5 ~~
+- Binding: ~<C-delete>~
+
+For example, ~M-O A~ will move the cursor ~<up>~.
+
+For the binding, I have tried ~(kbd "\e[3;5~")~ from the function key sequences for xterm for /C-del/: ~(define-key map "\e[3;5​~" [C-delete])~ in ~/usr/share/emacs/27.1/lisp/term~ as well as ~(kbd "M-[ 3 ; 5 ~")~ from the input decoding map translations above.
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "<C-delete>") 'paredit-delete-region)
+(add-hook 'cider-mode-hook #'enable-paredit-mode)
+(add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+(define-key org-mode-map (kbd "M-P") 'paredit-mode) ;; toggle paredit mode manually
+#+END_SRC
+
+**** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]]                                       :installed:
+**** [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]                                                 :installed:
+
+#+BEGIN_SRC clojure
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+    (clj-refactor-mode 1)
+    (yas-minor-mode 1) ; for adding require/use/import statements
+    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+    (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+#+END_SRC
 ** LSP Mode                                                      :installed:
 
 Install the [[https://clojure-lsp.io/][clojure-lsp]] GraalVM native executable for Linux
@@ -488,10 +567,6 @@ Other commands
 ~typescript-mode~:
 
 Use ~ts-ls~ as language server
-
-#+begin_src :tangle variable :
-
-#+end_src
 
 ** SX                                                           :considering:
 
@@ -542,14 +617,15 @@ Stop Emacs asking for confirmation to evaluate:
 Add ~(require 'org-tempo)~ to enable ~<s TAB~ code block shortcut.
 
 #+BEGIN_SRC emacs-lisp :results silent
-(org-babel-do-load-languages
- 'org-babel-load-languages '((emacs-lisp . t)
-                             (clojure . t)
-                             (python . t)
-                             (restclient . t)
-                             (shell . t)))
+  (org-babel-do-load-languages
+   'org-babel-load-languages '((emacs-lisp . t)
+                               (clojure . t)
+                               (python . t)
+                               (restclient . t)
+                               (shell . t)
+                               (sql . t)))
 
-(require 'org-tempo)
+  (require 'org-tempo)
 #+END_SRC
 
 #+BEGIN_SRC python :tangle no
@@ -570,47 +646,6 @@ From the documentation, [[https://www.orgmode.org/worg/org-contrib/babel/languag
 (setq org-babel-clojure-backend 'cider)
 (require 'cider)
 #+END_SRC
-
-* Fill Paragraphs and Word Frequency
-
-[[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~ (~M-q~).
-
-#+BEGIN_SRC emacs-lisp
-(defun unfill-paragraph (&optional region)
-  "Takes a multi-line paragraph and makes it into a single line of text."
-  (interactive (progn (barf-if-buffer-read-only) '(t)))
-  (let ((fill-column (point-max))
-        ;; This would override `fill-column' if it's an integer.
-        (emacs-lisp-docstring-fill-column t))
-    (fill-paragraph nil region)))
-#+END_SRC
-
-Handy key definition for ~unfill-paragraph~.
-
-#+BEGIN_SRC emacs-lisp
-(define-key global-map "\M-Q" 'unfill-paragraph)
-#+END_SRC
-
-A very basic word count analysis [[https://www.emacswiki.org/emacs/WordCount][from the EmacsWiki]] that I need to enhance.
-
-#+begin_src emacs-lisp
-  (defun word-count-analysis (start end)
-    "Count how many times each word is used in the region.
-  Punctuation is ignored."
-    (interactive "r")
-    (let (words)
-      (save-excursion
-        (goto-char start)
-        (while (re-search-forward "\\w+" end t)
-          (let* ((word (intern (match-string 0)))
-                 (cell (assq word words)))
-            (if cell
-                (setcdr cell (1+ (cdr cell)))
-              (setq words (cons (cons word 1) words))))))
-      (when (interactive-p)
-        (message "%S" words))
-      words))
-#+end_src
 
 * eMail
 
@@ -921,7 +956,13 @@ If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tip
 
 * Resources
 
-Install the missing manual because of an ~Info-find-file: Info file emacs does not exist~ error. Run ~apt-get install emacs-common-non-dfsg~ [Emacs 26.1]+ package (Debian).
+** Info Mode
+
+Install the missing [[https://www.emacswiki.org/emacs/InfoMode][Info Mode]] manual because of an ~Info-find-file: Info file emacs does not exist~ error. Run ~apt-get install emacs-common-non-dfsg~ [Emacs 26.1]+ package (Debian). This also gets me the Org Manual.
+
+~C-u C-h i~: read an Info manual that is not in your InfoPath
+
+** Outside Links
 
 - Inspiring literate GNU Emacs Configuration File
     - Seth Morabito's literate [[https://github.com/sethm/emacs-files/blob/master/configuration.org][GNU Emacs Configuration File]]
@@ -965,8 +1006,3 @@ You may sometimes want to write text that looks like Org syntax, but should real
 
 - ~C-x 8 <RET> zero width space <RET>~
 - ~C-x 8 <RET> 200B <RET>~
-
-** TODO
-
-- [[https://www.emacswiki.org/emacs/InfoPath][Set info-path for org-mode documentation]] (currently broken)
-- [[https://awesomeopensource.com/project/nobiot/org-transclusion?mode=...][Transclusions]]

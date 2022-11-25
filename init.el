@@ -61,6 +61,10 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(cider-boot-command "boot" nil nil "tried `boot dev`. no luck")
+ '(deft-case-fold-search t)
+ '(deft-directory "/home/schmudde/Dropbox/notes")
+ '(deft-recursive t)
+ '(deft-use-filename-as-title t)
  '(desktop-restore-in-current-display t)
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
@@ -112,9 +116,47 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa" . "https://melpa.org/packages/")))
  '(package-selected-packages
-   '(typescript-mode lsp-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(deft typescript-mode lsp-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
-   '((eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
+   '((eval progn
+           (defun dev
+               (function-name)
+             "call dev(s) functions specifying function name"
+             (interactive "sdev/function: ")
+             (with-current-buffer
+                 (current-buffer)
+               (cider-interactive-eval
+                (format "(dev/%s)" function-name))))
+           (defun portal nil "call dev/portal"
+                  (interactive)
+                  (with-current-buffer
+                      (current-buffer)
+                    (cider-interactive-eval "(dev/portal)")))
+           (defun portal-clear nil "call dev/portal-clear"
+                  (interactive)
+                  (with-current-buffer
+                      (current-buffer)
+                    (cider-interactive-eval "(dev/portal-clear)")))
+           (defun portal-close nil "call dev/portal-close"
+                  (interactive)
+                  (with-current-buffer
+                      (current-buffer)
+                    (cider-interactive-eval "(dev/portal-close)"))))
+     (eval progn
+           (defun yorba-dev
+               (choice)
+             (interactive
+              (let
+                  ((completion-ignore-case t))
+                (list
+                 (completing-read "Choose: "
+                                  '("start-server" "stop-server" "portal" "portal-clear" "portal-close" "refresh")
+                                  nil t))))
+             (with-current-buffer
+                 (current-buffer)
+               (cider-interactive-eval
+                (format "(dev/%s)" choice)))))
+     (eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
      (cider-refresh-after-fn . "server.repl/post-refresh")
      (cider-refresh-before-fn . "server.repl/pre-refresh")))
  '(send-mail-function 'smtpmail-send-it)
