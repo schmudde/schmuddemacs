@@ -1,0 +1,1 @@
+("~/.emacs.d/" "~/" "~/work/code/yorba/yorba-clj/" "~/work/code/schmudde-blog/" "~/work/code/yorba/yorba-nodejs/" "~/work/code/test/clerk-demo/" "~/work/code/" "~/work/code/yorba/yorba-app/" "~/work/code/gallery-404/")

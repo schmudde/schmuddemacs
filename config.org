@@ -95,9 +95,7 @@ ls -1q ~/.deft | wc -l
 (global-set-key (kbd "<f8>") 'deft)
 #+end_src
 
-Set ~deft-extensions~, ~deft-recursive~, and ~deft-directory~ in ~M-x customize-group~: ~deft~.
-
-[[https://jonathanchu.is/posts/setting-up-deft-mode-in-emacs-with-org-mode/][Note]]: Optionally, you can set deft-auto-save-interval to 0. Its default value is 1.0, which means it saves every second. This is very useful to many, meaning you don’t ever have to manually save your notes since Deft automatically does it for you; however, with my custom emacs config, I prefer to turn this off completely and manually save my notes file because I have a before-save-hook that deletes trailing whitespace. This made typing notes a bit annoying and would often remove whitespace if I was in the middle of writing a sentence, where I didn’t want it to do that yet.
+Set ~deft-extensions~, ~deft-recursive~, and ~deft-directory~ in ~M-x customize-group~: ~deft~. [[https://jonathanchu.is/posts/setting-up-deft-mode-in-emacs-with-org-mode/][Note]]: I set ~deft-auto-save-interval~ to 0 (default 1.0, it saves every second). I have a ~before-save-hook~ that deletes trailing whitespace. This can remove whitespace while in the middle of typing. Annoying.
 
 *** TODO [[https://protesilaos.com/codelog/2022-06-18-denote-demo/][denote]]                                               :considering:
 
@@ -152,7 +150,7 @@ List passwords on the command line using ~pass~ and then use ~password-store-edi
 *** Calendar with [[https://github.com/kiwanami/emacs-calfw][Calfw]]                                           :installed:
 
 #+BEGIN_SRC emacs-lisp
-  (require 'calfw-ical)
+  ;; (require 'calfw-ical)
   ;; IndieWeb @ https://events.indieweb.org/
   ;; (cfw:open-ical-calendar "https://events.indieweb.org/ics/events.ics")
 
@@ -319,6 +317,40 @@ Whilst this is a great feature, it adds to the amount of line scans that Emacs h
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 #+END_SRC
 
+Xah Lee's [[http://xahlee.info/emacs/emacs/emacs_copy_file_path.html][Copy File Path of Current Buffer URL]]
+
+#+begin_src emacs-lisp
+  (defun xah-copy-file-path (&optional DirPathOnlyQ)
+    "Copy current buffer file path or dired path. Result is full path.
+
+     If `universal-argument' is called first, copy only the dir path.
+     If in dired, copy the current or marked files.
+     If a buffer is not file and not dired, copy value of `default-directory'.
+
+     Version 2018-06-18 2021-09-30"
+    (interactive "P")
+    (let (($fpath
+           (if (string-equal major-mode 'dired-mode)
+               (progn
+                 (let (($result (mapconcat 'identity (dired-get-marked-files) "\n")))
+                   (if (equal (length $result) 0)
+                       (progn default-directory )
+                     (progn $result))))
+             (if (buffer-file-name)
+                 (buffer-file-name)
+               (expand-file-name default-directory)))))
+      (kill-new
+       (if DirPathOnlyQ
+           (progn
+             (message "Directory copied: %s" (file-name-directory $fpath))
+             (file-name-directory $fpath))
+         (progn
+           (message "File path copied: %s" $fpath)
+           $fpath )))))
+
+  (global-set-key (kbd "C-c w") 'xah-copy-file-path)
+#+end_src
+
 ** Markdown Mode                                                 :installed:
 [[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]
 
@@ -483,8 +515,7 @@ Also installed: ~ob-restclient.el~ for Emacs Restclient support in [[https://git
     - ~ivy-cider~
 
 **** Smartparens                                             :considering:
-[[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][
-Smartparens (installed) vs. Paredit]]
+[[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][Smartparens (installed) vs. Paredit]]
 
 "By default smartparens is much less strict about the 'balancedness' of the buffer and it usually allows you to delete whatever you please. However, there are settings (like smartparens-strict-mode) you can use to have it behave more like paredit."
 
@@ -501,26 +532,35 @@ For example, ~M-O A~ will move the cursor ~<up>~.
 
 For the binding, I have tried ~(kbd "\e[3;5~")~ from the function key sequences for xterm for /C-del/: ~(define-key map "\e[3;5​~" [C-delete])~ in ~/usr/share/emacs/27.1/lisp/term~ as well as ~(kbd "M-[ 3 ; 5 ~")~ from the input decoding map translations above.
 
+According to [[https://docs.cider.mx/cider/additional_packages.html][the official Cider Docs]]:
+
+#+begin_quote
+The use of paredit when editing Clojure (or any other Lisp) code is highly recommended.  You’re probably using it already in your clojure-mode buffers (if you’re not you probably should). You might also want to enable paredit in the REPL buffer as well:
+
+(add-hook 'cider-repl-mode-hook #'paredit-mode)
+#+end_src
+
+But the following hooks do not work (CIDER 1.5, 1.6 freezes):
+
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "<C-delete>") 'paredit-delete-region)
-(add-hook 'cider-mode-hook #'enable-paredit-mode)
-(add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
-(define-key org-mode-map (kbd "M-P") 'paredit-mode) ;; toggle paredit mode manually
+  (global-set-key (kbd "<C-delete>") 'paredit-delete-region)
+  ;; (add-hook 'cider-mode-hook #'enable-paredit-mode)
+  ;; (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
 #+END_SRC
 
 **** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]]                                       :installed:
 **** [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]                                                 :installed:
 
 #+BEGIN_SRC clojure
-(require 'clj-refactor)
+  (require 'clj-refactor)
 
-(defun my-clojure-mode-hook ()
-    (clj-refactor-mode 1)
-    (yas-minor-mode 1) ; for adding require/use/import statements
-    ;; This choice of keybinding leaves cider-macroexpand-1 unbound
-    (cljr-add-keybindings-with-prefix "C-c C-m"))
+  (defun my-clojure-mode-hook ()
+      (clj-refactor-mode 1)
+      (yas-minor-mode 1) ; for adding require/use/import statements
+      ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+      (cljr-add-keybindings-with-prefix "C-c C-m"))
 
-(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
+  (add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 #+END_SRC
 ** LSP Mode                                                      :installed:
 
@@ -558,10 +598,11 @@ Other commands
            (lsp-mode . lsp-enable-which-key-integration))
     :commands lsp)
 
-  ;;(use-package lsp-ui
-  ;;  :commands lsp-ui-mode)
+  (use-package lsp-ui
+    :commands lsp-ui-mode)
 #+end_src
 
+** Flycheck, flycheck-clojure, flycheck-clj-kondo                :installed:
 ** Typescript                                                    :installed:
 
 ~typescript-mode~:
@@ -593,8 +634,8 @@ Considering these bindings:
 Load it in ~clojure-mode~ or ~cider-mode~:
 
 #+begin_src emacs-lisp
-  (add-hook 'clojure-mode-hook 'hs-minor-mode)
-  (add-hook 'cider-mode-hook 'hs-minor-mode)
+  ;; (add-hook 'clojure-mode-hook 'hs-minor-mode)
+  ;; (add-hook 'cider-mode-hook 'hs-minor-mode)
 #+end_src
 
 ** Literate Programming in org-babel
@@ -639,12 +680,12 @@ return 3 + 7
 From the documentation, [[https://www.orgmode.org/worg/org-contrib/babel/languages/ob-doc-clojure.html][Clojure in Org Mode Babel]]:
 
 #+BEGIN_SRC emacs-lisp :results silent
-;; Clojure
-(require 'org)
-(require 'ob-clojure)
-;; Cider
-(setq org-babel-clojure-backend 'cider)
-(require 'cider)
+  ;; Clojure
+  (require 'org)
+  (require 'ob-clojure)
+  ;; Cider
+  (setq org-babel-clojure-backend 'cider)
+  (require 'cider)
 #+END_SRC
 
 * eMail
@@ -898,7 +939,7 @@ Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a sol
 
 Where are attachments, anyway?
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
 mu4e-attachment-dir
 #+END_SRC
 

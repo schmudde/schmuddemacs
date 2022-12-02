@@ -4,12 +4,12 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(org-babel-load-file (concat user-emacs-directory "config.org"))
+
 ;; settings for .txt files
 (add-to-list 'auto-mode-alist '("\\.txt$" . text-mode))
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
-
-(org-babel-load-file (concat user-emacs-directory "config.org"))
 
 (let ((default-directory "~/.emacs.d/elpa"))
   (normal-top-level-add-subdirs-to-load-path))
@@ -46,13 +46,6 @@
       '((:eval (if (buffer-file-name)
                    (abbreviate-file-name (buffer-file-name))
                                   "%b"))))
-
-;; figwheel for cider
-;; (require 'cider)
-;; (setq cider-cljs-lein-repl
-;;       "(do (require 'figwheel-sidecar.repl-api)
-;;            (figwheel-sidecar.repl-api/start-figwheel!)
-;;           (figwheel-sidecar.repl-api/cljs-repl))")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -97,6 +90,7 @@
  '(erc-track-minor-mode t)
  '(erc-track-mode t)
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
+ '(ispell-dictionary nil)
  '(ledger-reports
    '(("test" "ledger ")
      ("bal" "%(binary) -f %(ledger-file) bal")
@@ -114,9 +108,9 @@
  '(org-todo-keywords '((sequence "TODO" "DOING" "DONE")))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa" . "https://melpa.org/packages/")))
+     ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(deft typescript-mode lsp-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass calfw-ical calfw use-package adaptive-wrap ledger-mode magit clj-refactor restclient go htmlize multiple-cursors 4clojure cider clojure-essential-ref-nov clojure-mode markdown-mode cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode magit restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
            (defun dev
@@ -142,20 +136,6 @@
                   (with-current-buffer
                       (current-buffer)
                     (cider-interactive-eval "(dev/portal-close)"))))
-     (eval progn
-           (defun yorba-dev
-               (choice)
-             (interactive
-              (let
-                  ((completion-ignore-case t))
-                (list
-                 (completing-read "Choose: "
-                                  '("start-server" "stop-server" "portal" "portal-clear" "portal-close" "refresh")
-                                  nil t))))
-             (with-current-buffer
-                 (current-buffer)
-               (cider-interactive-eval
-                (format "(dev/%s)" choice)))))
      (eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
      (cider-refresh-after-fn . "server.repl/post-refresh")
      (cider-refresh-before-fn . "server.repl/pre-refresh")))
