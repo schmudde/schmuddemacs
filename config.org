@@ -243,6 +243,36 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
     - With ~customize-face~: ~tty-menu-disabled-face~, ~tty-menu-enabled-face~, ~tty-menu-selected-face~
     - Or in Lisp: ~(set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")~
 
+** Keybindings
+
+I don't use ~suspend-frame~. And it's easy to invoke by executed extended command. It's bound to the valuable ~C-z~.
+
+#+begin_src emacs-lisp :tangle no :results drawer
+(describe-key (kbd "C-z"))
+#+end_src
+
+#+RESULTS:
+:results:
+&optional BUFFER
+
+I typically try to stick to the standard C-x for system wide functions C-c for most minor mode and personal bindings.
+
+C-z is suspend-frame, that is something I just don't need as a keybinding. So I unbind C-z and use this as a prefix for my custom keybindings. That is very close to C-x and C-c so it feels natural.
+:end:
+
+So I want to unbind it and then use it for something better.
+
+#+begin_src emacs-lisp :results none
+  (unbind-key "C-z")
+  (bind-keys :prefix-map personal-ops-map
+             :prefix "C-z"
+             :prefix-docstring "Personal key bindings"
+             ("v" . emacs-version)
+             ("r" . revert-buffer))
+#+end_src
+
+You can target any map (for something like ~define-key global-map~) using ~:map~. See also [[https://github.com/jwiegley/use-package/blob/d2640fec376a8458a669e7526e63e5870d875118/bind-key.el#L213][use-package/bind-key.el]].
+
 ** [[https://github.com/justbur/emacs-which-key][which-key]]                                                     :installed:
 
 ~C-x~ and wait for the default of 1 second the minibuffer will expand with all of the available key bindings that follow ~C-x~ (or as many as space allows given your settings). This includes prefixes like ~C-x 8~ which are shown in a different face.
@@ -490,7 +520,7 @@ ls /home/schmudde/.emacs.d/snippets
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-}") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-x C-m C-c") 'mc/edit-lines)
+(global-set-key (kbd "C-z m") 'mc/edit-lines)
 #+END_SRC
 
 *** undo-tree                                                   :considering:
@@ -501,6 +531,13 @@ ls /home/schmudde/.emacs.d/snippets
 #+END_SRC
 
 * Programming
+
+** Shells
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "<f4>") 'eshell)
+(global-set-key (kbd "<f5>") 'shell)
+#+end_src
 
 ** Programming Utilities
 
@@ -792,7 +829,7 @@ database-path     : /home/schmudde/.cache/mu/xapian
 schema-version    : 452
 max-message-size  : 100000000
 batch-size        : 250000
-messages in store : 31024
+messages in store : 29990
 created           : Sat 23 Jul 2022 06:35:11 PM CEST
 personal-address  : d@schmud.de
 personal-address  : schmudde@yorba.co

@@ -54,6 +54,7 @@
  ;; If there is more than one, they won't work right.
  '(auth-source-save-behavior nil)
  '(cider-boot-command "boot" nil nil "tried `boot dev`. no luck")
+ '(deft-auto-save-interval 0.0)
  '(deft-case-fold-search t)
  '(deft-directory "/home/schmudde/Dropbox/notes")
  '(deft-recursive t)
@@ -110,9 +111,23 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode magit restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode magit restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
+           (defun yorba-dev
+               (choice)
+             (interactive
+              (let
+                  ((completion-ignore-case t))
+                (list
+                 (completing-read "Choose: "
+                                  '("start-server" "stop-server" "portal" "go" "stop" "reset" "portal-clear" "portal-close" "refresh")
+                                  nil t))))
+             (with-current-buffer
+                 (current-buffer)
+               (cider-interactive-eval
+                (format "(dev/%s)" choice)))))
+     (eval progn
            (defun dev
                (function-name)
              "call dev(s) functions specifying function name"
