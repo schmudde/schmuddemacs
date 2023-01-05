@@ -535,8 +535,8 @@ ls /home/schmudde/.emacs.d/snippets
 ** Shells
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "<f4>") 'eshell)
-(global-set-key (kbd "<f5>") 'shell)
+(global-set-key (kbd "<f5>") 'eshell)
+(global-set-key (kbd "<f6>") 'shell)
 #+end_src
 
 ** Programming Utilities
@@ -758,21 +758,17 @@ Dependencies
     - Mu4e and mu need to stay in sync, so it's best to use the package manager for both.
     - Maildir-utils might be better depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]]
 5. msmtp (via ~apt~) for sending mails
-6. altermime (via ~apt~) for [[https://emacs.stackexchange.com/a/23815][deleting attachments]]
+6. +altermime (via ~apt~) for [[https://emacs.stackexchange.com/a/23815][deleting attachments]]+ [deprecated]
 7. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
 8. [[https://github.com/jwiegley/use-package][use-package]] (via MELPA)
 
 Commands
 
+0. Initialize the password manager before running ~muw~ (~pass int xxx@yyy.zzz~ after running ~gpg --gen-key~ if no local key exists)
 1. ~muw add~: a script that walks you through adding a new eMail config to
-2. ~muw sync personal~ where ~personal~ is an account name
+2. ~muw sync personal~ where ~personal~ is an account name [switch steps #2 and #3 if necessary]
 3. ~muw mu-init~ to setup database store
 4. ~mu index~ to index for search (Xapian), also to rebuild the index
-
-Gmail
-
-1. Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
-2. If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to [[https://support.google.com/accounts/answer/185833][use an App Password]].
 
 #+BEGIN_SRC shell :results drawer
 muw list
@@ -787,33 +783,29 @@ yorba
 Lisp Code
 
 #+BEGIN_SRC emacs-lisp
-(load-file "~/.config/mu4e/mu4e-config.el")
+  (load-file "~/.config/mu4e/mu4e-config.el")
 
-(add-to-list 'load-path "~/.config/mu4e")
-(require 'mu4e-config)
+  (add-to-list 'load-path "~/.config/mu4e")
+  (require 'mu4e-config)
 
-(use-package mu4e-config
-  :after mu4e
-  :load-path "~/.config/mu4e")
+  (use-package mu4e-config
+    :after mu4e
+    :load-path "~/.config/mu4e"
+    :bind (("C-c m" . mu4e)
+           ("C-z A" . 'mu4e-view-save-attachments)
+           ("C-c i" . 'mu4e-org-store-and-capture)))
 
-;; mu4e does not by default rename files when moving them to a new directory and this then causes problems for mbsync.
-(setq mu4e-change-filenames-when-moving t)
+  ;; mu4e does not by default rename files when moving them to a new directory and this then causes problems for mbsync.
+  (setq mu4e-change-filenames-when-moving t)
 
-; mu4e defaults to plain text eMails with the original 79 character limit.
-; Set this so plain text eMails should flow correctly for recipients
-(setq mu4e-compose-format-flowed t)
+  ; mu4e defaults to plain text eMails with the original 79 character limit.
+  ; Set this so plain text eMails should flow correctly for recipients
+  (setq mu4e-compose-format-flowed t)
 
-;; (setq mu4e-view-use-old t)
-
-;; custom preferences
-(setq mu4e-update-interval (* 7 60)) ; refresh every 420 seconds/7 minutes
-;; (setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
-;;                               ("/personal/INBOX" . ?i)))
-(global-set-key (kbd "C-c m") 'mu4e)
-(local-set-key (kbd "<f5>") 'mu4e-view-save-attachment)
-
-;; Let's turn this into a task in org mode!
-(global-set-key (kbd "C-c i") 'mu4e-org-store-and-capture)
+  ;; custom preferences
+  (setq mu4e-update-interval (* 7 60)) ; refresh every 420 seconds/7 minutes
+  ;; (setq mu4e-maildir-shortcuts '(("/personal/INBOX.Personal" . ?p)
+  ;;                               ("/personal/INBOX" . ?i)))
 #+END_SRC
 
 Other than ~"~/.config/mu4e/mu4e-config.el"~, configuration files are also found in ~"~/.config/mu4e/accounts/personal.el"~. This is where I've moved ~(setq mu4e-compose-signature "w: http://schmud.de\ne: d@schmud.de\nt: @dschmudde")~
@@ -1021,6 +1013,18 @@ If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tip
 - ~find . -name "*U=2:*" -exec ls -l {} \;~ &rArr; ~./cur/1419106858.5661_2.pcuds06,U=2:2,S~ &amp; ~/cur/1423819205.29514_1.pcuds06,U=2:2,S~
 - ~mv ./cur/1423819205.29514_1.pcuds06,U=2:2,S ./cur/1423819205.29514_1.pcuds06~: This deduplicates the problematic UID and forces mbsync to create new UID for the second message at its next run.
 - ~mbsync -a | grep -i error | wc -l~
+
+*Gmail*
+
+Run the process from the command line for more insight.
+
+#+begin_src bash
+muw sync yorba
+#+end_src
+
+1. Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
+2. If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to [[https://support.google.com/accounts/answer/185833][use an App Password]].
+3. Update the password using ~pass edit schmudde@yorba.co~: ~xxxx yyyy zzzz aaaa~ (keep the spaces)
 
 ** Other Approaches
 
