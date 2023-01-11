@@ -1000,12 +1000,12 @@ OrgMsg is a GNU/Emacs global minor mode mixing up Org mode and your Mail User Ag
 
 The server protocol (as used by mu4e) often does not offer compatibility between minor release numbers (1.4 vs 1.6 vs 1.8) nor within development series (such as 1.7). However, within a stable release (such as all 1.6.x) the protocol won’t change (except if required to fix some severe bug; this never happened in practice). To understand what's happening within each release, refer to [[https://github.com/emacsmirror/mu4e/blob/master/NEWS.org][NEWS (user visible changes & bigger non-visible ones)]].
 
-*Recovery Tips*
+**Recovery Tips**
 
 - ~Error (mu4e): expected schema-version 452, but got 451; please use 'mu init'~
 - When the database schema of mu changes, run ~muw mu-init~ to reindex the database. For example, when upgrading from 1.6.1 to 1.6.2+.
 
-*UID Errors*
+**UID Errors**
 
 If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tips suggested by [[http://tiborsimko.org/mbsync-duplicate-uid.html][Troubleshooting Mbsync Duplicate UID Errors]]:
 
@@ -1014,7 +1014,7 @@ If you encounter UID errors (e.g. /Maildir error: duplicate UID 15/) use the tip
 - ~mv ./cur/1423819205.29514_1.pcuds06,U=2:2,S ./cur/1423819205.29514_1.pcuds06~: This deduplicates the problematic UID and forces mbsync to create new UID for the second message at its next run.
 - ~mbsync -a | grep -i error | wc -l~
 
-*Gmail*
+**Gmail**
 
 Run the process from the command line for more insight.
 
@@ -1025,6 +1025,13 @@ muw sync yorba
 1. Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
 2. If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to [[https://support.google.com/accounts/answer/185833][use an App Password]].
 3. Update the password using ~pass edit schmudde@yorba.co~: ~xxxx yyyy zzzz aaaa~ (keep the spaces)
+
+**[[https://github.com/djcb/mu/issues/2144][Failed to open glass revision file for reading]]**
+
+If ~muw sync personal~ &rArr; ~error: failed to open store @ /home/schmudde/.cache/mu/xapian: /home/schmudde/.cache/mu/xapian/iamglass: Failed to open glass revision file for reading~. Can be caused by the existence of only a ~flintlock~ file.
+
+Run ~muw mu-init~ to initialise the database first.
+
 
 ** Other Approaches
 
