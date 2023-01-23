@@ -113,7 +113,8 @@
  '(package-selected-packages
    '(clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode magit restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
-   '((eval progn
+   '((eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/.secrets/yorba-pubsub-resources.json")
+     (eval progn
            (defun yorba-dev
                (choice)
              (interactive

@@ -268,7 +268,8 @@ So I want to unbind it and then use it for something better.
              :prefix "C-z"
              :prefix-docstring "Personal key bindings"
              ("v" . emacs-version)
-             ("r" . revert-buffer))
+             ("r" . revert-buffer)
+             ("c" . quick-calc))
 #+end_src
 
 You can target any map (for something like ~define-key global-map~) using ~:map~. See also [[https://github.com/jwiegley/use-package/blob/d2640fec376a8458a669e7526e63e5870d875118/bind-key.el#L213][use-package/bind-key.el]].

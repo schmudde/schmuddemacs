@@ -1,1 +1,1 @@
-("~/" "~/.emacs.d/" "~/work/code/schmudde-blog/" "~/work/code/yorba/yorba-nodejs/" "~/work/code/gallery-404/" "~/work/code/yorba/yorba-clj/" "~/work/code/" "~/work/code/test/clerk-demo/" "~/work/code/yorba/yorba-app/")
+("~/.emacs.d/" "~/work/code/blog/" "~/work/code/yorba/yorba-clj/" "~/work/code/yorba/yorba-nodejs/" "~/work/code/blog/resources/public/css/et-book/" "~/")
