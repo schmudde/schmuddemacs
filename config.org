@@ -298,7 +298,7 @@ org-todo-keywords
 (global-set-key (kbd "<f3>") 'org-agenda)
 #+end_src
 
-* Editing Helpers
+* Writing & Editing Helpers
 
 Enable the upcase-region function. I still have no idea why this is disabled by default.
 
@@ -381,6 +381,20 @@ Xah Lee's [[http://xahlee.info/emacs/emacs/emacs_copy_file_path.html][Copy File 
 
   (global-set-key (kbd "C-c w") 'xah-copy-file-path)
 #+end_src
+
+** ChatGPT                                                       :installed:
+
+1. Procure an [[https://platform.openai.com/account/api-keys][OpenAI API key]].
+2. Currently using [[https://github.com/karthink/gptel][GPTel: A simple ChatGPT client for Emacs]]. [[https://www.reddit.com/r/emacs/comments/11k1q0s/chatgpt_inside_emacs/][Here]] is a current list of Emacs clients.
+
+#+begin_src emacs-lisp
+(add-to-list 'load-path "/home/schmudde/.emacs.d/packages/gptel/")
+(require 'gptel)
+#+end_src
+
+~C-c RET~ to submit a query.
+
+TODO: set ~gptel-api-key~ to the key or to a function that returns the key (more secure).
 
 ** Markdown Mode                                                 :installed:
 [[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]

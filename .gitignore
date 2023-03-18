@@ -22,3 +22,4 @@ transient/history.el
 /site-lisp/
 /tramp
 /tutorial/
+init.el
