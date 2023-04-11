@@ -97,6 +97,12 @@ ls -1q ~/.deft | wc -l
 
 Set ~deft-extensions~, ~deft-recursive~, and ~deft-directory~ in ~M-x customize-group~: ~deft~. [[https://jonathanchu.is/posts/setting-up-deft-mode-in-emacs-with-org-mode/][Note]]: I set ~deft-auto-save-interval~ to 0 (default 1.0, it saves every second). I have a ~before-save-hook~ that deletes trailing whitespace. This can remove whitespace while in the middle of typing. Annoying.
 
+~deft-incremental-search~
+
+- ~t~ (default): use incremental string search when non-nil. During incremental string search, substrings separated by spaces are treated as subfilters, each of which must match a file. They need not be adjacent and may appear in any order.
+- ~nil~: regexp search. During regexp search, the entire filter string is interpreted as a single regular expression.
+    - ~The\s-KLF~ Will find /The KLF/.
+
 *** TODO [[https://protesilaos.com/codelog/2022-06-18-denote-demo/][denote]]                                               :considering:
 
 Denote is a simple note-taking tool for Emacs. It is based on the idea that notes should follow a predictable and descriptive file-naming scheme. The file name must offer a clear indication of what the note is about, without reference to any other metadata. Denote basically streamlines the creation of such files while providing facilities to link between them.
@@ -392,7 +398,9 @@ Xah Lee's [[http://xahlee.info/emacs/emacs/emacs_copy_file_path.html][Copy File 
 (require 'gptel)
 #+end_src
 
-~C-c RET~ to submit a query.
+- ~C-c RET~ to submit a query.
+- Select a region of text, call ~M-x gptel-send~.
+- Set chat parameters by calling ~M-x gptel-send~ with a prefix argument (~C-u C-c RET~):
 
 TODO: set ~gptel-api-key~ to the key or to a function that returns the key (more secure).
 
@@ -836,19 +844,11 @@ database-path     : /home/schmudde/.cache/mu/xapian
 schema-version    : 452
 max-message-size  : 100000000
 batch-size        : 250000
-messages in store : 29990
-created           : Sat 23 Jul 2022 06:35:11 PM CEST
+messages in store : 31128
+created           : Thu 05 Jan 2023 07:38:37 PM CET
 personal-address  : d@schmud.de
 personal-address  : schmudde@yorba.co
 :end:
-
-database-path      : /home/schmudde/.cache/mu/xapian
-messages in store  : 26279
-schema-version     : 451
-created            : Mon 04 Oct 2021 04:08:51 PM CEST
-maildir            : /home/schmudde/.local/share/mail
-personal-addresses : d@schmud.de
-                     schmudde@yorba.co
 
 ** Attachments (MIME parts)
 
@@ -1011,6 +1011,12 @@ Unfortunately it's not that easy. PDFs currently open in my eReader.
 
 OrgMsg is a GNU/Emacs global minor mode mixing up Org mode and your Mail User Agent Mode to compose and reply to emails in a HTML friendly style.
 
+** Custom IMAP Folders
+
+**Labels in Gmail**
+
+/See All Settings/ -> /Labels/ -> /Show in IMAP/
+
 ** Troubleshooting, Breaking Changes, and Recovery
 
 The server protocol (as used by mu4e) often does not offer compatibility between minor release numbers (1.4 vs 1.6 vs 1.8) nor within development series (such as 1.7). However, within a stable release (such as all 1.6.x) the protocol won’t change (except if required to fix some severe bug; this never happened in practice). To understand what's happening within each release, refer to [[https://github.com/emacsmirror/mu4e/blob/master/NEWS.org][NEWS (user visible changes & bigger non-visible ones)]].
@@ -1050,15 +1056,17 @@ muw sync yorba
 #+end_src
 
 1. Make sure to turn on Less Secure Apps under Google Account -> [[https://myaccount.google.com/security][Security]]
-2. If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to [[https://support.google.com/accounts/answer/185833][use an App Password]].
-3. Update the password using ~pass edit schmudde@yorba.co~: ~xxxx yyyy zzzz aaaa~ (keep the spaces)
+2. If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to [[https://support.google.com/accounts/answer/185833][use an App Password]]. The instructions had "App Passwords" in the wrong place so I had to search for it in my "Google Account" search bar.
+3. Update the password using ~pass edit schmudde@yorba.co~: ~xxxx yyyy zzzz aaaa~ (no need to keep the spaces). Hints:
+    - If it's in a name space, don't forget to prefix it. (e.g. ~muw/schmudde@yorba.co~)
+    - The ~pass~ editor opens up in nano, so don't use ~shell~ or ~eshell~ in Emacs
+    - This will probably need to be reset every time there is a password reset.
 
 **[[https://github.com/djcb/mu/issues/2144][Failed to open glass revision file for reading]]**
 
 If ~muw sync personal~ &rArr; ~error: failed to open store @ /home/schmudde/.cache/mu/xapian: /home/schmudde/.cache/mu/xapian/iamglass: Failed to open glass revision file for reading~. Can be caused by the existence of only a ~flintlock~ file.
 
 Run ~muw mu-init~ to initialise the database first.
-
 
 ** Other Approaches
 

@@ -16,10 +16,9 @@ auto-save-list
 .sx
 init.el
 bookmarks
-snow.el
+/packages/
 transient/history.el
 /%backup%~
 /site-lisp/
 /tramp
 /tutorial/
-init.el
