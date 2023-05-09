@@ -227,7 +227,21 @@ fi
 
 I use the Emacs Web Wowser quite a bit, so I want to customize the search engine. When in EWW: ~M-x customize-mode~ &rarr; /Eww Search Prefix/ &rarr; ~https://html.duckduckgo.com/html?q=~
 
+#+begin_src bash
+whereis firefox
+#+end_src
+
+#+RESULTS:
+: firefox: /usr/bin/firefox /usr/lib/firefox
+
 "/usr/share/applications/firefox.desktop"
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-z s") 'eww-search-words)
+#+end_src
+
+#+RESULTS:
+: eww-search-words
 
 I like having the day, date, and time displayed in my modeline.
 
@@ -303,6 +317,50 @@ org-todo-keywords
 #+begin_src emacs-lisp
 (global-set-key (kbd "<f3>") 'org-agenda)
 #+end_src
+
+** [[https://github.com/marcinkoziej/org-pomodoro][Pomodoro Timer]]                                                :installed:
+
+~org-pomodoro~ + logbook
+
+You also need the sound-wav package.  I turn the ticking sound off because it is too low in frequency. I just use the alarms for the end of a pomodoro and the end of a break. I use the Tomightly.app for the ticking soud.
+
+Here is my current configuration:
+
+#+begin_src
+ (use-package org-pomodoro
+
+ :commands (org-pomodoro)
+
+ :config
+
+ (setq alert-user-configuration (quote ((((:category . "org-pomodoro")) libnotify nil)))))
+
+ (use-package sound-wav)
+
+ (setq org-pomodoro-ticking-sound-p nil)
+
+ (setq org-pomodoro-ticking-sound-states '(:pomodoro :short-break :long-break))
+
+ (setq org-pomodoro-ticking-sound-states '(:pomodoro))
+
+ (setq org-pomodoro-ticking-frequency 1)
+
+ (setq org-pomodoro-audio-player "mplayer")
+
+ (setq org-pomodoro-finished-sound-args "-volume 0.9")
+
+ (setq org-pomodoro-long-break-sound-args "-volume 0.9")
+
+ (setq org-pomodoro-short-break-sound-args "-volume 0.9")
+
+ (setq org-pomodoro-ticking-sound-args "-volume 0.3")
+#+end_src
+
+#+begin_src emacs-lisp
+(global-set-key (kbd "C-z p") 'org-pomodoro)
+#+end_src
+
+I navigate the point to the headline in the respective org file and enter ~C-c o~. If the project lacks a logbook, a new one is created automatically.
 
 * Writing & Editing Helpers
 
@@ -649,6 +707,8 @@ Other commands
 - ~n~: when it's a library. It may even write the stuff to a .jar
 - ~lsp-describe-session~: what projects does the server work with?
 
+The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-ui][~lsp-ui~]]. This is configured in *[LSP Headerline]                     LSP support for headerline* (e.g. ~lsp-headerline-breadcrumb-path-face~).
+
 #+begin_src emacs-lisp
   (use-package lsp-mode
     :init
@@ -659,7 +719,9 @@ Other commands
     :commands lsp)
 
   (use-package lsp-ui
-    :commands lsp-ui-mode)
+    :commands lsp-ui-mode
+    :config (global-set-key (kbd "C-c l d s") 'lsp-ui-doc-show)
+            (global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide))
 #+end_src
 
 ** Flycheck, flycheck-clojure, flycheck-clj-kondo                :installed:
@@ -1016,6 +1078,12 @@ OrgMsg is a GNU/Emacs global minor mode mixing up Org mode and your Mail User Ag
 **Labels in Gmail**
 
 /See All Settings/ -> /Labels/ -> /Show in IMAP/
+
+This seems to sync after I run:
+
+#+begin_src bash
+muw sync yorba
+#+end_src
 
 ** Troubleshooting, Breaking Changes, and Recovery
 
