@@ -236,13 +236,6 @@ whereis firefox
 
 "/usr/share/applications/firefox.desktop"
 
-#+begin_src emacs-lisp
-(global-set-key (kbd "C-z s") 'eww-search-words)
-#+end_src
-
-#+RESULTS:
-: eww-search-words
-
 I like having the day, date, and time displayed in my modeline.
 
 #+BEGIN_SRC emacs-lisp
@@ -273,11 +266,7 @@ I don't use ~suspend-frame~. And it's easy to invoke by executed extended comman
 
 #+RESULTS:
 :results:
-&optional BUFFER
-
-I typically try to stick to the standard C-x for system wide functions C-c for most minor mode and personal bindings.
-
-C-z is suspend-frame, that is something I just don't need as a keybinding. So I unbind C-z and use this as a prefix for my custom keybindings. That is very close to C-x and C-c so it feels natural.
+nil
 :end:
 
 So I want to unbind it and then use it for something better.
@@ -289,7 +278,8 @@ So I want to unbind it and then use it for something better.
              :prefix-docstring "Personal key bindings"
              ("v" . emacs-version)
              ("r" . revert-buffer)
-             ("c" . quick-calc))
+             ("c" . quick-calc)
+             ("s" . eww-search-words))
 #+end_src
 
 You can target any map (for something like ~define-key global-map~) using ~:map~. See also [[https://github.com/jwiegley/use-package/blob/d2640fec376a8458a669e7526e63e5870d875118/bind-key.el#L213][use-package/bind-key.el]].
