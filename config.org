@@ -256,6 +256,18 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
     - With ~customize-face~: ~tty-menu-disabled-face~, ~tty-menu-enabled-face~, ~tty-menu-selected-face~
     - Or in Lisp: ~(set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")~
 
+** Elfeed                                                        :installed:
+
+#+begin_src emacs-lisp
+  (load (locate-user-emacs-file "feeds.el") :no-error)
+  (setq elfeed-search-filter "@2-weeks-ago +unread")
+
+  (use-package elfeed
+    :ensure t
+    :bind (:map elfeed-search-mode-map
+                ("g" . elfeed-update)))
+#+end_src
+
 ** Keybindings
 
 I don't use ~suspend-frame~. And it's easy to invoke by executed extended command. It's bound to the valuable ~C-z~.
@@ -442,8 +454,8 @@ Xah Lee's [[http://xahlee.info/emacs/emacs/emacs_copy_file_path.html][Copy File 
 2. Currently using [[https://github.com/karthink/gptel][GPTel: A simple ChatGPT client for Emacs]]. [[https://www.reddit.com/r/emacs/comments/11k1q0s/chatgpt_inside_emacs/][Here]] is a current list of Emacs clients.
 
 #+begin_src emacs-lisp
-(add-to-list 'load-path "/home/schmudde/.emacs.d/packages/gptel/")
-(require 'gptel)
+;; (add-to-list 'load-path "/home/schmudde/.emacs.d/packages/gptel/")
+;; (require 'gptel)
 #+end_src
 
 - ~C-c RET~ to submit a query.
@@ -657,6 +669,11 @@ But the following hooks do not work (CIDER 1.5, 1.6 freezes):
 #+END_SRC
 
 **** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]]                                       :installed:
+
+#+begin_src emacs-lisp
+  (global-set-key (kbd "C-c C-c c") 'cider-repl-clear-buffer)
+#+end_src
+
 **** [[https://github.com/clojure-emacs/clj-refactor.el][clj-refactor]]                                                 :installed:
 
 #+BEGIN_SRC clojure
@@ -800,6 +817,8 @@ From the documentation, [[https://www.orgmode.org/worg/org-contrib/babel/languag
   (require 'cider)
 #+END_SRC
 
+** [[https://github.com/magit/forge][Git Forge]]                                                   :considering:
+
 * eMail
 
 All about [[[https://www.djcbsoftware.nl/code/mu/mu4e/Contexts.html][contexts]]: I have different e-mail accounts for private and work email, each with their own values for folders, e-mail addresses, mailservers and so on. Use ~;~ to switch contexts in mu4e.
@@ -904,11 +923,19 @@ personal-address  : schmudde@yorba.co
 
 ** Attachments (MIME parts)
 
+
+
 MIME-part actions allow you to act upon MIME-parts in a message - such as attachments. For now, these actions are defined and documented in ~mu4e-view-mime-part-action~, bound to ~A~.
 
 mu4e v1.6 uses the gnus-based message viewer as the default, which includes support for S/MIME.
 
-For .pdfs: ~open-with~ function mapped to ~A~ /attachment number/ ~w~ ~okular~.
+- For .pdfs: ~open-with~ function mapped to ~A~ /attachment number/ ~w~ ~okular~.
+- With IDO ~C-j~ to save with the default filename
+- List found in ~/home/schmudde/.config/mimeapps.list~
+    - e.g. ~application/pdf=xournal.desktop;okularApplication_pdf.desktop;~
+    - e.g. ~xdg-open xyz.pdf~ will parse the above list
+
+---
 
 - Preferred (see scripts below)
     - ~C-c D~: ~timu/mu4e-view-save-attachment~
