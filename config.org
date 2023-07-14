@@ -21,23 +21,56 @@ The move to Org Mode is currently a work in progress!
 
 Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is available in [[https://melpa.org/#/snow][MELPA]] or on [[https://github.com/alphapapa/snow.el][GitHub]]. Download the file, ~curl -O https://raw.githubusercontent.com/alphapapa/snow.el/master/snow.el~, open it in a buffer, ~eval-buffer~, and ~M-x snow RET~.
 
-** Movement Utilities
-
-- TODO: also: avy - company - [[https://depp.brause.cc/nov.el/][nov.el]]
-- [[https://github.com/nonsequitur/smex][smex]], a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
-
 ** Completion Frameworks
 
-*** IDO                                                         :installed:
+- icomplete: Standards compliant, feature parity with IDO, FIDO: a way to accept IDO quirks, Emacs 27 introduced many of these improvements
+- Not standards compliant. Up to Emacs 26.3 it was fine.
+    - IDO
+    - Helm: Not standards compliant. filter-as-you-type completion
 
-[[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]
+Standards compliant: when you define a prompt, you want it to be aligned with broader interface standards (e.g. you'll never need something like [[https://github.com/bbatsov/helm-projectile][helm projectile]] for Vertico).
+
+~(savehist-mode 1)~ most used commands in the minibuffer prompt. Rather than [[https://github.com/nonsequitur/smex][smex]]. Smex is a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
+
+#+begin_src emacs-lisp
+(savehist-mode 1)
+#+end_src
+
+*** VERTical Interactive COmpletion: vertico.el
+
+- Vertico: purely a user-enhancement, based on the back end ("standard) completion framework
+- Marginalia
+- Orderless: hooks into the underlying completion infrastructure
+- Corfu: in-buffer completion
+
+#+begin_src emacs-lisp
+  (use-package vertico
+    :ensure t
+    :config (vertico-mode 1))
+
+  (use-package marginalia
+    :ensure t
+    :config (marginalia-mode 1))
+
+  (setq completion-styles '(orderless basic))
+  (setq completion-category-overrides
+        '((file (style . (basic partial-completion orderless)))))
+#+end_src
+
+~(global-corfu-mode 1)~ doesn't work in the terminal... check it out...
+
+#+begin_src emacs-lisp
+  (setq completion-in-region-function #'consult-completion-in-region)
+#+end_src
+
+*** COMMENT [[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]: IDO
 
 Improvements over Emacs' TAB-based completion.
 
 - ~C-s~ and ~C-r~: Move to the next and previous match
 - ~C-d~ Open ~M-x dired~ buffer in current directory
 
-#+BEGIN_SRC emacs-lisp
+#+BEGIN_SRC emacs-lisp :tangle no
   (require `ido)
   (setq ido-enable-flex-matching t)
   (setq ido-everywhere t)
@@ -45,6 +78,7 @@ Improvements over Emacs' TAB-based completion.
 #+END_SRC
 
 ~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
+
 *** [[https://github.com/bbatsov/projectile][Projectile]]                                                  :installed:
 
 Navigate between files in a project. From the README:
@@ -60,23 +94,6 @@ Navigate between files in a project. From the README:
 
 To get the most of Projectile you also need to enable (and potentially install) some minibuffer completion framework (e.g. ido, ivy or selectrum). See this section of the documentation for more details.
 
-*** Helm: filter-as-you-type completion                       :considering:
-
-For in-depth searching and completion.
-
-- Install via the package manager
-- ~C-x c~: prefix for all Helm commands
-- see also:
-    - helm-rg
-    - [[https://github.com/bbatsov/helm-projectile][helm projectile]]: ~helm-projectile-grep~, ~helm-projectile-find-file~
-
-#+BEGIN_SRC emacs-lisp :tangle no
-(require 'helm)
-
-(setq-default helm-M-x-fuzzy-match t)
-(global-set-key "\C-x\C-m" 'helm-M-x)
-(global-set-key "\C-c\C-m" 'helm-M-x)
-#+END_SRC
 
 ** Note Management
 
@@ -256,18 +273,6 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
     - With ~customize-face~: ~tty-menu-disabled-face~, ~tty-menu-enabled-face~, ~tty-menu-selected-face~
     - Or in Lisp: ~(set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")~
 
-** Elfeed                                                        :installed:
-
-#+begin_src emacs-lisp
-  (load (locate-user-emacs-file "feeds.el") :no-error)
-  (setq elfeed-search-filter "@2-weeks-ago +unread")
-
-  (use-package elfeed
-    :ensure t
-    :bind (:map elfeed-search-mode-map
-                ("g" . elfeed-update)))
-#+end_src
-
 ** Keybindings
 
 I don't use ~suspend-frame~. And it's easy to invoke by executed extended command. It's bound to the valuable ~C-z~.
@@ -284,17 +289,46 @@ nil
 So I want to unbind it and then use it for something better.
 
 #+begin_src emacs-lisp :results none
-  (unbind-key "C-z")
-  (bind-keys :prefix-map personal-ops-map
-             :prefix "C-z"
-             :prefix-docstring "Personal key bindings"
-             ("v" . emacs-version)
-             ("r" . revert-buffer)
-             ("c" . quick-calc)
-             ("s" . eww-search-words))
+  (define-key global-map (kbd "C-z") nil)
+
+  ;; (bind-keys :prefix-map personal-ops-map
+  ;;            :prefix "C-z"
+  ;;            :prefix-docstring "Personal key bindings"
+  ;;            ("s" . eww-search-words)
+  ;;            ("l" . org-store-link)
+  ;;           ("C-l" . org-insert-link-global))
+
+
+  ;; fundamentally global-set-key, local-set-key, etc... call define-key
+
+  (defvar my-keymap
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "r") 'revert-buffer)
+      (define-key map (kbd "s") 'eww-search-words)
+      map)
+    "Schmudde's personal keymap")
+
+  (define-key my-keymap (kbd "c") 'quick-calc)
+  (define-key global-map (kbd "C-z") my-keymap)
 #+end_src
 
 You can target any map (for something like ~define-key global-map~) using ~:map~. See also [[https://github.com/jwiegley/use-package/blob/d2640fec376a8458a669e7526e63e5870d875118/bind-key.el#L213][use-package/bind-key.el]].
+
+** [[https://depp.brause.cc/nov.el/][nov.el]]                                                      :considering:
+** Elfeed                                                        :installed:
+
+- Filter by feed name ~=ScienceAlert~
+- Filter by tag/keyword: ~+irl~
+
+#+begin_src emacs-lisp
+  (load (locate-user-emacs-file "feeds.el") :no-error)
+  (setq elfeed-search-filter "@2-weeks-ago +unread")
+
+  (use-package elfeed
+    :ensure t
+    :bind (:map elfeed-search-mode-map
+                ("g" . elfeed-update)))
+#+end_src
 
 ** [[https://github.com/justbur/emacs-which-key][which-key]]                                                     :installed:
 
@@ -305,7 +339,29 @@ You can target any map (for something like ~define-key global-map~) using ~:map~
 (which-key-setup-side-window-right)
 #+end_src
 
-* Org Agenda
+* Org Mode
+** Org Mode
+
+
+  ;;            ("l" . org-store-link)
+  ;;           ("C-l" . org-insert-link-global)
+
+#+begin_src emacs-lisp
+  (defun my-markdown-insert-link (&optional org-insert-link-global)
+    (interactive (list current-prefix-arg))
+    (if org-insert-link-global
+        (call-interactively 'org-insert-link-global)
+      (call-interactively 'markdown-insert-link)))
+
+  (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
+
+  ;; M-1 C-c C-l works!
+
+  ;; C-c C-l > markdown insert markdown
+  ;; p C-c C-l > markdown insert org-insert-link-global
+#+end_src
+
+** Org Agenda
 
 [[/home/schmudde/Dropbox/notes/emacs-modes.org::72][org-capture shortcuts]]
 
@@ -601,9 +657,9 @@ ls /home/schmudde/.emacs.d/snippets
 *** Multiple Cursors                                              :installed:
 
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-}") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C-z m") 'mc/edit-lines)
+  (global-set-key (kbd "C-}") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-z m") 'mc/edit-lines)
 #+END_SRC
 
 *** undo-tree                                                   :considering:
