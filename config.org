@@ -23,27 +23,21 @@ Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is av
 
 ** Completion Frameworks
 
-- icomplete: Standards compliant, feature parity with IDO, FIDO: a way to accept IDO quirks, Emacs 27 introduced many of these improvements
-- Not standards compliant. Up to Emacs 26.3 it was fine.
-    - IDO
-    - Helm: Not standards compliant. filter-as-you-type completion
+I'm looking for something that is based on [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Icomplete.html][Icomplete]], which offers most critical completion features as of Emacs 27. I switched from [[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]] + ~ido-everywhere~; I don't use Icomplete's FIDO (IDO compatibility) because I never needed any IDO quirks. I also considered Helm, which offers packages like [[https://github.com/bbatsov/helm-projectile][Helm Projectile]]. But using Projectile in concert with Icomplete is trivial since Icomplete is built-in and ubiquitious.
 
-Standards compliant: when you define a prompt, you want it to be aligned with broader interface standards (e.g. you'll never need something like [[https://github.com/bbatsov/helm-projectile][helm projectile]] for Vertico).
+I am now using VERTical Interactive COmpletion (vertico) as an interface to Icomplete. This works anywhere Icomplete does, including Projectile. Furthermore, ~(savehist-mode 1)~ is a built-in command that will save the most used commands in the minibuffer prompt. This replaces IDO + [[https://github.com/nonsequitur/smex][smex]].
 
-~(savehist-mode 1)~ most used commands in the minibuffer prompt. Rather than [[https://github.com/nonsequitur/smex][smex]]. Smex is a package that improves the use of M-x. TODO: to use everywhere ~(global-set-key (kbd "M-x") 'smex)~
+My current minibuffer enhancements
 
-#+begin_src emacs-lisp
-(savehist-mode 1)
-#+end_src
-
-*** VERTical Interactive COmpletion: vertico.el
-
-- Vertico: purely a user-enhancement, based on the back end ("standard) completion framework
+- Savehist mode
+- Vertico
 - Marginalia
-- Orderless: hooks into the underlying completion infrastructure
-- Corfu: in-buffer completion
+- Orderless: hooks into the underlying completion infrastructure to provide out-of-order completion
 
 #+begin_src emacs-lisp
+
+  (savehist-mode 1)
+
   (use-package vertico
     :ensure t
     :config (vertico-mode 1))
@@ -57,43 +51,25 @@ Standards compliant: when you define a prompt, you want it to be aligned with br
         '((file (style . (basic partial-completion orderless)))))
 #+end_src
 
-~(global-corfu-mode 1)~ doesn't work in the terminal... check it out...
-
-#+begin_src emacs-lisp
-  (setq completion-in-region-function #'consult-completion-in-region)
-#+end_src
-
-*** COMMENT [[https://www.masteringemacs.org/article/introduction-to-ido-mode][Interactively DO Things]]: IDO
-
-Improvements over Emacs' TAB-based completion.
-
-- ~C-s~ and ~C-r~: Move to the next and previous match
-- ~C-d~ Open ~M-x dired~ buffer in current directory
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require `ido)
-  (setq ido-enable-flex-matching t)
-  (setq ido-everywhere t)
-  (ido-mode 1)
-#+END_SRC
-
-~Ido-Everywhere~ minor mode: Toggle use of Ido for all buffer/file reading (~C-x C-f~, ~C-x d~, and ~C-x b~).
-
 *** [[https://github.com/bbatsov/projectile][Projectile]]                                                  :installed:
 
-Navigate between files in a project. From the README:
+Navigate between files in a project.
 
 - ~C-c p f~: open a file to add a project
 - ~C-c p p~: switch to another project
 
 #+begin_src emacs-lisp
   (projectile-mode +1)
-  ;; Recommended keymap prefix on Windows/Linux
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 #+end_src
 
-To get the most of Projectile you also need to enable (and potentially install) some minibuffer completion framework (e.g. ido, ivy or selectrum). See this section of the documentation for more details.
+*** Buffer Completion
 
+Corfu is my current buffer completion enhancement. I use terminal mode, so ~(global-corfu-mode 1)~ doesn't cut it. However, the following setting will bring up completions in the minibuffer:
+
+#+begin_src emacs-lisp
+  (setq completion-in-region-function #'consult-completion-in-region)
+#+end_src
 
 ** Note Management
 
@@ -286,33 +262,21 @@ I don't use ~suspend-frame~. And it's easy to invoke by executed extended comman
 nil
 :end:
 
-So I want to unbind it and then use it for something better.
+So I want to unbind it and then use it for something better. Fundamentally ~global-set-key~, ~local-set-key~, etc... call ~define-key~, so I'm going to use that for most of my keybindings. It
 
 #+begin_src emacs-lisp :results none
-  (define-key global-map (kbd "C-z") nil)
+  (define-key global-map (kbd "C-z") nil) ; Unbind C-z
 
-  ;; (bind-keys :prefix-map personal-ops-map
-  ;;            :prefix "C-z"
-  ;;            :prefix-docstring "Personal key bindings"
-  ;;            ("s" . eww-search-words)
-  ;;            ("l" . org-store-link)
-  ;;           ("C-l" . org-insert-link-global))
-
-
-  ;; fundamentally global-set-key, local-set-key, etc... call define-key
-
-  (defvar my-keymap
+  (defvar my-keymap ; declare keymap and make some basic bindings
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "r") 'revert-buffer)
       (define-key map (kbd "s") 'eww-search-words)
+      (define-key map (kbd "c") 'quick-calc)
       map)
     "Schmudde's personal keymap")
 
-  (define-key my-keymap (kbd "c") 'quick-calc)
-  (define-key global-map (kbd "C-z") my-keymap)
+  (define-key global-map (kbd "C-z") my-keymap) ; Bind C-z within my-keymap
 #+end_src
-
-You can target any map (for something like ~define-key global-map~) using ~:map~. See also [[https://github.com/jwiegley/use-package/blob/d2640fec376a8458a669e7526e63e5870d875118/bind-key.el#L213][use-package/bind-key.el]].
 
 ** [[https://depp.brause.cc/nov.el/][nov.el]]                                                      :considering:
 ** Elfeed                                                        :installed:
@@ -347,13 +311,13 @@ You can target any map (for something like ~define-key global-map~) using ~:map~
   ;;           ("C-l" . org-insert-link-global)
 
 #+begin_src emacs-lisp
-  (defun my-markdown-insert-link (&optional org-insert-link-global)
-    (interactive (list current-prefix-arg))
-    (if org-insert-link-global
-        (call-interactively 'org-insert-link-global)
-      (call-interactively 'markdown-insert-link)))
+  ;; (defun my-markdown-insert-link (&optional org-insert-link-global)
+  ;;   (interactive (list current-prefix-arg))
+  ;;   (if org-insert-link-global
+  ;;       (call-interactively 'org-insert-link-global)
+  ;;     (call-interactively 'markdown-insert-link)))
 
-  (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
+  ;; (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
 
   ;; M-1 C-c C-l works!
 
@@ -415,7 +379,7 @@ Here is my current configuration:
 #+end_src
 
 #+begin_src emacs-lisp
-(global-set-key (kbd "C-z p") 'org-pomodoro)
+(define-key my-keymap (kbd "p") 'org-pomodoro)
 #+end_src
 
 I navigate the point to the headline in the respective org file and enter ~C-c o~. If the project lacks a logbook, a new one is created automatically.
@@ -565,7 +529,6 @@ And start your translate with command ~gts-do-translate~.
 
 *** German
 
-
 [[https://github.com/munen/emacs.d#translations][dict.cc elisp wrapper]] by Alain M. Lafon. Just ~M-x dict~ to translate a word at a point.
 
 #+BEGIN_SRC emacs-lisp
@@ -657,9 +620,9 @@ ls /home/schmudde/.emacs.d/snippets
 *** Multiple Cursors                                              :installed:
 
 #+BEGIN_SRC emacs-lisp
-  (global-set-key (kbd "C-}") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-{") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-z m") 'mc/edit-lines)
+  (define-key my-keymap (kbd "m") 'mc/edit-lines)
+  (define-key my-keymap (kbd "}") 'mc/mark-next-like-this)
+  (define-key my-keymap (kbd "{") 'mc/mark-previous-like-this)
 #+END_SRC
 
 *** undo-tree                                                   :considering:
