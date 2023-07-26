@@ -55,7 +55,7 @@ My current minibuffer enhancements
 
 Navigate between files in a project.
 
-- ~C-c p f~: open a file to add a project
+- ~C-c p l~: open a file to add a project
 - ~C-c p p~: switch to another project
 
 #+begin_src emacs-lisp
@@ -304,26 +304,47 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
 #+end_src
 
 * Org Mode
-** Org Mode
-
-
-  ;;            ("l" . org-store-link)
-  ;;           ("C-l" . org-insert-link-global)
+** COMMENT Org Mode
 
 #+begin_src emacs-lisp
-  ;; (defun my-markdown-insert-link (&optional org-insert-link-global)
+  ;; (defun my-markdown-insert-link (&optional arg)
   ;;   (interactive (list current-prefix-arg))
-  ;;   (if org-insert-link-global
+  ;;   (if arg
   ;;       (call-interactively 'org-insert-link-global)
   ;;     (call-interactively 'markdown-insert-link)))
 
-  ;; (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
 
-  ;; M-1 C-c C-l works!
+  ;; (defun my-markdown-insert-link ()
+  ;;   (interactive)
+  ;;   (call-interactively
+  ;;    (if (bound-and-true-p org-stored-links)
+  ;;        'org-insert-link-global
+  ;;     'markdown-insert-link)))
 
-  ;; C-c C-l > markdown insert markdown
-  ;; p C-c C-l > markdown insert org-insert-link-global
+  (defun my-markdown-insert-link ()
+    (interactive)
+    (if (bound-and-true-p org-stored-links)
+        (call-interactively 'org-insert-link-global)
+      (call-interactively 'markdown-insert-link)))
+
+  (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
+
+  ;; PIN: org-open-at-point-global
+
+  ;; (defun my-markdown-open-link ()
+  ;;   (interactive)
+  ;;   (if (or (markdown-link-p) (markdown-inside-link-p))
+  ;;       (call-interactively 'markdown-follow-thing-at-point)
+  ;;     (call-interactively 'org-open-at-point-global)))
+
+  ;; (define-key markdown-mode-map [remap markdown-follow-thing-at-point] 'my-markdown-open-link)
 #+end_src
+
+#+begin_src emacs-lisp
+  (define-key text-mode-map (kbd "C-c l") 'org-store-link)
+#+end_src
+
+
 
 ** Org Agenda
 
@@ -746,9 +767,13 @@ The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-
 
   (use-package lsp-ui
     :commands lsp-ui-mode
-    :config (global-set-key (kbd "C-c l d s") 'lsp-ui-doc-show)
-            (global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide))
+    :config (define-key lsp-mode-map (kbd "C-c l d s") 'lsp-ui-doc-show)
+            (define-key lsp-mode-map (kbd "C-c l d h") 'lsp-ui-doc-hide))
 #+end_src
+
+Note, ~lsp-ui~ was:
+(global-set-key (kbd "C-c l d s") 'lsp-ui-doc-show)
+(global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide)
 
 ** Flycheck, flycheck-clojure, flycheck-clj-kondo                :installed:
 ** Typescript                                                    :installed:
