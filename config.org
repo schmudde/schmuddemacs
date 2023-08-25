@@ -304,22 +304,10 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
 #+end_src
 
 * Org Mode
-** COMMENT Org Mode
+** Org Mode
 
 #+begin_src emacs-lisp
-  ;; (defun my-markdown-insert-link (&optional arg)
-  ;;   (interactive (list current-prefix-arg))
-  ;;   (if arg
-  ;;       (call-interactively 'org-insert-link-global)
-  ;;     (call-interactively 'markdown-insert-link)))
-
-
-  ;; (defun my-markdown-insert-link ()
-  ;;   (interactive)
-  ;;   (call-interactively
-  ;;    (if (bound-and-true-p org-stored-links)
-  ;;        'org-insert-link-global
-  ;;     'markdown-insert-link)))
+  (use-package markdown-mode)
 
   (defun my-markdown-insert-link ()
     (interactive)
@@ -329,22 +317,37 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
 
   (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
 
-  ;; PIN: org-open-at-point-global
+  ;; Like `markdown-regex-link-reference' but with an extra closing
+  ;; square bracket (group 8).
+  (setq my-markdown-org-link-regexp
+        (concat "\\(?1:!\\)?"
+                "\\(?2:\\[\\)"
+                "\\(?3:[^]^][^]]*\\|\\)"
+                "\\(?4:\\]\\)"
+                "\\(?5:\\[\\)"
+                "\\(?6:[^]]*?\\)"
+                "\\(?7:\\]\\)"
+                "\\(?8:\\]\\)"))
 
-  ;; (defun my-markdown-open-link ()
-  ;;   (interactive)
-  ;;   (if (or (markdown-link-p) (markdown-inside-link-p))
-  ;;       (call-interactively 'markdown-follow-thing-at-point)
-  ;;     (call-interactively 'org-open-at-point-global)))
+  (defun my-markdown-open-link ()
+    (interactive)
+    ;; The `thing-at-point-looking-at' is like what we find in
+    ;; `markdown-inside-link-p'.
+    ;;
+    ;; The `or' has two possibilities.  The first is an Org-style link
+    ;; like [[ref][anchor]].  The second is an Org link without an
+    ;; anchor tag, which is the same as Markdown "wiki" link: [[ref]].
+    (if (or (thing-at-point-looking-at my-markdown-org-link-regexp)
+            (thing-at-point-looking-at markdown-regex-wiki-link))
+        (call-interactively 'org-open-at-point-global)
+      (call-interactively 'markdown-follow-thing-at-point)))
 
-  ;; (define-key markdown-mode-map [remap markdown-follow-thing-at-point] 'my-markdown-open-link)
+  (define-key markdown-mode-map [remap markdown-follow-thing-at-point] 'my-markdown-open-link)
 #+end_src
 
 #+begin_src emacs-lisp
   (define-key text-mode-map (kbd "C-c l") 'org-store-link)
 #+end_src
-
-
 
 ** Org Agenda
 
@@ -517,7 +520,7 @@ Multi-Language Options:
 - [[https://github.com/atykhonov/google-translate][Emacs interface to Google Translate]]
 - [[https://github.com/lorniu/go-translate][Go-Translate]] (used here)
 
-*** Italian
+*** Comment Translate                                           :installed:
 
 [[https://github.com/muqiuhan/emacs-comment-trans.el][Emacs Comment Translate]] 0.5.0 has a dependency on translate-shell, which can be installed via ~sudo apt install translate-shell~.
 
@@ -536,17 +539,35 @@ Multi-Language Options:
   (global-set-key (kbd "C-c s t") 'translate-select-string)
 #+end_src
 
+*** Do Translate                                                :installed:
+
 #+begin_src emacs-lisp
-(require 'go-translate)
-  (setq gts-translate-list '(("it" "en")))
+  (use-package go-translate
+    :ensure t
+    :demand t  ;; rather than an explicit require
+    :bind (("C-z t" . gts-do-translate)))
+
+  (setq gts-translate-list '(("it" "en") ("en" "it")))
   (setq gts-default-translator
        (gts-translator
         :picker (gts-prompt-picker)
         :engines (list (gts-google-engine) (gts-google-rpc-engine))
         :render (gts-buffer-render)))
+
+  ;; (setq gts-translate-list '(("en" "it")))
+  ;; (setq gts-translate-list '(("it" "en")))
+
+  ;; (defun my-gts-translate (&optional flip)
+  ;;   (interactive "P")
+  ;;   (let ((gts-translate-list (if flip '(("en" "it")) '(("it" "en")))))
+  ;;    (call-interactively 'gts-do-translate)))
 #+end_src
 
-And start your translate with command ~gts-do-translate~.
+-  ~h~ show help
+-  ~g~ refresh q exit
+-  ~x~ exchanges source language and target language and refresh the translation
+-  ~M-n~/~M-p~, switch to the next/prev available translation direction, and refresh
+-  ~C~ clear all caches in gts-default-cacher
 
 *** German
 
@@ -555,6 +576,29 @@ And start your translate with command ~gts-do-translate~.
 #+BEGIN_SRC emacs-lisp
 (load "~/.emacs.d/dict")
 #+END_SRC
+
+** Jinx (Spell Checking)                                         :installed:
+
+- ~apt-get install aspell-it~
+- ~apt-get install libenchant-2-dev~
+
+#+begin_src emacs-lisp
+  (use-package jinx
+    :ensure t ; install, if missing
+    :config
+    (setq jinx-languages "en_US it")
+    (setq jinx-include-modes '(text-mode prog-mode))
+    (setq jinx-include-faces
+          '((prog-mode font-lock-doc-face)
+            (conf-mode font-lock-comment-face)))
+
+    (global-jinx-mode 1)
+
+    (define-key global-map (kbd "C-z $") #'jinx-correct)
+    (define-key global-map (kbd "C-z l") #'jinx-languages))
+#+end_src
+
+~jinx-languages~ uses ~completing-read-multiple~, which allows you to pick more than one by separating them with a comma (technically, with the ~crm-separator~).
 
 ** Text Expansion
 
@@ -771,7 +815,7 @@ The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-
             (define-key lsp-mode-map (kbd "C-c l d h") 'lsp-ui-doc-hide))
 #+end_src
 
-Note, ~lsp-ui~ was:
+TODO: Note, ~lsp-ui~ was:
 (global-set-key (kbd "C-c l d s") 'lsp-ui-doc-show)
 (global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide)
 
@@ -897,6 +941,8 @@ Dependencies
     - Maildir-utils might be better depending on your distribution, see also [[http://www.djcbsoftware.nl/code/mu/mu4e.html][mu/mu4e]]
 5. msmtp (via ~apt~) for sending mails
 6. +altermime (via ~apt~) for [[https://emacs.stackexchange.com/a/23815][deleting attachments]]+ [deprecated]
+    - Installed and got this note: Postfix (main.cf) was not set up.  Start with
+  ~cp /usr/share/postfix/main.cf.debian~ ~/etc/postfix/main.cf~. If you need to make changes, edit ~/etc/postfix/main.cf~ (and others) as needed. To view Postfix configuration values, see postconf(1).
 7. [[https://xapian.org/][Xapian]] (install ~libxapian-dev~ via ~apt~) is an Open Source Search Engine Library
 8. [[https://github.com/jwiegley/use-package][use-package]] (via MELPA)
 
@@ -967,8 +1013,6 @@ personal-address  : schmudde@yorba.co
 
 ** Attachments (MIME parts)
 
-
-
 MIME-part actions allow you to act upon MIME-parts in a message - such as attachments. For now, these actions are defined and documented in ~mu4e-view-mime-part-action~, bound to ~A~.
 
 mu4e v1.6 uses the gnus-based message viewer as the default, which includes support for S/MIME.
@@ -996,66 +1040,22 @@ mu4e v1.6 uses the gnus-based message viewer as the default, which includes supp
 
 Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Aimé Bertrand wrote and updated [[https://macowners.club/posts/mu4e-save-attachments-faster-with-ivy/#edits][Mu4E - Save attachments faster with ivy]]. Here are the functions they provide using the new ~gnus-article-mode~.
 
-#+begin_src emacs-lisp
-  (defun timu/mu4e-view-save-attachments ()
-    "Save All Attachements in a selected directory using completion.
-  This is a modified version of `mu4e-view-save-attachments'."
-    (interactive)
-    (cl-assert (and (eq major-mode 'mu4e-view-mode)
-                    (derived-mode-p 'gnus-article-mode)))
-    (let* ((parts (mu4e~view-gather-mime-parts))
-           (handles '())
-           (files '())
-           dir)
-      (dolist (part parts)
-        (let ((fname (cdr (assoc 'filename (assoc "attachment" (cdr part))))))
-          (when fname
-            (push `(,fname . ,(cdr part)) handles)
-            (push fname files))))
-      (if files
-          (progn
-            (setq dir (read-directory-name "Save to directory: "))
-            (cl-loop for (f . h) in handles
-                     when (member f files)
-                     do (mm-save-part-to-file h (expand-file-name f dir))))
-        (mu4e-message "No attached files found"))))
-
-  (global-set-key (kbd "C-c A") 'timu/mu4e-view-save-attachments)
-#+end_src
-
-#+begin_src emacs-lisp
-  (defun timu/mu4e-view-save-attachment ()
-    "Save one attachement in a selected directory using completion.
-  This is a modified version of `mu4e-view-save-attachments'."
-    (interactive)
-    (cl-assert (and (eq major-mode 'mu4e-view-mode)
-                    (derived-mode-p 'gnus-article-mode)))
-    (let* ((parts (mu4e~view-gather-mime-parts))
-           (handles '())
-           (files '())
-           dir)
-      (dolist (part parts)
-        (let ((fname (cdr (assoc 'filename (assoc "attachment" (cdr part))))))
-          (when fname
-            (push `(,fname . ,(cdr part)) handles)
-            (push fname files))))
-      (if files
-          (progn
-            (setq files (completing-read-multiple "Save part(s): " files)
-                  dir (read-directory-name "Save to directory: "))
-            (cl-loop for (f . h) in handles
-                     when (member f files)
-                     do (mm-save-part-to-file h (expand-file-name f dir))))
-        (mu4e-message "No attached files found"))))
-
-  (global-set-key (kbd "C-c D") 'timu/mu4e-view-save-attachment)
-#+end_src
+---
 
 It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
 
 But the gnus-based message view update in v1.6 of mu/mu4e provides a broken built-in function, ~gnus-mime-delete-part~, that gives this error message: /The current group does not support deleting of parts/. It seems like an issue with [[https://mail.gnu.org/archive/html/emacs-diffs/2021-01/msg00681.html][a setting]]: ~(when (gnus-group-read-only-p) (error "The current group does not support deleting of parts"))~?
 
 Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a solution]]. Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
+
+#+begin_src emacs-lisp
+  (defun test-mu4e-part-action (_)
+    (message "Does this return a file? << %s >>"
+             (mu4e-message-field-at-point :path)))
+
+  (add-to-list 'mu4e-view-mime-part-actions
+               '(:name "Ttest-the-thing" :handler test-mu4e-part-action :receives temp))
+#+end_src
 
 #+begin_src emacs-lisp
   (defun my-mime-part-filename (num)
@@ -1112,6 +1112,7 @@ mu4e-attachment-dir
 
 #+RESULTS:
 : /home/schmudde/
+
 
 While I'm making attachments better, mark the file(s) in dired you would like to attach and press ~C-c RET C-a~ or use ~gnus-dired-attach~ on each file. Via the docs: File: mu4e.info, Node: Dired.
 
