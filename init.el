@@ -63,8 +63,6 @@
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
  '(doc-view-dvipdfm-program "nil")
- '(elfeed-feeds
-   '("https://tirkarthi.github.io/" "http://rss.slashdot.org/Slashdot/slashdot"))
  '(erc-autojoin-channels-alist '(("freenode.net" "#clojure" "##Atari")))
  '(erc-autojoin-delay 30)
  '(erc-autojoin-mode t)
@@ -91,6 +89,7 @@
  '(erc-track-minor-mode t)
  '(erc-track-mode t)
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
+ '(gptel-use-curl nil)
  '(ispell-dictionary nil)
  '(ledger-reports
    '(("test" "ledger ")
@@ -111,24 +110,9 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode magit restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(jinx consult corfu marginalia orderless vertico elfeed gptel org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
-   '((eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/.secrets/yorba-pubsub-resources.json")
-     (eval progn
-           (defun yorba-dev
-               (choice)
-             (interactive
-              (let
-                  ((completion-ignore-case t))
-                (list
-                 (completing-read "Choose: "
-                                  '("start-server" "stop-server" "portal" "go" "stop" "reset" "portal-clear" "portal-close" "refresh")
-                                  nil t))))
-             (with-current-buffer
-                 (current-buffer)
-               (cider-interactive-eval
-                (format "(dev/%s)" choice)))))
-     (eval progn
+   '((eval progn
            (defun dev
                (function-name)
              "call dev(s) functions specifying function name"
@@ -152,7 +136,6 @@
                   (with-current-buffer
                       (current-buffer)
                     (cider-interactive-eval "(dev/portal-close)"))))
-     (eval setenv "GOOGLE_APPLICATION_CREDENTIALS" "/home/schmudde/work/yorba/yorba-pubsub-resources.json")
      (cider-refresh-after-fn . "server.repl/post-refresh")
      (cider-refresh-before-fn . "server.repl/pre-refresh")))
  '(send-mail-function 'smtpmail-send-it)
@@ -171,8 +154,11 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(menu ((t (:background "brightwhite" :foreground "blue" :inverse-video t))))
- '(tty-menu-enabled-face ((t (:background "blue" :foreground "brightblack" :weight bold)))))
+ '(ansi-color-blue ((t (:background "#2fafff" :foreground "#2fafcf"))))
+ '(lsp-ui-peek-line-number ((t (:inherit shadow))))
+ '(tty-menu-disabled-face ((t (:background "#2277bb" :foreground "gray70"))))
+ '(tty-menu-enabled-face ((t (:background "#2277bb" :foreground "gray85" :weight bold))))
+ '(tty-menu-selected-face ((t (:background "#449bce")))))
 
 (define-key input-decode-map "\e[1;2A" [S-up])
 (windmove-default-keybindings)
