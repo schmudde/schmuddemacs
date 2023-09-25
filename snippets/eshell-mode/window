@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: window
+# key: w
+# --
+xdg-open .

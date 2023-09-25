@@ -59,6 +59,11 @@
  '(deft-directory "/home/schmudde/Dropbox/notes")
  '(deft-recursive t)
  '(deft-use-filename-as-title t)
+ '(denote-backlinks-show-context t)
+ '(denote-directory "/home/schmudde/Dropbox/notes/zettelkasten")
+ '(denote-infer-keywords nil)
+ '(denote-known-keywords
+   '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs" "clojure"))
  '(desktop-restore-in-current-display t)
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
@@ -105,12 +110,13 @@
      ("\\.mm\\'" . default)
      ("\\.x?html?\\'" . default)
      ("\\.pdf\\'" . default)))
- '(org-todo-keywords '((sequence "TODO" "DOING" "DONE")))
+ '(org-todo-keywords
+   '((sequence "TODO(t)" "DOING(p)" "|" "ABANDONED(a)" "DONE(d)")))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(jinx consult corfu marginalia orderless vertico elfeed gptel org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed gptel org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
            (defun dev

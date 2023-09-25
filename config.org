@@ -42,9 +42,9 @@ My current minibuffer enhancements
     :ensure t
     :config (vertico-mode 1))
 
-  (use-package marginalia
-    :ensure t
-    :config (marginalia-mode 1))
+  ;;(use-package marginalia
+  ;;  :ensure t
+  ;;  :config (marginalia-mode 1))
 
   (setq completion-styles '(orderless basic))
   (setq completion-category-overrides
@@ -253,14 +253,9 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
 
 I don't use ~suspend-frame~. And it's easy to invoke by executed extended command. It's bound to the valuable ~C-z~.
 
-#+begin_src emacs-lisp :tangle no :results drawer
+#+begin_src emacs-lisp :tangle no
 (describe-key (kbd "C-z"))
 #+end_src
-
-#+RESULTS:
-:results:
-nil
-:end:
 
 So I want to unbind it and then use it for something better. Fundamentally ~global-set-key~, ~local-set-key~, etc... call ~define-key~, so I'm going to use that for most of my keybindings. It
 
@@ -272,11 +267,32 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
       (define-key map (kbd "r") 'revert-buffer)
       (define-key map (kbd "s") 'eww-search-words)
       (define-key map (kbd "c") 'quick-calc)
+      (define-key map (kbd "d") 'dictionary-search)
+      (define-key map (kbd "y") 'yas-expand)
       map)
     "Schmudde's personal keymap")
 
   (define-key global-map (kbd "C-z") my-keymap) ; Bind C-z within my-keymap
+
+  (define-key global-map (kbd "C-x C-n") 'next-buffer)
+  (define-key global-map (kbd "C-x C-p") 'previous-buffer)
 #+end_src
+
+** Text Expansion
+n
+/[[https://www.masteringemacs.org/article/text-expansion-hippie-expand][Hippie Expand]]/ > /Dynamic Abbrev/
+
+#+begin_src emacs-lisp
+(global-set-key [remap dabbrev-expand] 'hippie-expand)
+#+end_src
+
+~M-/~ expands the things it has seen in:
+
+- File Names and Paths in any buffer
+- A repeated line from earlier
+- Lisp lists
+- Switches/keywords in ~eshell~/~shell~
+- Stuff from the Kill Ring
 
 ** [[https://depp.brause.cc/nov.el/][nov.el]]                                                      :considering:
 ** Elfeed                                                        :installed:
@@ -344,6 +360,10 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
 
   (define-key markdown-mode-map [remap markdown-follow-thing-at-point] 'my-markdown-open-link)
 #+end_src
+
+*** TODO Update to ~global-map~
+
+The issue is ~C-c l~ is a prefix for lsp-mode, which is why I haven't made this global already.
 
 #+begin_src emacs-lisp
   (define-key text-mode-map (kbd "C-c l") 'org-store-link)
@@ -600,22 +620,6 @@ Multi-Language Options:
 
 ~jinx-languages~ uses ~completing-read-multiple~, which allows you to pick more than one by separating them with a comma (technically, with the ~crm-separator~).
 
-** Text Expansion
-
-/[[https://www.masteringemacs.org/article/text-expansion-hippie-expand][Hippie Expand]]/ > /Dynamic Abbrev/
-
-#+begin_src emacs-lisp
-(global-set-key [remap dabbrev-expand] 'hippie-expand)
-#+end_src
-
-~M-/~ expands the things it has seen in:
-
-- File Names and Paths in any buffer
-- A repeated line from earlier
-- Lisp lists
-- Switches/keywords in ~eshell~/~shell~
-- Stuff from the Kill Ring
-
 ** Fill Paragraphs and Word Frequency
 
 [[https://www.emacswiki.org/emacs/UnfillParagraph ][Unfill Paragraph]] by Stefan Monnier <foo at acm.org>. It is the opposite of ~fill-paragraph~ (~M-q~).
@@ -662,12 +666,14 @@ A very basic word count analysis [[https://www.emacswiki.org/emacs/WordCount][fr
 
 Expanding a YASnippet requires the ~yas-minor-mode~ + ~xxx-mode~ (major mode). The ~xxx-mode~ must match a directory in:
 
+
+
 #+begin_src emacs-lisp :tangle no
 yas-snippet-dirs
 #+end_src
 
 #+RESULTS:
-| /home/schmudde/.emacs.d/snippets |
+| /home/schmudde/.emacs.d/snippets | /home/schmudde/.emacs.d/elpa/clojure-snippets-1.0.1/snippets |
 
 For example, the currently supported modes include:
 
@@ -677,10 +683,16 @@ ls /home/schmudde/.emacs.d/snippets
 
 #+RESULTS:
 | clojure-mode  |
+| eshell-mode   |
 | markdown-mode |
 | org-mode      |
 
 [[https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets][The project repo]] is a great snippet resource. Add them and then evaluate ~yas-reload-all~.
+
+#+begin_src emacs-lisp
+(use-package eshell-mode
+  :hook ((yas-minor-mode-on)))
+#+end_src
 
 *** Multiple Cursors                                              :installed:
 

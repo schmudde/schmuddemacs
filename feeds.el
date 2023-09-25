@@ -238,4 +238,7 @@
         ("https://doc.searls.com/feed" networks identity)
         ("http://projectvrm.org/feed/" networks identity)
         ("https://www.customerfutures.com/feed/" networks)
+        ("https://queue.acm.org/rss/feeds/articles.xml" comp-sci)
+        ("https://spectrum.ieee.org/feeds/feed.rss" comp-sci)
+        ("https://lars.ingebrigtsen.no/feed" emcas bloggers)
         ("http://www.paulgraham.com/rss.html" tech-news comp-sci networks)))
