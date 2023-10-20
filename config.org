@@ -96,9 +96,24 @@ Set ~deft-extensions~, ~deft-recursive~, and ~deft-directory~ in ~M-x customize-
 - ~nil~: regexp search. During regexp search, the entire filter string is interpreted as a single regular expression.
     - ~The\s-KLF~ Will find /The KLF/.
 
-*** TODO [[https://protesilaos.com/codelog/2022-06-18-denote-demo/][denote]]                                               :considering:
+*** [[https://protesilaos.com/codelog/2022-06-18-denote-demo/][denote]]                                                      :installed:
 
 Denote is a simple note-taking tool for Emacs. It is based on the idea that notes should follow a predictable and descriptive file-naming scheme. The file name must offer a clear indication of what the note is about, without reference to any other metadata. Denote basically streamlines the creation of such files while providing facilities to link between them.
+
+*** [[https://github.com/nobiot/org-transclusion][org-transclusion]]                                       :installed:
+
+#+begin_src emacs-lisp
+  (use-package org-transclusion
+    :hook (org-mode . org-transclusion-mode))
+#+end_src
+
+
+Specify a range of lines to transclude: ~#+transclude: [[file:../../test/test.txt]] :lines 3-5~
+
+- ~3-5~: lines from 3 to 5, both lines inclusive.
+- ~10-10~, meaning line 10 only
+- You can combine ‘:lines’ with ‘:src’ to transclude only a certain range of source files: ~#+transclude: [[file:../../test/python-1.py::id-1234]] :lines 1-4 :src python~ (the four lines of the source file from the line that contains string “id-1234”)
+- For Org’s file links (using ~org-transclusion-make-from-link~), you can use [[https://orgmode.org/manual/Search-Options.html][search options]] w/ ~::~. When a search finds a line that includes the string, the Org-transclude counts it as the starting line 1 for the ‘:lines’ property: ~#+transclude: [[file:../../test/test.txt::Transcendental Ontology]] :lines 1-1~ (only the single line that contains the line found by the search option for text string “Transcendental Ontology”)
 
 *** TODO Querying Org Files                                   :considering:
 
@@ -115,7 +130,6 @@ A question often asked, and rightfully so, is why zetteldeft doesn’t use any o
 - Org-mode links depend on filenames and might break when files are moved or the filename changes.
 - I want to prevent lock in as much as possible. Many people use a Markdown-based system, and you could perfectly use Zetteldeft together with other applications that make Markdown notes (theoretically at least – I haven’t tested this myself)
 
-*** TODO [[https://github.com/nobiot/org-transclusion][org-transclusion]]                                     :considering:
 *** TODO zk.el                                                :considering:
 
 - zk-index and zk-desktop, interfaces for the zk note-taking package: https://www.youtube.com/watch?v=7qNT87dphiA
@@ -532,6 +546,13 @@ TODO: set ~gptel-api-key~ to the key or to a function that returns the key (more
 [[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]
 
 - ~[[https://elpa.gnu.org/packages/adaptive-wrap.html][adaptive-wrap]]~: ensures that outlines wrap lines correctly with ~wrap-prefix~. (installed)
+** Dictionary
+
+Local hosting: Webster's 1913 edition. Or just use the internet, like in 2023.
+
+#+begin_src emacs-lisp
+  (setq dictionary-server "dict.org")
+#+end_src
 ** Translations
 
 Multi-Language Options:
@@ -666,8 +687,6 @@ A very basic word count analysis [[https://www.emacswiki.org/emacs/WordCount][fr
 
 Expanding a YASnippet requires the ~yas-minor-mode~ + ~xxx-mode~ (major mode). The ~xxx-mode~ must match a directory in:
 
-
-
 #+begin_src emacs-lisp :tangle no
 yas-snippet-dirs
 #+end_src
@@ -690,8 +709,7 @@ ls /home/schmudde/.emacs.d/snippets
 [[https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets][The project repo]] is a great snippet resource. Add them and then evaluate ~yas-reload-all~.
 
 #+begin_src emacs-lisp
-(use-package eshell-mode
-  :hook ((yas-minor-mode-on)))
+  (yas-global-mode 1)
 #+end_src
 
 *** Multiple Cursors                                              :installed:
@@ -900,6 +918,7 @@ Add ~(require 'org-tempo)~ to enable ~<s TAB~ code block shortcut.
                                (python . t)
                                (restclient . t)
                                (shell . t)
+                               (http . t)
                                (sql . t)))
 
   (require 'org-tempo)
@@ -978,8 +997,6 @@ muw list
 personal
 yorba
 :end:
-
-Lisp Code
 
 #+BEGIN_SRC emacs-lisp
   (load-file "~/.config/mu4e/mu4e-config.el")
@@ -1069,8 +1086,132 @@ Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a sol
              (mu4e-message-field-at-point :path)))
 
   (add-to-list 'mu4e-view-mime-part-actions
-               '(:name "Ttest-the-thing" :handler test-mu4e-part-action :receives temp))
+               '(:name "Test-the-thing" :handler test-mu4e-part-action :receives temp))
 #+end_src
+
+#+begin_quote
+Attachments are a list of elements with fields ~:index~ (the number of the MIME-part), ~:name~ (the file name, if any), ~:mime-type~ (the MIME-type, if any) and ~:size~ (the size in bytes, if any).
+#+end_quote
+
+~ /usr/local/share/emacs/site-lisp/mu4e/mu4e-message.el
+
+Get the information:
+
+- ~(mu4e-message-field-at-point :path)~ → ~"/home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S"~
+- ~(test-mu4e-part-action nil)~ ~"Does this return a file? << /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S >>"~
+- ~(mu4e--view-gather-mime-parts)~ → ~((2 #<buffer  *mm*-715641> ("application/octet-stream" (name . "toolbox--tb-2798-pdf_1433511060.pdf")) base64 nil ("attachment") nil nil nil))~
+
+~(mu4e-message-at-point)~
+
+#+begin_src
+(:path /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S
+ :size 139602
+ :reply-to ((:email MYTOOLBOX@TOOLBOXCOWORKING.COM))
+ :changed (25902 36366 0)
+ :date (25901 48979 0)
+ :flags (seen attach)
+ :from ((:email no-reply@nexudus.com :name Toolbox))
+ :message-id 1gzhqUHxSFeAN4TMy97F9g@geopod-ismtpd-6
+ :priority normal
+ :subject We could not take payment for invoice #TB-2798
+ :to ((:email d@schmud.de :name d@schmud.de))
+ :maildir /personal/INBOX
+ :docid 35184
+ :meta (:path 18:z :level 0 :date n652dbf53 :data-tstamp (0 0 0) :root t :thread-subject t))
+#+end_src
+
+∴ ~altermime --input="/home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S" --remove="toolbox--tb-2798-pdf_1433511060.pdf"~
+
+#+begin_src shell :results drawer
+mu fields
+#+end_src
+
+#+RESULTS:
+:results:
+#
+# message fields
+#
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| field-name | alias     | short | search  | value | sexp | example query                 | description                    |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| bcc        |           | h     | index   | yes   | yes  | bcc:foo@example.com           | Blind carbon-copy recipient    |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| body       |           | b     | index   | no    | no   | body:capybara                 | Message plain-text body        |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| cc         |           | c     | index   | yes   | yes  | cc:quinn@example.com          | Carbon-copy recipient          |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| changed    |           | k     | range   | yes   | yes  | changed:30M..                 | Last change time               |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| date       |           | d     | range   | yes   | yes  | date:20220101..20220505       | Message date                   |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| embed      |           | e     | index   | no    | no   | embed:war OR embed:peace      | Embedded text                  |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| file       |           | j     | boolean | no    | no   | file:/image\.*.jpg/           | Attachment file name           |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| flags      | flag      | g     | boolean | yes   | yes  | flag:unread AND flag:personal | Message properties             |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| from       |           | f     | index   | yes   | yes  | from:jimbo                    | Message sender                 |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| maildir    |           | m     | boolean | yes   | yes  | maildir:/private/archive      | Maildir path for message       |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| list       |           | v     | boolean | yes   | yes  | list:mu-discuss.example.com   | Mailing list (List-Id:)        |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| message-id | msgid     | i     | boolean | yes   | yes  | msgid:abc@123                 | Message-Id                     |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| mime       | mime-type | y     | boolean | no    | no   | mime:image/jpeg               | Attachment MIME-type           |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| path       |           | l     | boolean | yes   | yes  | path:/a/b/Maildir/cur/msg:2,S | File system path to message    |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| priority   | prio      | p     | boolean | yes   | yes  | prio:high                     | Priority                       |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| references |           | r     | no      | yes   | yes  |                               | References to related messages |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| size       |           | z     | range   | yes   | yes  | size:1M..5M                   | Message size in bytes          |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| subject    |           | s     | index   | yes   | yes  | subject:wombat                | Message subject                |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| tags       | tag       | x     | boolean | yes   | yes  | tag:projectx                  | Message tags                   |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| thread     |           | w     | boolean | yes   | no   |                               | Thread a message belongs to    |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+| to         |           | t     | index   | yes   | yes  | to:flimflam@example.com       | Message recipient              |
++------------+-----------+-------+---------+-------+------+-------------------------------+--------------------------------+
+
+#
+# message flags
+#
++-----------+----------+----------+-----------------------------+
+| flag      | shortcut | category | description                 |
++-----------+----------+----------+-----------------------------+
+| draft     | D        | file     | Draft (in progress)         |
++-----------+----------+----------+-----------------------------+
+| flagged   | F        | file     | User-flagged                |
++-----------+----------+----------+-----------------------------+
+| passed    | P        | file     | Forwarded message           |
++-----------+----------+----------+-----------------------------+
+| replied   | R        | file     | Replied-to                  |
++-----------+----------+----------+-----------------------------+
+| seen      | S        | file     | Viewed at least once        |
++-----------+----------+----------+-----------------------------+
+| trashed   | T        | file     | Marked for deletion         |
++-----------+----------+----------+-----------------------------+
+| new       | N        | maildir  | New message                 |
++-----------+----------+----------+-----------------------------+
+| signed    | z        | content  | Cryptographically signed    |
++-----------+----------+----------+-----------------------------+
+| encrypted | x        | content  | Encrypted                   |
++-----------+----------+----------+-----------------------------+
+| attach    | a        | content  | Has at least one attachment |
++-----------+----------+----------+-----------------------------+
+| unread    | u        | pseudo   | New or not seen message     |
++-----------+----------+----------+-----------------------------+
+| list      | l        | content  | Mailing list message        |
++-----------+----------+----------+-----------------------------+
+| personal  | q        | content  | Personal message            |
++-----------+----------+----------+-----------------------------+
+| calendar  | c        | content  | Calendar invitation         |
++-----------+----------+----------+-----------------------------+
+:end:
 
 #+begin_src emacs-lisp
   (defun my-mime-part-filename (num)
@@ -1127,7 +1268,6 @@ mu4e-attachment-dir
 
 #+RESULTS:
 : /home/schmudde/
-
 
 While I'm making attachments better, mark the file(s) in dired you would like to attach and press ~C-c RET C-a~ or use ~gnus-dired-attach~ on each file. Via the docs: File: mu4e.info, Node: Dired.
 

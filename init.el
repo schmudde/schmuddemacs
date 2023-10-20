@@ -116,7 +116,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed gptel org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed gptel org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
            (defun dev
