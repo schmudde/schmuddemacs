@@ -107,7 +107,6 @@ Denote is a simple note-taking tool for Emacs. It is based on the idea that note
     :hook (org-mode . org-transclusion-mode))
 #+end_src
 
-
 Specify a range of lines to transclude: ~#+transclude: [[file:../../test/test.txt]] :lines 3-5~
 
 - ~3-5~: lines from 3 to 5, both lines inclusive.
@@ -779,7 +778,7 @@ According to [[https://docs.cider.mx/cider/additional_packages.html][the officia
 The use of paredit when editing Clojure (or any other Lisp) code is highly recommended.  You’re probably using it already in your clojure-mode buffers (if you’re not you probably should). You might also want to enable paredit in the REPL buffer as well:
 
 (add-hook 'cider-repl-mode-hook #'paredit-mode)
-#+end_src
+#+end_quote
 
 But the following hooks do not work (CIDER 1.5, 1.6 freezes):
 
