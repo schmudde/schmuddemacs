@@ -14,6 +14,7 @@
         ("http://www.thinktankwatch.com/feeds/posts/default" real-news)
         ("http://www.dlederle.com/feed.xml" sts comp-sci bloggers)
         ("https://www.zylstra.org/blog/feed/" identity bloggers)
+        ("https://blog.khinsen.net/feeds/all.rss.xml" bloggers commons sts)
         ("http://www.craigmurray.org.uk/feed/")
         ("https://www.charlieharrington.com/rss.xml")
         ("https://rocks.guide/rss/")

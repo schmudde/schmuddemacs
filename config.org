@@ -340,9 +340,19 @@ n
 
   (defun my-markdown-insert-link ()
     (interactive)
-    (if (bound-and-true-p org-stored-links)
-        (call-interactively 'org-insert-link-global)
-      (call-interactively 'markdown-insert-link)))
+    (let ((org-stored-link (bound-and-true-p org-stored-links)))
+      (call-interactively
+       (cond
+        ((and org-stored-link
+              kill-ring
+              (string-match-p browse-url-button-regexp (car kill-ring)))
+         (intern ;; insert into (or read from like ~intern-soft~) to the object array
+          (completing-read "Pick function: "
+                           '(org-insert-link-global
+                             markdown-insert-link)
+                           nil :require-match)))
+        (org-stored-link #'org-insert-link-global)
+        (t #'markdown-insert-link)))))
 
   (define-key markdown-mode-map [remap markdown-insert-link] 'my-markdown-insert-link)
 
