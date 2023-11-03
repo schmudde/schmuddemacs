@@ -77,8 +77,9 @@
         ("http://feeds.feedburner.com/TheRhizomeBlogRss")
         ("https://www.niio.com/blog/feed/")
         ("http://www.aec.at/aeblog/en/feed/")
-        ("https://jillianhess.substack.com/feed" suchness fine-art) ; notebooks
-        ("http://feeds2.feedburner.com/ignant" fine-art)
+        ("https://ocula.com/magazine/feed/" culture)
+        ("https://jillianhess.substack.com/feed" suchness culture) ; notebooks
+        ("http://feeds2.feedburner.com/ignant" culture)
         ("https://feeds.feedburner.com/bengrosser" digital-art bloggers)
         ("https://petervanstudios.com/blog/rss" digtial-art bloggers)
         ("https://www.holo.mg/feed/" digital-art)
