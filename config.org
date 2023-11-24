@@ -100,6 +100,25 @@ Set ~deft-extensions~, ~deft-recursive~, and ~deft-directory~ in ~M-x customize-
 
 Denote is a simple note-taking tool for Emacs. It is based on the idea that notes should follow a predictable and descriptive file-naming scheme. The file name must offer a clear indication of what the note is about, without reference to any other metadata. Denote basically streamlines the creation of such files while providing facilities to link between them.
 
+#+begin_src emacs-lisp
+  ;; Uses the `denote-dired-directories' which by default includes just the `denote-directory'.
+  (add-hook 'dired-mode-hook 'denote-dired-mode-in-directories)
+  (setq denote-dired-directories-include-subdirectories t)
+  (setq denote-rename-buffer-format "[D] %t")
+  (denote-rename-buffer-mode 1)
+#+end_src
+
+#+RESULTS:
+: t
+
+A controlled vocabulary for keywords/filetags (meaning they are predefined and do not proliferate).
+
+#+begin_src emacs-lisp
+  (setq denote-infer-keywords nil)
+  (setq denote-known-keywords '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs" "clojure" "art"))
+#+end_src
+
+
 *** [[https://github.com/nobiot/org-transclusion][org-transclusion]]                                       :installed:
 
 #+begin_src emacs-lisp
@@ -1110,8 +1129,7 @@ Get the information:
 - ~(test-mu4e-part-action nil)~ ~"Does this return a file? << /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S >>"~
 - ~(mu4e--view-gather-mime-parts)~ → ~((2 #<buffer  *mm*-715641> ("application/octet-stream" (name . "toolbox--tb-2798-pdf_1433511060.pdf")) base64 nil ("attachment") nil nil nil))~
 
-~(mu4e-message-at-point)~
-
+~(mu4e-message-at-point)~ →
 #+begin_src
 (:path /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S
  :size 139602
