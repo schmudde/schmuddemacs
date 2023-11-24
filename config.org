@@ -1083,14 +1083,6 @@ mu4e v1.6 uses the gnus-based message viewer as the default, which includes supp
     - e.g. ~application/pdf=xournal.desktop;okularApplication_pdf.desktop;~
     - e.g. ~xdg-open xyz.pdf~ will parse the above list
 
----
-
-- Preferred (see scripts below)
-    - ~C-c D~: ~timu/mu4e-view-save-attachment~
-    - ~C-c A~: ~timu/mu4e-view-save-attachments~
-- ~e~, ~mu4e-view-save-attachments~: extract (save) mime parts from current mu4e gnus view buffer. (asks for numbers).
-- ~a~: execute some custom action on the message
-- ~A~, ~mu4e-view-mime-part-action~: execute some custom action on the message's MIME-parts ~3 A o~ opens the third MIME-part.
 - The gnus-based view is deceitful.
     - The ~o~ binding works when the cursor is over the attachment.
     - Move the cursor over the file with the cursor S-return runs the command ~mu4e~view-save-attach-from-binding~
@@ -1098,40 +1090,20 @@ mu4e v1.6 uses the gnus-based message viewer as the default, which includes supp
     - ~i~: open in internal editor (useful for text MIME parts when the rendering sucks)
     - ~e~: open in external editor
 
-Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Aimé Bertrand wrote and updated [[https://macowners.club/posts/mu4e-save-attachments-faster-with-ivy/#edits][Mu4E - Save attachments faster with ivy]]. Here are the functions they provide using the new ~gnus-article-mode~.
+*** Explanation
 
----
-
-It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
-
-But the gnus-based message view update in v1.6 of mu/mu4e provides a broken built-in function, ~gnus-mime-delete-part~, that gives this error message: /The current group does not support deleting of parts/. It seems like an issue with [[https://mail.gnu.org/archive/html/emacs-diffs/2021-01/msg00681.html][a setting]]: ~(when (gnus-group-read-only-p) (error "The current group does not support deleting of parts"))~?
-
-Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a solution]]. Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
-
-#+begin_src emacs-lisp
-  (defun test-mu4e-part-action (_)
-    (message "Does this return a file? << %s >>"
-             (mu4e-message-field-at-point :path)))
-
-  (add-to-list 'mu4e-view-mime-part-actions
-               '(:name "Test-the-thing" :handler test-mu4e-part-action :receives temp))
-#+end_src
-
+#+name: /usr/local/share/emacs/site-lisp/mu4e/mu4e-message.el
 #+begin_quote
 Attachments are a list of elements with fields ~:index~ (the number of the MIME-part), ~:name~ (the file name, if any), ~:mime-type~ (the MIME-type, if any) and ~:size~ (the size in bytes, if any).
 #+end_quote
 
-~ /usr/local/share/emacs/site-lisp/mu4e/mu4e-message.el
+To use /altermime/, one needs a ~:path~ and the ~name~ of the part to remove.
 
-Get the information:
+**** See the ~:path~
 
-- ~(mu4e-message-field-at-point :path)~ → ~"/home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S"~
-- ~(test-mu4e-part-action nil)~ ~"Does this return a file? << /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S >>"~
-- ~(mu4e--view-gather-mime-parts)~ → ~((2 #<buffer  *mm*-715641> ("application/octet-stream" (name . "toolbox--tb-2798-pdf_1433511060.pdf")) base64 nil ("attachment") nil nil nil))~
-
-~(mu4e-message-at-point)~ →
+#+name: (mu4e-message-at-point)
 #+begin_src
-(:path /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S
+'(:path /home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S
  :size 139602
  :reply-to ((:email MYTOOLBOX@TOOLBOXCOWORKING.COM))
  :changed (25902 36366 0)
@@ -1147,7 +1119,38 @@ Get the information:
  :meta (:path 18:z :level 0 :date n652dbf53 :data-tstamp (0 0 0) :root t :thread-subject t))
 #+end_src
 
-∴ ~altermime --input="/home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S" --remove="toolbox--tb-2798-pdf_1433511060.pdf"~
+**** See the ~name~
+
+To see the MIME part names: ~(mu4e--view-gather-mime-parts)~ → ~((2 #<buffer  *mm*-715641> ("application/octet-stream" (name . "toolbox--tb-2798-pdf_1433511060.pdf")) base64 nil ("attachment") nil nil nil))~
+
+**** ∴ the /altermime/ command
+
+~altermime --input="/home/schmudde/.local/share/mail/personal/INBOX/cur/1697530521.82007_2.pop-os,U=5023:2,S" --remove="toolbox--tb-2798-pdf_1433511060.pdf"~
+
+*** Implementation
+
+It's important that I can delete large, superfluous attachments. No reason to keep them around year after year. Thankfully, I found this bit of Elisp code [[https://emacs.stackexchange.com/a/23815][on Stackexchange]]. Depends on altermime.
+
+But the gnus-based message view update in v1.6 of mu/mu4e provides a broken built-in function, ~gnus-mime-delete-part~, that gives this error message: /The current group does not support deleting of parts/. It seems like an issue with [[https://mail.gnu.org/archive/html/emacs-diffs/2021-01/msg00681.html][a setting]]: ~(when (gnus-group-read-only-p) (error "The current group does not support deleting of parts"))~?
+
+Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a solution]]. Note: the header listing the attachments is not updated but when you leave the email and reopen it, the attachment is gone
+
+Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Aimé Bertrand wrote and updated [[https://macowners.club/posts/mu4e-save-attachments-faster-with-ivy/#edits][Mu4E - Save attachments faster with ivy]]. Here are the functions they provide using the new ~gnus-article-mode~.
+
+#+begin_src emacs-lisp
+(defun my-mu4e-delete-attachment (number)
+    "Use altermime to delete current email's NUMBERth attachment."
+    (interactive (list (read-number "Delete attachmenet with NUMBER: ")))
+    (if-let ((email-file (mu4e-message-field-at-point :path))
+             (parts gnus-article-mime-handle-alist)
+             (part (alist-get number parts))
+             (element (cdr (assoc 'filename (assoc "attachment" (cdr part))))))
+        (if (executable-find "altermime")
+            (shell-command (format "altermime --input='%s' --remove='%s'" email-file element))
+            ;; (message (format "altermime --input='%s' --remove='%s'" email-file element))
+          (user-error "Altermime is not installed"))
+      (message "Did not find %s attachment to delete" number)))
+#+end_src
 
 #+begin_src shell :results drawer
 mu fields
