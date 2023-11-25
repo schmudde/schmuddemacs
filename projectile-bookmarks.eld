@@ -1,1 +1,1 @@
-("~/.emacs.d/" "~/work/code/yorba/yorba-clj/" "~/work/code/blog/" "~/bin/emacs/" "~/work/code/stlouis2023/" "~/bin/tiara/" "~/bin/mu-wizard/" "~/work/code/yorba/yorba-nodejs/" "~/work/code/netart.today/" "~/work/code/graphs/" "~/work/code/temp/dictim.cookbook/" "~/work/code/temp/d3.wiki/" "~/work/code/blog/resources/public/css/et-book/" "~/")
+("~/.emacs.d/" "~/work/code/yorba/yorba-clj/" "~/work/code/blog/" "~/bin/emacs/" "~/work/code/yorba/analytics/" "~/bin/tiara/" "~/bin/mu-wizard/" "~/work/code/yorba/yorba-nodejs/" "~/work/code/netart.today/")
