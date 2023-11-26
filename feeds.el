@@ -253,7 +253,7 @@
         ("http://shkspr.mobi/blog/feed/" bloggers)
         ("https://tirkarthi.github.io/feed.xml" clojure)
         ("http://rss.slashdot.org/Slashdot/slashdot" tech-news)
-        ("https://wise.readwise.io/feed/" tech-news)
+        ("https://wise.readwise.io/feed/" tech-news bloggers)
         ("https://crookedtimber.org/" bloggers pundits) ;; via jack
         ("https://doc.searls.com/feed" networks identity)
         ("http://projectvrm.org/feed/" networks identity)
@@ -269,5 +269,14 @@
         ("https://deprogrammaticaipsum.com/rss" sts)
         ("https://www.sicpers.info/blog/rss" informatics)
         ("https://www.sloweb.org/en/" clojure emacs)
+        ("https://www.inkandswitch.com/index.xml" informatics irl)
+        ("https://newsletter.futureofcoding.org/rss.xml" informatics irl)
+        ("https://blog.bmannconsulting.com/feed.xml" informatics irl)
+        ("https://blog.zgp.org/feed.xml" bloggers) ;; via mastodon
+        ("https://www.steveherman.press/feed" real-news) ;; via mastodon
+        ("https://parkerhiggins.net/feed.xml" sts) ;; via mastodon
+        ("https://tariqyusuf.in/feed.xml" sts bloggers) ;; via mastodon
+        ("https://blog.sigplan.org/feed/" informatics)
+        ("http://neural.it/customfeed/all.php" culture sts) ;; https://neural.it/rss-feeds/
         ("https://manuelmoreale.com/feed/rss" bloggers) ;; blogs and people
         ("http://www.paulgraham.com/rss.html" tech-news informatics networks)))

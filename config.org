@@ -426,6 +426,7 @@ org-todo-keywords
 (global-set-key (kbd "<f3>") 'org-agenda)
 #+end_src
 
+*** [[https://github.com/alphapapa/org-ql][org-ql]]: query org-mode files                              :considering:
 ** [[https://github.com/marcinkoziej/org-pomodoro][Pomodoro Timer]]                                                :installed:
 
 ~org-pomodoro~ + logbook
