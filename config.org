@@ -35,7 +35,6 @@ My current minibuffer enhancements
 - Orderless: hooks into the underlying completion infrastructure to provide out-of-order completion
 
 #+begin_src emacs-lisp
-
   (savehist-mode 1)
 
   (use-package vertico
@@ -49,6 +48,13 @@ My current minibuffer enhancements
   (setq completion-styles '(orderless basic))
   (setq completion-category-overrides
         '((file (style . (basic partial-completion orderless)))))
+#+end_src
+
+I experimented with recursive minibuffers, but so far haven't needed them. So I'm not adding them to the ~emacs-lisp~ evaluation.
+
+#+begin_src
+  (setq enable-recursive-minibuffers t)
+  (minibuffer-depth-indicate-mode 1)
 #+end_src
 
 *** [[https://github.com/bbatsov/projectile][Projectile]]                                                  :installed:
@@ -737,8 +743,10 @@ ls /home/schmudde/.emacs.d/snippets
 
 [[https://github.com/AndreaCrotti/yasnippet-snippets/tree/master/snippets][The project repo]] is a great snippet resource. Add them and then evaluate ~yas-reload-all~.
 
+Make sure we can run Yas everywhere, including the minibuffer!
 #+begin_src emacs-lisp
   (yas-global-mode 1)
+  (add-hook 'minibuffer-mode-hook 'yas-minor-mode)
 #+end_src
 
 *** Multiple Cursors                                              :installed:
@@ -1162,22 +1170,38 @@ Luckily there seems to be [[https://emacs.stackexchange.com/a/70992/11015][a sol
 
 Save attachments changed quite a bit with the mu/mu4e 1.6 updates. Thankfully Aimé Bertrand wrote and updated [[https://macowners.club/posts/mu4e-save-attachments-faster-with-ivy/#edits][Mu4E - Save attachments faster with ivy]]. Here are the functions they provide using the new ~gnus-article-mode~.
 
-I still have the [[file:~/Dropbox/org/inbox.org::*Attachment debugging][old my-delete-attachment code here]] and [[file:~/Dropbox/org/inbox.org::*Improve attachment deletion.][here]].
+#+begin_src emacs-lisp
+  (defun my-mu4e-delete-attachment (number)
+      "Use altermime to delete current email's NUMBERth attachment."
+      (interactive (list (read-number "Delete attachmenet with NUMBER: ")))
+      (if-let ((email-file (mu4e-message-field-at-point :path))
+               (parts gnus-article-mime-handle-alist)
+               (part (alist-get number parts))
+               (element (or (cdr (assoc 'filename (assoc "attachment" (cdr part))))
+                            (cdr (cadr (cadr part))))))
+          (if (and (executable-find "altermime")
+                   (y-or-n-p (format "Delete %s attachment?"
+                                     (propertize element 'face 'error))))
+              (shell-command (format "altermime --input='%s' --remove='%s'" email-file element))
+              ;; (message (format "altermime --input='%s' --remove='%s'" email-file element))
+            (user-error "Altermime is not installed"))
+        (message "Did not find %s attachment to delete" number)))
+#+end_src
+
+
+That ~or~ statement to get the ~element~ is pretty gnarly. But I found two ways that attachments may be ordered. The second is just structured data and it's pretty rough. This is how it works:
 
 #+begin_src emacs-lisp
-(defun my-mu4e-delete-attachment (number)
-    "Use altermime to delete current email's NUMBERth attachment."
-    (interactive (list (read-number "Delete attachmenet with NUMBER: ")))
-    (if-let ((email-file (mu4e-message-field-at-point :path))
-             (parts gnus-article-mime-handle-alist)
-             (part (alist-get number parts))
-             (element (cdr (assoc 'filename (assoc "attachment" (cdr part))))))
-        (if (executable-find "altermime")
-            (shell-command (format "altermime --input='%s' --remove='%s'" email-file element))
-            ;; (message (format "altermime --input='%s' --remove='%s'" email-file element))
-          (user-error "Altermime is not installed"))
-      (message "Did not find %s attachment to delete" number)))
+  (cdr (cadr (cadr
+              '("#<buffer  *mm*-538155>" ("application/octet-stream"
+                                          (name . "DHL_Fattura_cash_464508.pdf"))
+                base64 nil ("inline") nil nil nil))))
 #+end_src
+
+#+RESULTS:
+: DHL_Fattura_cash_464508.pdf
+
+I still have the [[file:~/Dropbox/org/inbox.org::*Attachment debugging][old my-delete-attachment code here]] and [[file:~/Dropbox/org/inbox.org::*Improve attachment deletion.][here]]. But this seems to be more elegant. There's not much I can do about the ~cdr~ madness because of the original library.
 
 #+begin_src shell :results drawer
 mu fields
