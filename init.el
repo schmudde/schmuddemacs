@@ -63,7 +63,7 @@
  '(denote-directory "/home/schmudde/Dropbox/notes/zettelkasten")
  '(denote-infer-keywords nil)
  '(denote-known-keywords
-   '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs" "clojure"))
+   '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs" "clojure" "art"))
  '(desktop-restore-in-current-display t)
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
@@ -95,6 +95,22 @@
  '(erc-track-mode t)
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
  '(gptel-use-curl nil)
+ '(ignored-local-variable-values
+   '((eval progn
+           (defun yorba-dev
+               (choice)
+             (interactive
+              (let
+                  ((completion-ignore-case t))
+                (list
+                 (completing-read "Choose: "
+                                  '("start-server" "stop-server" "portal" "go" "stop" "reset" "portal-clear" "portal-close" "refresh")
+                                  nil t))))
+             (with-current-buffer
+                 (current-buffer)
+               (cider-interactive-eval
+                (format "(dev/%s)" choice))))
+           (setenv "GOOGLE_APPLICATION_CREDENTIALS" "/path/to/yorba-pubsub-resources.json"))))
  '(ispell-dictionary nil)
  '(ledger-reports
    '(("test" "ledger ")
@@ -119,6 +135,21 @@
    '(ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
+           (defun yorba-dev
+               (choice)
+             (interactive
+              (let
+                  ((completion-ignore-case t))
+                (list
+                 (completing-read "Choose: "
+                                  '("start-server" "stop-server" "portal" "go" "stop" "reset" "portal-clear" "portal-close" "refresh")
+                                  nil t))))
+             (with-current-buffer
+                 (current-buffer)
+               (cider-interactive-eval
+                (format "(dev/%s)" choice))))
+           (setenv "GOOGLE_APPLICATION_CREDENTIALS" "/path/to/yorba-pubsub-resources.json"))
+     (eval progn
            (defun dev
                (function-name)
              "call dev(s) functions specifying function name"

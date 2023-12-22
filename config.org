@@ -108,22 +108,19 @@ Denote is a simple note-taking tool for Emacs. It is based on the idea that note
 
 #+begin_src emacs-lisp
   ;; Uses the `denote-dired-directories' which by default includes just the `denote-directory'.
+  (require 'denote)
   (add-hook 'dired-mode-hook 'denote-dired-mode-in-directories)
+  (setq denote-dired-directories (list denote-directory))
   (setq denote-dired-directories-include-subdirectories t)
   (setq denote-rename-buffer-format "[D] %t")
   (denote-rename-buffer-mode 1)
+  (setq denote-infer-keywords nil)
 #+end_src
 
 #+RESULTS:
 : t
 
-A controlled vocabulary for keywords/filetags (meaning they are predefined and do not proliferate).
-
-#+begin_src emacs-lisp
-  (setq denote-infer-keywords nil)
-  (setq denote-known-keywords '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs" "clojure" "art"))
-#+end_src
-
+~denote-infer-keywords~ sets a controlled vocabulary for keywords/filetags (meaning they are predefined and do not proliferate). Keywords set in *Customize Group: Denote*.
 
 *** [[https://github.com/nobiot/org-transclusion][org-transclusion]]                                       :installed:
 
@@ -432,6 +429,13 @@ org-todo-keywords
 (global-set-key (kbd "<f3>") 'org-agenda)
 #+end_src
 
+#+begin_src emacs-lisp
+  (setq org-log-done 'time)
+  (setq org-log-into-drawer t)
+  (setq org-log-redeadline 'time)
+  (setq org-log-reschedule 'time)
+#+end_src
+
 *** [[https://github.com/alphapapa/org-ql][org-ql]]: query org-mode files                              :considering:
 ** [[https://github.com/marcinkoziej/org-pomodoro][Pomodoro Timer]]                                                :installed:
 
@@ -559,6 +563,25 @@ Xah Lee's [[http://xahlee.info/emacs/emacs/emacs_copy_file_path.html][Copy File 
            $fpath )))))
 
   (global-set-key (kbd "C-c w") 'xah-copy-file-path)
+#+end_src
+
+HTML → Org via Pandoc
+
+#+begin_src emacs-lisp
+  (defun drs-html-to-org ()
+    (interactive)
+    (let* ((contents (if (region-active-p)
+                         (buffer-substring-no-properties (region-beginning) (region-end))
+                       (buffer-substring-no-properties (point-min) (point-max))))
+           (tmp-file (make-temp-file "eww"))
+           (tmp-file-buffer (find-file-noselect tmp-file)))
+      (with-current-buffer tmp-file-buffer
+        (insert contents)
+        (save-buffer))
+      (kill-buffer tmp-file-buffer)
+      (kill-new
+       (shell-command-to-string
+        (format "pandoc -f html -i %s -t org" tmp-file)))))
 #+end_src
 
 ** ChatGPT                                                       :installed:

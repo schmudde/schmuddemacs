@@ -279,4 +279,8 @@
         ("https://blog.sigplan.org/feed/" informatics)
         ("http://neural.it/customfeed/all.php" culture sts) ;; https://neural.it/rss-feeds/
         ("https://manuelmoreale.com/feed/rss" bloggers) ;; blogs and people
+        ("https://100r.co/links/rss.xml" culture informatics)
+        ("https://battellemedia.com/feed" networks) ;; dot social podcast
+        ("https://evanp.me/feed" networks) ;; dot social podcast
+        ("https://informationaccountability.org/iaf-blog/rss" identity)
         ("http://www.paulgraham.com/rss.html" tech-news informatics networks)))
