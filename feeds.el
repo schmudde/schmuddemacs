@@ -18,6 +18,7 @@
         ("http://www.dlederle.com/feed.xml" sts informatics bloggers)
         ("https://www.zylstra.org/blog/feed/" identity bloggers)
         ("https://blog.khinsen.net/feeds/all.rss.xml" bloggers commons sts)
+        ("https://everybodyslibraries.com/feed" commons)
         ("http://www.craigmurray.org.uk/feed/")
         ("https://www.charlieharrington.com/rss.xml")
         ("https://rocks.guide/rss/")
@@ -139,6 +140,7 @@
         ("http://triquarterly.northwestern.edu/site-feed" chicago)
         ("https://chi.streetsblog.org/author/sharonhoyer/feed/" chicago)
         ("https://bnet.substack.com/feed/" networks)
+        ("https://jackrusher.com/feed.xml" irl)
         ("https://blog.ignaciobrasca.com/feed.xml" irl informatics)
         ("https://blog.matthoran.com/index.xml" irl)
         ("https://protesilaos.com/master.xml" irl emacs)
@@ -151,6 +153,7 @@
         ("http://newcitystage.com/feed/" chicago)
         ("https://compassneedleblog.wordpress.com/feed/" irl)
         ("https://commodore.international/feed/" atari)
+        ("https://atariprojects.org/feed/" atari) ;; vai goto 10
         ("https://oldvcr.blogspot.com/feeds/posts/default" atari)
         ("https://acjay.com/feed/" irl)
         ("http://seespotcode.net/feed.xml" irl clojure)
@@ -282,5 +285,12 @@
         ("https://100r.co/links/rss.xml" culture informatics)
         ("https://battellemedia.com/feed" networks) ;; dot social podcast
         ("https://evanp.me/feed" networks) ;; dot social podcast
+        ("https://laughingmeme.org//feed.xml" networks)
+        ("https://tuxar.uk/feed/" informatics) ;; beautiful turing essays
+        ("https://rknight.me/feed.xml" bloggers)
+        ("https://feeds.pinboard.in/rss/u:vorizi/" informatics chicago) ;; via Komar and Melamid net.art on pinboard
         ("https://informationaccountability.org/iaf-blog/rss" identity)
+        ("https://donotresearch.substack.com/feed" digital-art)
+        ("https://interconnected.org/home/feed" networks) ;; via Samuel Arbesman
+        ("https://maggieappleton.com/rss.xml" networks bloggers) ;; via indieweb
         ("http://www.paulgraham.com/rss.html" tech-news informatics networks)))
