@@ -117,8 +117,7 @@ Denote is a simple note-taking tool for Emacs. It is based on the idea that note
   (setq denote-infer-keywords nil)
 #+end_src
 
-#+RESULTS:
-: t
+~remove-hook~ → ~denote--signature-history~ to clean up signature history
 
 ~denote-infer-keywords~ sets a controlled vocabulary for keywords/filetags (meaning they are predefined and do not proliferate). Keywords set in *Customize Group: Denote*.
 
@@ -785,6 +784,19 @@ Make sure we can run Yas everywhere, including the minibuffer!
 #+END_SRC
 
 * Programming
+
+#+begin_src emacs-lisp
+  (defun drs-kebab-string (beg end)
+    "Make text between BEG and END use kebab-case."
+    (interactive "r")
+    (when (region-active-p)
+      (let* ((string (buffer-substring-no-properties beg end))
+             (kebab (s-dashed-words string)))
+        (delete-region beg end)
+        (insert kebab))))
+
+  (define-key my-keymap (kbd "k") 'drs-kebab-string)
+#+end_src
 
 ** Yorba
 

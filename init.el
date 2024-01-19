@@ -4,8 +4,6 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(org-babel-load-file (concat user-emacs-directory "config.org"))
-
 ;; settings for .txt files
 (add-to-list 'auto-mode-alist '("\\.txt$" . text-mode))
 (add-hook 'text-mode-hook 'flyspell-mode)
@@ -202,3 +200,5 @@
 
 (setq browse-url-browser-function 'eww-browse-url)
 (put 'upcase-region 'disabled nil)
+
+(org-babel-load-file (concat user-emacs-directory "config.org"))
