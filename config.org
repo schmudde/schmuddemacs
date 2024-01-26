@@ -588,6 +588,48 @@ HTML → Org via Pandoc
         (format "pandoc -f html -i %s -t org" tmp-file)))))
 #+end_src
 
+** Citations
+:PROPERTIES:
+:AUTHOR: D. Schmudde
+:TITLE: Schmuddemacs
+:PUBLISHER:
+:GEO: Turin, Italy
+:DATE_PUB: 2024-01-26
+:DATE_ASSC: [2024-01-26 Fri]
+:DESC: Testing functionality of ~drs-citation-set-properties~
+:IMAGE:
+:LINK: https://github.com/schmudde/schmuddemacs
+:END:
+
+#+begin_quote emacs-lisp
+(defvar drs-citation-properties '("AUTHOR" "TITLE" "PUBLISHER" "GEO" "DATE_PUB" "DATE_ASSC" "DESC" "IMAGE" "LINK"))
+
+(defun drs-citation-set-properties ()
+  (interactive)
+  (dolist (property drs-citation-properties)
+    (unless (org-entry-get (point) property)
+     (org-set-property property ""))))
+#+end_quote
+
+#+begin_src emacs-lisp :tangle no :results none
+(drs-citation-set-properties) ; see above heading
+#+end_src
+
+#+begin_src emacs-lisp
+(defun drs-make-citation ()
+  (format "%s /%s/ (%s)"
+  (org-entry-get (point) "AUTHOR")
+  (org-entry-get (point) "TITLE")
+  (org-entry-get (point) "DATE_PUB")))
+#+end_src
+
+#+begin_src emacs-lisp :tangle no
+(drs-make-citation)
+#+end_src
+
+#+RESULTS:
+: D. Schmudde /Schmuddemacs/ (2024-01-26)
+
 ** ChatGPT                                                       :installed:
 
 1. Procure an [[https://platform.openai.com/account/api-keys][OpenAI API key]].
