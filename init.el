@@ -118,12 +118,16 @@
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
  '(org-agenda-files '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"))
+ '(org-default-notes-file "~/.notes.org")
+ '(org-directory "~/Dropbox/notes")
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-file-apps
    '((auto-mode . emacs)
      ("\\.mm\\'" . default)
      ("\\.x?html?\\'" . default)
      ("\\.pdf\\'" . default)))
+ '(org-mobile-directory "~/Dropbox/Apps/MobileOrg")
+ '(org-mobile-inbox-for-pull "~/Dropbox/notes/flagged.org")
  '(org-todo-keywords
    '((sequence "TODO(t)" "DOING(p)" "|" "ABANDONED(a)" "DONE(d)")))
  '(package-archives

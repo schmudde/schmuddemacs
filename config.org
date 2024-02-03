@@ -32,22 +32,30 @@ My current minibuffer enhancements
 - Savehist mode
 - Vertico
 - Marginalia
-- Orderless: hooks into the underlying completion infrastructure to provide out-of-order completion
+- ~completion-styles~
+    - Are the text-matching algorithm (e.g. ~orderless~). Based on the /completion category/ metadata, it can chose a style for a specific file type.
+    - They hook into the underlying completion infrastructure to provide ~orderless~ completion
+    - ~orderless~ accepts SPC but ~basic~ and ~partial-completion~ do not. ∴ ~wikidata_test.clj~ can be found when typing ~tes SPC~ even if the directory includes ~test.clj~.
 
 #+begin_src emacs-lisp
-  (savehist-mode 1)
+    (savehist-mode 1)
 
-  (use-package vertico
-    :ensure t
-    :config (vertico-mode 1))
+    (use-package vertico
+      :ensure t
+      :config (vertico-mode 1)
+      ;; This works with `file-name-shadow-mode' enabled.  When you are in
+      ;; a sub-directory and use, say, `find-file' to go to your home '~/'
+      ;; or root '/' directory, Vertico will clear the old path to keep
+      ;; only your current input.
+      (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
 
-  ;;(use-package marginalia
-  ;;  :ensure t
-  ;;  :config (marginalia-mode 1))
+    ;;(use-package marginalia
+    ;;  :ensure t
+    ;;  :config (marginalia-mode 1))
 
-  (setq completion-styles '(orderless basic))
-  (setq completion-category-overrides
-        '((file (style . (basic partial-completion orderless)))))
+    (setq completion-styles '(orderless basic))
+    (setq completion-category-overrides
+          '((file (styles . (basic partial-completion orderless)))))
 #+end_src
 
 I experimented with recursive minibuffers, but so far haven't needed them. So I'm not adding them to the ~emacs-lisp~ evaluation.
@@ -69,7 +77,7 @@ Navigate between files in a project.
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 #+end_src
 
-*** Buffer Completion
+*** Buffer Completion vs. Pop Ups
 
 Corfu is my current buffer completion enhancement. I use terminal mode, so ~(global-corfu-mode 1)~ doesn't cut it. However, the following setting will bring up completions in the minibuffer:
 
@@ -601,15 +609,15 @@ HTML → Org via Pandoc
 :LINK: https://github.com/schmudde/schmuddemacs
 :END:
 
-#+begin_quote emacs-lisp
-(defvar drs-citation-properties '("AUTHOR" "TITLE" "PUBLISHER" "GEO" "DATE_PUB" "DATE_ASSC" "DESC" "IMAGE" "LINK"))
+#+begin_src emacs-lisp
+(defvar drs-citation-properties '("AUTHOR" "TITLE" "PUBLISHER" "GEO" "DATE_PUB" "DATE_ASSC" "DESC" "IMAGE" "LINK" "PAGES"))
 
 (defun drs-citation-set-properties ()
   (interactive)
   (dolist (property drs-citation-properties)
     (unless (org-entry-get (point) property)
      (org-set-property property ""))))
-#+end_quote
+#+end_src
 
 #+begin_src emacs-lisp :tangle no :results none
 (drs-citation-set-properties) ; see above heading

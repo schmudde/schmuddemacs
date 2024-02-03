@@ -138,8 +138,8 @@
         ("https://feeds.feedburner.com/sciencealert-latestnews" real-news)
         ("http://brevity.wordpress.com/feed/" suchness)
         ("http://triquarterly.northwestern.edu/site-feed" chicago)
-        ("https://chi.streetsblog.org/author/sharonhoyer/feed/" chicago)
-        ("https://bnet.substack.com/feed/" networks)
+        ("https://chi.streetsblog.org/author/sharonhoyer/feed/" chicago irl)
+        ("https://bnet.substack.com/feed/" networks irl)
         ("https://jackrusher.com/feed.xml" irl)
         ("https://blog.ignaciobrasca.com/feed.xml" irl informatics)
         ("https://blog.matthoran.com/index.xml" irl)
@@ -152,6 +152,7 @@
         ("https://gist.github.com/brfid.atom")
         ("http://newcitystage.com/feed/" chicago)
         ("https://compassneedleblog.wordpress.com/feed/" irl)
+        ("https://breakintochat.com/blog/rss" atari) ;; St. Louis guy
         ("https://commodore.international/feed/" atari)
         ("https://atariprojects.org/feed/" atari) ;; vai goto 10
         ("https://oldvcr.blogspot.com/feeds/posts/default" atari)
@@ -287,6 +288,7 @@
         ("https://evanp.me/feed" networks) ;; dot social podcast
         ("https://laughingmeme.org//feed.xml" networks)
         ("https://tuxar.uk/feed/" informatics) ;; beautiful turing essays
+        ("https://www.ben-evans.com/benedictevans?format=rss" informatics) ;; recommended by Adam Lofbomm
         ("https://rknight.me/feed.xml" bloggers)
         ("https://feeds.pinboard.in/rss/u:vorizi/" informatics chicago) ;; via Komar and Melamid net.art on pinboard
         ("https://informationaccountability.org/iaf-blog/rss" identity)
