@@ -289,10 +289,13 @@
         ("https://laughingmeme.org//feed.xml" networks)
         ("https://tuxar.uk/feed/" informatics) ;; beautiful turing essays
         ("https://www.ben-evans.com/benedictevans?format=rss" informatics) ;; recommended by Adam Lofbomm
+        ("https://omar.website/posts/index.xml" networks culture bloggers digital-art) ;; https://folk.computer via Adrian KTC
         ("https://rknight.me/feed.xml" bloggers)
         ("https://feeds.pinboard.in/rss/u:vorizi/" informatics chicago) ;; via Komar and Melamid net.art on pinboard
         ("https://informationaccountability.org/iaf-blog/rss" identity)
         ("https://donotresearch.substack.com/feed" digital-art)
         ("https://interconnected.org/home/feed" networks) ;; via Samuel Arbesman
         ("https://maggieappleton.com/rss.xml" networks bloggers) ;; via indieweb
+        ("https://chriscoyier.net/feed/" networks) ;; code pen guy
+        ("https://adactio.com/journal/rss" bloggers networks) ;; indieweb
         ("http://www.paulgraham.com/rss.html" tech-news informatics networks)))

@@ -448,6 +448,29 @@ org-todo-keywords
   (setq org-log-reschedule 'time)
 #+end_src
 
+#+begin_src emacs-lisp
+  (defun drs-org-done-today ()
+    (let (headings)
+      (goto-char (point-min))
+      (org-map-entries
+       (lambda ()
+         (when-let ((closed-date (org-entry-get (point) "CLOSED"))
+                    ((string-match-p (format-time-string "%F") closed-date)))
+           (push (org-get-heading nil nil nil :no-comment) headings))))
+      (nreverse headings)))
+
+  (defun drs-org-done-today-display ()
+    (interactive)
+    (if-let ((headings (my-org-done-today)))
+        (with-current-buffer (pop-to-buffer "*my-org-done-today*")
+          (erase-buffer)
+          (org-mode)
+          (insert (format "* %s\n" (format-time-string "%F, %A")))
+          (dolist (heading headings)
+            (insert (format "** %s\n" heading))))
+      (message "Nothing done today 😉")))
+#+end_src
+
 *** [[https://github.com/alphapapa/org-ql][org-ql]]: query org-mode files                              :considering:
 ** [[https://github.com/marcinkoziej/org-pomodoro][Pomodoro Timer]]                                                :installed:
 
