@@ -298,4 +298,7 @@
         ("https://maggieappleton.com/rss.xml" networks bloggers) ;; via indieweb
         ("https://chriscoyier.net/feed/" networks) ;; code pen guy
         ("https://adactio.com/journal/rss" bloggers networks) ;; indieweb
-        ("http://www.paulgraham.com/rss.html" tech-news informatics networks)))
+        ("https://musings.tychi.me/feed/" digital-art bloggers) ;; Solid artist
+        ("https://www.menimagerie.com/a-glass-menagerie-of-insight?format=rss" bloggers networks)
+        ("http://www.paulgraham.com/rss.html" tech-news informatics networks)
+        ("https://atlasminor.com/atlasminor.com/feed" digital-art bloggers)))

@@ -461,8 +461,8 @@ org-todo-keywords
 
   (defun drs-org-done-today-display ()
     (interactive)
-    (if-let ((headings (my-org-done-today)))
-        (with-current-buffer (pop-to-buffer "*my-org-done-today*")
+    (if-let ((headings (drs-org-done-today)))
+        (with-current-buffer (pop-to-buffer "*drs-org-done-today*")
           (erase-buffer)
           (org-mode)
           (insert (format "* %s\n" (format-time-string "%F, %A")))
@@ -619,6 +619,15 @@ HTML → Org via Pandoc
         (format "pandoc -f html -i %s -t org" tmp-file)))))
 #+end_src
 
+** CSV Mode
+
+#+begin_src emacs-lisp
+(use-package csv-mode
+  :ensure t
+  :hook
+  (csv-mode . csv-align-mode))
+#+end_src
+
 ** Citations
 :PROPERTIES:
 :AUTHOR: D. Schmudde
@@ -675,7 +684,17 @@ HTML → Org via Pandoc
 - Select a region of text, call ~M-x gptel-send~.
 - Set chat parameters by calling ~M-x gptel-send~ with a prefix argument (~C-u C-c RET~):
 
-TODO: set ~gptel-api-key~ to the key or to a function that returns the key (more secure).
+TODO:
+
+- Set ~gptel-api-key~ to the key or to a function that returns the key (more secure).
+- Add custom Emacs [[https://github.com/agzam/.doom.d/blob/main/modules/custom/chat/autoload.el#L31][functions]].
+
+On the [[https://github.com/karthink/gptel/issues/79][confusing]] and [[https://github.com/karthink/gptel/issues/197][flaky]] [[https://github.com/karthink/gptel/issues/106][GPT]] [[https://github.com/karthink/gptel/issues/197][4]] [[https://help.openai.com/en/articles/7102672-how-can-i-access-gpt-4][support]]:
+
+#+name: https://github.com/karthink/gptel/issues/106#issuecomment-1858678687
+#+begin_quote
+Now that I can access gpt-4, I can confirm that setting the model using C-u gptel-send works as expected. The chat still self-identifies as gpt-3, but the model being used is gpt-4 as the billing and the http headers attest. Assuming there's nothing else to be done from gptel's side, I'm closing this issue.
+#+end_quote
 
 ** Markdown Mode                                                 :installed:
 [[id:ac572c17-3f81-4c73-9a22-30b2d5e2c964][Markdown Documentation]]
@@ -856,6 +875,10 @@ Make sure we can run Yas everywhere, including the minibuffer!
 (global-set-key (kbd "M-/") 'undo-tree-visualize)
 #+END_SRC
 
+** Search Engines                                              :considering:
+
+https://github.com/hrs/engine-mode
+
 * Programming
 
 #+begin_src emacs-lisp
@@ -872,7 +895,6 @@ Make sure we can run Yas everywhere, including the minibuffer!
 #+end_src
 
 ** Yorba
-
 
 #+begin_src emacs-lisp
   (load "/home/schmudde/.secrets/yorba-env-credentials.el" :no-error-if-missing)
@@ -1102,6 +1124,29 @@ mu --version
 version 1.10.7
 :end:
 
+** Personal eMail Addesses
+
+~mu init --maildir=/home/schmudde/.local/share/mail --my-address=a@example.com b@example.com~
+
++-------------------+----------------------------------+
+| maildir           | /home/schmudde/.local/share/mail |
++-------------------+----------------------------------+
+| database-path     | /home/schmudde/.cache/mu/xapian  |
++-------------------+----------------------------------+
+| schema-version    | 466                              |
++-------------------+----------------------------------+
+....
++-------------------+----------------------------------+
+| created           | Fri 01 Mar 2024 06:03:36 PM CET  |
++-------------------+----------------------------------+
+| personal-address  | a@example.com                    |
++-------------------+----------------------------------+
+| personal-address  | b@example.com                    |
++-------------------+----------------------------------+
+
+- ~database created; use the 'index' command to fill/update it.~
+- ~mu index~: ~idexing maildir /.../.local/share/mail -> store /.../.cache/mu/xapian indexing messages; checked: 33955; updated/new: 33955; cleaned-up: 0~
+
 ** Using mu-wizard                                               :installed:
 
 Dependencies
@@ -1174,15 +1219,25 @@ mu info
 
 #+RESULTS:
 :results:
-maildir           : /home/schmudde/.local/share/mail
-database-path     : /home/schmudde/.cache/mu/xapian
-schema-version    : 452
-max-message-size  : 100000000
-batch-size        : 250000
-messages in store : 31128
-created           : Thu 05 Jan 2023 07:38:37 PM CET
-personal-address  : d@schmud.de
-personal-address  : schmudde@yorba.co
++-------------------+----------------------------------+
+| maildir           | /.../.local/share/mail           |
++-------------------+----------------------------------+
+| database-path     | /.../.cache/mu/xapian            |
++-------------------+----------------------------------+
+| schema-version    | 466                              |
++-------------------+----------------------------------+
+| max-message-size  | 100000000                        |
++-------------------+----------------------------------+
+| batch-size        | 50000                            |
++-------------------+----------------------------------+
+| created           | Fri 01 Sep 2023 05:12:47 PM CEST |
++-------------------+----------------------------------+
+| messages in store | 33955                            |
++-------------------+----------------------------------+
+| last-change       | Fri 01 Mar 2024 05:48:38 PM CET  |
++-------------------+----------------------------------+
+| last-index        | Fri 01 Mar 2024 05:48:39 PM CET  |
++-------------------+----------------------------------+
 :end:
 
 ** Attachments (MIME parts)
@@ -1498,6 +1553,7 @@ Install the missing [[https://www.emacswiki.org/emacs/InfoMode][Info Mode]] manu
 - Inspiring Blog Posts
     - [[https://dev.to/matheusemm/simple-emacs-configuration-for-clojure-development-11i3][Simple Emacs configuration for Clojure development]]
     - [[https://karthinks.com/software/batteries-included-with-emacs/][Batteries Included With Emacs]]
+    - [[https://protesilaos.com/codelog/2024-02-17-emacs-modern-minibuffer-packages/][Emacs: modern minibuffer packages (Vertico, Consult, etc.)]]
 - [[https://github.com/alphapapa/unpackaged.el][Unpackaged]]: A collection of useful Emacs Lisp code that isn’t substantial enough to be packaged.
 - Org Mode Babel: [[https://github.com/grettke/help/blob/master/Org-Mode_Fundamentals.md][tangling/evaluating/weaving]]
 - Documentation
@@ -1513,6 +1569,12 @@ I find printing a default message in the empty scratch buffer opened at startup 
 [[https://github.com/github/markup][Github markup]] uses [[https://github.com/wallyqs/org-ruby][org-ruby]] to convert org-mode to HTML. It supports footnotes and some custom markup.
 
 [[file:https://readme-jokes.vercel.app/api]]
+
+** iOS Roll call
+
+- https://plainorg.com for general org usage
+- https://flathabits.com for habit tracking
+- *scratch* for jotting things down ASAP
 
 ** Key Bindings
 

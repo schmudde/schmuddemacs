@@ -117,10 +117,13 @@
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
+ '(message-dont-reply-to-names nil)
+ '(mu4e-compose-dont-reply-to-self t)
  '(org-agenda-files '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"))
  '(org-default-notes-file "~/.notes.org")
  '(org-directory "~/Dropbox/notes")
  '(org-export-backends '(ascii html icalendar latex md odt))
+ '(org-extend-today-until 2)
  '(org-file-apps
    '((auto-mode . emacs)
      ("\\.mm\\'" . default)
@@ -134,7 +137,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(gptel csv-mode ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
            (defun yorba-dev
