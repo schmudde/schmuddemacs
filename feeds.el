@@ -24,7 +24,6 @@
         ("http://www.synthtopia.com/feed/" music-making)
         ("http://feeds2.feedburner.com/SlicingUpEyeballs" music)
         ("http://www.overgrownpath.com/feeds/posts/default" music)
-        ("http://www.preservationsound.com/?feed=rss2")
         ("http://regenmag.com/feed/" music)
         ("http://audiocookbook.org/feed/" music-making)
         ("http://www.falconproductions.us/blog/index.xml" music-making atari)
@@ -37,11 +36,9 @@
         ("http://scholars-stage.blogspot.com/feeds/posts/default")
         ("http://excessreturns.wordpress.com/feed/")
         ("http://www.systemsofromance.com/blog/feed/")
-        ;; export works
         ("https://drewcoffman.com/rss")
         ("http://www.orderofthegooddeath.com/feed")
         ("http://slatestarcodex.com/feed/")
-        ("http://blog.kenperlin.com/?feed=rss2" bloggers)
         ("https://sive.rs/tech.atom" bloggers)
         ("http://boston.conman.org/index.atom")
         ("https://techlearningcollective.com/feed.xml" informatics sts)
@@ -49,21 +46,18 @@
         ("https://leancrew.com/all-this/feed/")
         ("https://conflatedautomatons.org/feed/")
         ("https://seekingalpha.com/author/trading-places-research.xml")
-        ("http://alarmingdevelopment.org/?feed=rss2")
         ("http://lambda-the-ultimate.org/rss.xml")
         ("http://www.fileformat.info/news/atom.xml")
         ("https://computer.rip/rss.xml")
         ("http://metaredux.com/feed.xml")
         ("http://blog.computationalcomplexity.org/feeds/posts/default")
         ("https://subconscious.substack.com/feed/")
-        ("http://www.identitywoman.net/?feed=rss2" identity)
         ("http://www.windley.com/rss.xml" identity)
         ("http://nat.sakimura.org/feed/")
         ("http://blogs.law.harvard.edu/doc/feed/" identity)
         ("http://lockstep.com.au/blog/rss")
         ("https://reb00ted.org/index.xml")
         ("https://kyledenhartog.com/feed.xml")
-        ("http://self-issued.info/?feed=rss2" identity)
         ("http://beltmag.com/feed/" chicago)
         ("https://blockclubchicago.org/feed/" chicago)
         ("http://www.publicbooks.org/tag/the-big-picture/feed" culture) ;; via arts & letters daily
@@ -111,7 +105,6 @@
         ("https://silasjelley.com/feeds/everything" bloggers)
         ("http://blog.jonudell.net/feed/" bloggers)
         ("http://www.jwz.org/blog/feed/" bloggers)
-        ("http://www.mkbergman.com/?feed=rss2")
         ("http://planetrdf.com/index.rdf")
         ("https://augmentedlawyer.com/feed/")
         ("https://alexanderobenauer.com/assets/feed/rss.xml")
@@ -163,7 +156,6 @@
         ("http://naik.co/feed/" irl)
         ("https://www.hillelwayne.com/post/index.xml" informatics)
         ("https://southstreetdungeon.wordpress.com/feed/" irl music)
-        ("http://www.meanwhilebackinpeoria.com/blog?format=rss" irl)
         ("http://artoftravelogue.blogspot.com/feeds/posts/default" irl music)
         ("https://schmud.de/feed.rss" irl)
         ("http://freecinemanow.blogspot.com/feeds/posts/default" irl art)
@@ -174,8 +166,6 @@
         ("http://mackbernie.blogspot.com/feeds/posts/default" irl)
         ("http://www.cs.uni.edu/~wallingf/blog/index.xml" irl informatics)
         ("http://feeds.feedburner.com/johnpilger" irl)
-        ("https://biosrhythm.com/?feed=comments-rss2" irl atari)
-        ("http://eugene-wei.squarespace.com/blog?format=rss" bloggers networks)
         ("https://realalexrubi.substack.com/feed/" real-news bloggers)
         ("https://www.mintpressnews.com/rss/" real-news)
         ("http://raymcgovern.com/feed/" real-news bloggers)
@@ -193,7 +183,6 @@
         ("https://www.gozgeek.com/feed/index.xml" atari)
         ("http://www.righto.com/feeds/posts/default" atari)
         ("http://atari8bitads.blogspot.com/feeds/posts/default" atari)
-        ("https://goto10.substack.com/feed?utm_source=substack&utm_medium=email" atari)
         ("https://lunduke.substack.com/feed/" atari)
         ("http://sachachua.com/blog/category/emacs/feed/" emacs)
         ("http://xenodium.com/rss.xml")
@@ -273,7 +262,6 @@
         ("https://evanp.me/feed" networks) ;; dot social podcast
         ("https://laughingmeme.org//feed.xml" networks)
         ("https://tuxar.uk/feed/" informatics) ;; beautiful turing essays
-        ("https://www.ben-evans.com/benedictevans?format=rss" informatics) ;; recommended by Adam Lofbomm
         ("https://omar.website/posts/index.xml" networks culture bloggers digital-art) ;; https://folk.computer via Adrian KTC
         ("https://rknight.me/feed.xml" bloggers)
         ("https://feeds.pinboard.in/rss/u:vorizi/" informatics chicago) ;; via Komar and Melamid net.art on pinboard
@@ -283,7 +271,17 @@
         ("https://maggieappleton.com/rss.xml" networks bloggers) ;; via indieweb
         ("https://chriscoyier.net/feed/" networks) ;; code pen guy
         ("https://adactio.com/journal/rss" bloggers networks) ;; indieweb
-        ("https://www.menimagerie.com/a-glass-menagerie-of-insight?format=rss" bloggers networks)
+;;        ("http://www.meanwhilebackinpeoria.com/blog?format=rss" irl)
+;;        ("https://biosrhythm.com/?feed=comments-rss2" irl atari)
+;;        ("http://www.preservationsound.com/?feed=rss2")
+;;        ("http://alarmingdevelopment.org/?feed=rss2")
+;;        ("http://www.identitywoman.net/?feed=rss2" identity)
+;;        ("http://self-issued.info/?feed=rss2" identity)
+;;        ("http://www.mkbergman.com/?feed=rss2")
+;;        ("http://eugene-wei.squarespace.com/blog?format=rss" bloggers networks)
+;;        ("https://goto10.substack.com/feed?utm_source=substack&utm_medium=email" atari)
+;;        ("https://www.ben-evans.com/benedictevans?format=rss" informatics) ;; recommended by Adam Lofbomm
+;;        ("https://www.menimagerie.com/a-glass-menagerie-of-insight?format=rss" bloggers networks)
         ("https://atlasminor.com/atlasminor.com/feed" digital-art bloggers)
         ("https://feeds.feedburner.com/blogspot/musingsbyken" suchness)
         ("https://rocks.guide/feed.rss")
@@ -300,5 +298,4 @@
 ;; ("https://www.therestisnoise.com/atom.xml" music) ;; 403
 ;; ("http://rachelbythebay.com/w/atom.xml") ;; atom 403
 
-
-        ))
+))
