@@ -21,10 +21,9 @@
         ("https://everybodyslibraries.com/feed" commons)
         ("http://www.craigmurray.org.uk/feed/")
         ("https://www.charlieharrington.com/rss.xml")
-        ("https://rocks.guide/rss/")
         ("http://www.synthtopia.com/feed/" music-making)
         ("http://feeds2.feedburner.com/SlicingUpEyeballs" music)
-        ("http://www.overgrownpath.com/feeds/posts/default"music)
+        ("http://www.overgrownpath.com/feeds/posts/default" music)
         ("http://www.preservationsound.com/?feed=rss2")
         ("http://regenmag.com/feed/" music)
         ("http://audiocookbook.org/feed/" music-making)
@@ -38,6 +37,7 @@
         ("http://scholars-stage.blogspot.com/feeds/posts/default")
         ("http://excessreturns.wordpress.com/feed/")
         ("http://www.systemsofromance.com/blog/feed/")
+        ;; export works
         ("https://drewcoffman.com/rss")
         ("http://www.orderofthegooddeath.com/feed")
         ("http://slatestarcodex.com/feed/")
@@ -95,7 +95,6 @@
         ("https://artofericwayne.com/feed/" digital-art)
         ("https://pluralistic.net/feed/" sts networks)
         ("http://www.schneier.com/blog/index.rdf" bloggers networks informatics)
-        ("http://tinysubversions.com/feed.xml" networks digital-art)
         ("http://redecentralize.org/blog/feed.rss" networks)
         ("https://p1k3.com/feed" bloggers)
         ("https://100r.co/links/rss.xml" digital-art informatics)
@@ -124,7 +123,6 @@
         ("https://policyreview.info/feed" networks)
         ("http://www.hiig.de/feed/" networks)
         ("https://fsfe.org/news/news.en.rss")
-        ("http://whatsthebigdata.com/feed/")
         ("https://www.cyberforge.com/feed/cyberforge.xml" bloggers networks)
         ("http://www.turinepi.com/feeds/posts/default" italy)
         ("https://le-strade.com/feed/" italy)
@@ -134,10 +132,8 @@
         ("http://digitalcosmonaut.com/feed/" germany)
         ("http://www.iheartberlin.de/feed/" germany)
         ("http://www.edge.org/feed" suchness)
-        ("https://musingsbyken.blogspot.com/" suchness)
         ("https://feeds.feedburner.com/sciencealert-latestnews" real-news)
         ("http://brevity.wordpress.com/feed/" suchness)
-        ("http://triquarterly.northwestern.edu/site-feed" chicago)
         ("https://chi.streetsblog.org/author/sharonhoyer/feed/" chicago irl)
         ("https://bnet.substack.com/feed/" networks irl)
         ("https://jackrusher.com/feed.xml" irl)
@@ -147,7 +143,6 @@
         ("https://blog.ignaciobrasca.com/feed" irl informatics)
         ("http://www.nathanwolek.com/feed/" irl music)
         ("http://blog.jessitron.com/feeds/posts/default" irl informatics)
-        ("http://modulolotus.net/feed.xml" irl)
         ("http://danielbachler.de/feed.xml" irl)
         ("https://gist.github.com/brfid.atom")
         ("http://newcitystage.com/feed/" chicago)
@@ -170,7 +165,6 @@
         ("https://southstreetdungeon.wordpress.com/feed/" irl music)
         ("http://www.meanwhilebackinpeoria.com/blog?format=rss" irl)
         ("http://artoftravelogue.blogspot.com/feeds/posts/default" irl music)
-        ("http://zerolib.com/feed.xml" irl)
         ("https://schmud.de/feed.rss" irl)
         ("http://freecinemanow.blogspot.com/feeds/posts/default" irl art)
         ("https://buttondown.email/perfectsentences/rss" bloggers irl)
@@ -178,7 +172,6 @@
         ("https://www.feltpresence.com/rss/" irl)
         ("https://medium.com/feed/@ericcorrielstudios" irl)
         ("http://mackbernie.blogspot.com/feeds/posts/default" irl)
-        ("https://missginsu.com/index.xml" irl)
         ("http://www.cs.uni.edu/~wallingf/blog/index.xml" irl informatics)
         ("http://feeds.feedburner.com/johnpilger" irl)
         ("https://biosrhythm.com/?feed=comments-rss2" irl atari)
@@ -210,7 +203,6 @@
         ("http://boffosocko.com/feed/" bloggers indieweb)
         ("https://ohhelloana.blog/feed.xml" bloggers indieweb)
         ("https://www.markllobrera.com/feed/feed.xml" bloggers)
-        ("https://calumryan.com/feeds/articles/rss" bloggers)
         ("https://www.baldurbjarnason.com/index.xml")
         ("https://lambdaisland.com/feeds/blog.atom" clojure)
         ("https://ag91.github.io/rss.xml")
@@ -221,7 +213,6 @@
         ("http://blog.acolyer.org/feed/")
         ("http://blog.klipse.tech//feed.xml")
         ("http://www.more-magic.net/feed.atom")
-        ("http://rachelbythebay.com/w/atom.xml")
         ("http://vvvvalvalval.github.io/feed.xml" clojure)
         ("http://insideclojure.org/feed.xml" clojure)
         ("http://planet.clojure.in/atom.xml" clojure)
@@ -232,7 +223,6 @@
         ("https://ndc.substack.com/feed/" networks)
         ("https://twobithistory.org/feed.xml" networks)
         ("https://reboothq.substack.com/feed/" networks)
-        ("https://techpolicy.press/feed/" networks)
         ("https://stop.zona-m.net/feed.xml" networks)
         ("http://feeds.feedburner.com/shortformblog/feed")
         ("http://tedium.co/rss/" sts)
@@ -249,7 +239,6 @@
         ("https://draculadaily.substack.com/feed")
         ("http://www.davidbordwell.net/blog/feed/atom/")
         ("http://www.aphotoeditor.com/feed/" film)
-        ("http://www.therestisnoise.com/atom.xml" music)
         ("http://gregmankiw.blogspot.com/feeds/posts/default")
         ("http://feeds.feedburner.com/ideamensch")
         ("http://blog.blcklst.com/feed/")
@@ -258,28 +247,24 @@
         ("https://tirkarthi.github.io/feed.xml" clojure)
         ("http://rss.slashdot.org/Slashdot/slashdot" tech-news)
         ("https://wise.readwise.io/feed/" tech-news bloggers)
-        ("https://crookedtimber.org/" bloggers pundits) ;; via jack
         ("https://doc.searls.com/feed" networks identity)
         ("http://projectvrm.org/feed/" networks identity)
         ("https://www.customerfutures.com/feed/" networks)
         ("https://queue.acm.org/rss/feeds/articles.xml" informatics)
         ("https://spectrum.ieee.org/feeds/feed.rss" informatics)
         ("https://lars.ingebrigtsen.no/feed" emacs bloggers)
-        ("https://michal.sapka.me/" emacs bloggers)
         ("https://vhbelvadi.com/rss" networks bloggers) ;; via indieweb
         ("https://thedialrss.com/combined-rss/" sts networks) ;; via nettime
         ("https://sirupsen.com/atom.xml" informatics) ;; via Readwise newsletter
         ("https://medium.com/feed/@sts-news" sts irl)
         ("https://deprogrammaticaipsum.com/rss" sts)
         ("https://www.sicpers.info/blog/rss" informatics)
-        ("https://www.sloweb.org/en/" clojure emacs)
         ("https://www.inkandswitch.com/index.xml" informatics irl)
         ("https://newsletter.futureofcoding.org/rss.xml" informatics irl)
         ("https://blog.bmannconsulting.com/feed.xml" informatics irl)
         ("https://blog.zgp.org/feed.xml" bloggers) ;; via mastodon
         ("https://www.steveherman.press/feed" real-news) ;; via mastodon
         ("https://parkerhiggins.net/feed.xml" sts) ;; via mastodon
-        ("https://tariqyusuf.in/feed.xml" sts bloggers) ;; via mastodon
         ("https://blog.sigplan.org/feed/" informatics)
         ("http://neural.it/customfeed/all.php" culture sts) ;; https://neural.it/rss-feeds/
         ("https://manuelmoreale.com/feed/rss" bloggers) ;; blogs and people
@@ -298,7 +283,22 @@
         ("https://maggieappleton.com/rss.xml" networks bloggers) ;; via indieweb
         ("https://chriscoyier.net/feed/" networks) ;; code pen guy
         ("https://adactio.com/journal/rss" bloggers networks) ;; indieweb
-        ("https://musings.tychi.me/feed/" digital-art bloggers) ;; Solid artist
         ("https://www.menimagerie.com/a-glass-menagerie-of-insight?format=rss" bloggers networks)
-        ("http://www.paulgraham.com/rss.html" tech-news informatics networks)
-        ("https://atlasminor.com/atlasminor.com/feed" digital-art bloggers)))
+        ("https://atlasminor.com/atlasminor.com/feed" digital-art bloggers)
+        ("https://feeds.feedburner.com/blogspot/musingsbyken" suchness)
+        ("https://rocks.guide/feed.rss")
+        ("https://www.triquarterly.org/feed" chicago)
+        ("https://michal.sapka.me/index.xml" emacs bloggers)
+        ("http://www.aaronsw.com/2002/feeds/pgessays.rss" tech-news informatics networks)
+        ("https://techpolicy.press/rss/feed.xml" networks)
+        ("https://musings.tychi.me/feed/" digital-art bloggers) ;; Solid artist
+
+;; ("http://modulolotus.net/feed.xml" irl) certificate issue
+;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
+;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
+;; ("https://calumryan.com/feeds/articles/rss" bloggers) 400
+;; ("https://www.therestisnoise.com/atom.xml" music) ;; 403
+;; ("http://rachelbythebay.com/w/atom.xml") ;; atom 403
+
+
+        ))
