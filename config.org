@@ -138,6 +138,22 @@ Denote is a simple note-taking tool for Emacs. It is based on the idea that note
 
 Watch out!! ~org-transclusion-add~ → ~org-transclusion-deactivate~ → ~org-transclusion-activate~ → ~org-transclusion-add~
 
+**** Simple Example
+
+1. Insert link
+
+[[file:transclude-example.org::transclusion][transclusion example]]
+
+Note that it has the ~#+name~ reflected in the hyperlink.
+
+2. Create the Transclusion
+
+Prefix ~#+transclude:~, move the cursor over the text, ~M-x org-transclusion-add~
+
+#+transclude: [[/home/schmudde/.emacs.d/transclude-example.org::quote-example][transclusion example]]
+
+**** Specifics Instructions
+
 - The minor mode is automatically turned on locally for your current buffer through one of these commands. All it does is to call ~org-transclusion-activate~ to activate hooks and some other variables.
     - ~org-transclusion~ is a local minor mode intended to be just a convenient wrapper to let you easily toggle between ‘activate’ and ‘deactivate’.
     - ~org-transclusion-add~ to add transclusions in your current buffer.
@@ -694,6 +710,12 @@ On the [[https://github.com/karthink/gptel/issues/79][confusing]] and [[https://
 #+name: https://github.com/karthink/gptel/issues/106#issuecomment-1858678687
 #+begin_quote
 Now that I can access gpt-4, I can confirm that setting the model using C-u gptel-send works as expected. The chat still self-identifies as gpt-3, but the model being used is gpt-4 as the billing and the http headers attest. Assuming there's nothing else to be done from gptel's side, I'm closing this issue.
+#+end_quote
+
+#+begin_quote
+### can you read this url? https://plaid.com/docs/api/webhooks/webhook-verification/
+
+I can't directly access or read content from URLs, including the one you've provided for Plaid's documentation on webhook verification. However, I can still offer information and guidance based on my training data up until my last update in April 2023. If you have specific questions about webhook verification with Plaid, feel free to ask, and I'll do my best to help based on the information available to me.
 #+end_quote
 
 ** Markdown Mode                                                 :installed:
