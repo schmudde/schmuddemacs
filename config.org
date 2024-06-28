@@ -142,7 +142,7 @@ Watch out!! ~org-transclusion-add~ → ~org-transclusion-deactivate~ → ~org-tr
 
 1. Insert link
 
-[[file:transclude-example.org::transclusion][transclusion example]]
+[[/home/schmudde/.emacs.d/transclude-example.org::quote-example][transclusion example]]
 
 Note that it has the ~#+name~ reflected in the hyperlink.
 
@@ -329,7 +329,8 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
     (let ((map (make-sparse-keymap)))
       (define-key map (kbd "r") 'revert-buffer)
       (define-key map (kbd "s") 'eww-search-words)
-      (define-key map (kbd "c") 'quick-calc)
+      (define-key map (kbd "+") 'quick-calc)
+      (define-key map (kbd "c") 'org-capture)
       (define-key map (kbd "d") 'dictionary-search)
       (define-key map (kbd "y") 'yas-expand)
       map)
@@ -462,6 +463,19 @@ org-todo-keywords
   (setq org-log-into-drawer t)
   (setq org-log-redeadline 'time)
   (setq org-log-reschedule 'time)
+#+end_src
+
+#+begin_src emacs-lisp
+;; The tasks.org here is relative to the `org-directory'.
+(setq org-capture-templates
+             `(("e" "Email note" entry
+               (file+headline "../org/inbox.org" "Unprocessed")
+               ,(concat "* TODO %:subject :mail:\n"
+                        ":PROPERTIES:\n"
+                        ":CAPTURED: %U\n"
+                        ":END:\n\n"
+                        "%a\n%i%?")
+               :empty-lines-after 1)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -633,6 +647,10 @@ HTML → Org via Pandoc
       (kill-new
        (shell-command-to-string
         (format "pandoc -f html -i %s -t org" tmp-file)))))
+#+end_src
+
+#+begin_src emacs-lisp
+  (add-to-list 'load-path (locate-user-emacs-file "drs-elisp"))
 #+end_src
 
 ** CSV Mode
