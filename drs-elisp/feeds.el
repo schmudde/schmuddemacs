@@ -284,6 +284,7 @@
         ("http://www.meanwhilebackinpeoria.com/blog?format=rss" irl)
         ("https://www.calmabiding.me/rss" irl clojure)  ;; Stephen Castro-Starkey
         ("https://audreywatters.com/feed" bloggers) ; via Wallingford
+        ("https://www.grazielelautenschlaeger.com/feed/" digital-art irl) ;; xCoAx 2024
 
         ("https://biosrhythm.com/?feed=comments-rss2" irl atari)
         ("http://www.preservationsound.com/?feed=rss2")
@@ -308,6 +309,7 @@
         ("https://morrick.me/feed" bloggers) ;; italian
         ("https://blog.archive.org/author/jasonscott/feed/" sts) ;; preservation
         ("https://blog.dshr.org/feeds/posts/default?alt=rss" sts)  ;; preservation
+        ("https://9to5linux.com/feed/atom" tech-news)
 
 ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
 ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type

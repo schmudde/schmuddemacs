@@ -142,7 +142,7 @@ Watch out!! ~org-transclusion-add~ → ~org-transclusion-deactivate~ → ~org-tr
 
 1. Insert link
 
-[[/home/schmudde/.emacs.d/transclude-example.org::quote-example][transclusion example]]
+[[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]
 
 Note that it has the ~#+name~ reflected in the hyperlink.
 
@@ -150,7 +150,7 @@ Note that it has the ~#+name~ reflected in the hyperlink.
 
 Prefix ~#+transclude:~, move the cursor over the text, ~M-x org-transclusion-add~
 
-#+transclude: [[/home/schmudde/.emacs.d/transclude-example.org::quote-example][transclusion example]]
+#+transclude: [[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]
 
 **** Specifics Instructions
 
@@ -365,7 +365,7 @@ n
 - Filter by tag/keyword: ~+irl~
 
 #+begin_src emacs-lisp
-  (load (locate-user-emacs-file "feeds.el") :no-error)
+  (load (locate-user-emacs-file "drs-elisp/feeds.el") :no-error)
   (setq elfeed-search-filter "@2-weeks-ago +unread")
 
   (use-package elfeed
