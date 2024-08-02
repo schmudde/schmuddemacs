@@ -148,11 +148,19 @@ Note that it has the ~#+name~ reflected in the hyperlink.
 
 2. Create the Transclusion
 
-Prefix ~#+transclude:~, move the cursor over the text, ~M-x org-transclusion-add~
+- Prefix ~#+transclude:~: ~#+transclude: [[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]~
+- Move the cursor over the text
+- ~M-x org-transclusion-add~
 
-#+transclude: [[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]
+#+name: quote-example
+#+begin_quote
+Ted Nelson would be proud.
+#+end_quote
+
 
 **** Specifics Instructions
+
+Note: the transclusion package seems to struggle with the links copied within a Denote file.
 
 - The minor mode is automatically turned on locally for your current buffer through one of these commands. All it does is to call ~org-transclusion-activate~ to activate hooks and some other variables.
     - ~org-transclusion~ is a local minor mode intended to be just a convenient wrapper to let you easily toggle between ‘activate’ and ‘deactivate’.

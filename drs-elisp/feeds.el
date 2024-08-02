@@ -309,6 +309,7 @@
         ("https://morrick.me/feed" bloggers) ;; italian
         ("https://blog.archive.org/author/jasonscott/feed/" sts) ;; preservation
         ("https://blog.dshr.org/feeds/posts/default?alt=rss" sts)  ;; preservation
+        ("https://hendersoni.substack.com/feed" identity) ;; via Doc
         ("https://9to5linux.com/feed/atom" tech-news)
 
 ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
