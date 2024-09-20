@@ -455,6 +455,19 @@ The issue is ~C-c l~ is a prefix for lsp-mode, which is why I haven't made this 
 
 [[/home/schmudde/Dropbox/notes/emacs-modes.org::72][org-capture shortcuts]]
 
+Custom views
+
+#+begin_src emacs-lisp
+org-agenda-custom-commands
+#+end_src
+
+#+RESULTS:
+| w | Weekly Review        | ---                            | nil   | nil                                                                                          |
+| d | Daily Agenda         | ---                            | nil   | nil                                                                                          |
+| u | Untagged             | tags-todo                      | -{.*} | ((org-agenda-overriding-header Untagged Inbox Tasks) (org-agenda-files '(../org/inbox.org))) |
+| n | Agenda and all TODOs | ((agenda  nil) (alltodo  nil)) | nil   |                                                                                              |
+
+
 #+begin_src emacs-lisp
 org-todo-keywords
 #+end_src
@@ -474,16 +487,18 @@ org-todo-keywords
 #+end_src
 
 #+begin_src emacs-lisp
-;; The tasks.org here is relative to the `org-directory'.
-(setq org-capture-templates
-             `(("e" "Email note" entry
-               (file+headline "../org/inbox.org" "Unprocessed")
-               ,(concat "* TODO %:subject :mail:\n"
-                        ":PROPERTIES:\n"
-                        ":CAPTURED: %U\n"
-                        ":END:\n\n"
-                        "%a\n%i%?")
-               :empty-lines-after 1)))
+  (setq org-agenda-start-with-log-mode t)
+
+  ;; The tasks.org here is relative to the `org-directory'.
+  (setq org-capture-templates
+               `(("e" "Email note" entry
+                 (file+headline "../org/inbox.org" "Unprocessed")
+                 ,(concat "* TODO %:subject :mail:\n"
+                          ":PROPERTIES:\n"
+                          ":CAPTURED: %U\n"
+                          ":END:\n\n"
+                          "%a\n%i%?")
+                 :empty-lines-after 1)))
 #+end_src
 
 #+begin_src emacs-lisp
@@ -1154,6 +1169,27 @@ From the documentation, [[https://www.orgmode.org/worg/org-contrib/babel/languag
   (setq org-babel-clojure-backend 'cider)
   (require 'cider)
 #+END_SRC
+
+** Difftastic                                                  :considering:
+
+The lift for Pop_OS! currently seems quite high. ~ [2024-08-13 Tue]
+
+#+begin_src emacs-lisp :tangle no
+  (add-to-list 'load-path (locate-user-emacs-file "packages/difftastic.el"))
+  (require 'difftastic)
+
+  (use-package difftastic
+  :demand t
+  :bind (:map magit-blame-read-only-mode-map
+         ("D" . difftastic-magit-show)
+         ("S" . difftastic-magit-show))
+  :config
+  (eval-after-load 'magit-diff
+    '(transient-append-suffix 'magit-diff '(-1 -1)
+       [("D" "Difftastic diff (dwim)" difftastic-magit-diff)
+        ("S" "Difftastic show" difftastic-magit-show)])))
+#+end_src
+
 
 ** [[https://github.com/magit/forge][Git Forge]]                                                   :considering:
 

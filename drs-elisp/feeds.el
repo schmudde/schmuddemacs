@@ -311,6 +311,14 @@
         ("https://blog.dshr.org/feeds/posts/default?alt=rss" sts)  ;; preservation
         ("https://hendersoni.substack.com/feed" identity) ;; via Doc
         ("https://9to5linux.com/feed/atom" tech-news)
+        ("https://paleofuture.com/blog?format=rss" sts)
+        ("https://www.evalapply.org/index.xml" clojure)
+        ("https://blog.m4ra.net/rss/" bloggers)
+        ("https://www.nakedcapitalism.com/feed" real-news)
+        ("https://prescheme.org/rss.xml" clojure comp-sci)
+        ("https://chsmc.org/feed.xml" bloggers sts) ; shared different itnernet
+        ("https://www.dbreunig.com/feed.xml" bloggers sts) ; cultural anthropology, computer science, and media.
+        ("https://joshleeb.com/index.xml" bloggers comp-sci) ; shared different itnernet
 
 ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
 ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type

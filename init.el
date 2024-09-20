@@ -92,6 +92,8 @@
  '(erc-track-minor-mode t)
  '(erc-track-mode t)
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
+
+ '(gptel-model "gpt-4o")
  '(gptel-use-curl nil)
  '(ignored-local-variable-values
    '((eval progn
@@ -110,6 +112,7 @@
                 (format "(dev/%s)" choice))))
            (setenv "GOOGLE_APPLICATION_CREDENTIALS" "/path/to/yorba-pubsub-resources.json"))))
  '(ispell-dictionary nil)
+ '(json-mode-indent-level 2)
  '(ledger-reports
    '(("test" "ledger ")
      ("bal" "%(binary) -f %(ledger-file) bal")
@@ -119,7 +122,39 @@
  '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
  '(message-dont-reply-to-names nil)
  '(mu4e-compose-dont-reply-to-self t)
+
  '(org-agenda-files '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"))
+ '(org-agenda-start-with-log-mode nil)
+ '(org-agenda-custom-commands
+   '(("w" "Weekly Review"
+      ((agenda ""
+               ((org-agenda-span 'week)
+                (org-agenda-overriding-header "Completed Tasks")
+                (org-agenda-skip-function
+                 '(org-agenda-skip-entry-if 'nottodo 'done))))
+       (agenda ""
+               ((org-agenda-span 'week)
+                (org-agenda-overriding-header "Unfinished Scheduled Tasks")
+                (org-agenda-skip-function
+                 '(org-agenda-skip-entry-if 'todo 'done)))))
+      nil nil)
+     ("d" "Daily Agenda"
+      ((agenda ""
+               ((org-agenda-span 'day)
+                (org-deadline-warning-days 1)))
+       (tags-todo "+PRIORITY=\"A\""
+                  ((org-agenda-overriding-header "High Priority Tasks")))
+       (tags-todo "+PRIORITY=\"C\""
+                  ((org-agenda-overriding-header "Low Priority Tasks"))))
+      nil nil)
+     ("u" "Untagged" tags-todo "-{.*}"
+      ((org-agenda-overriding-header "Untagged Inbox Tasks")
+       (org-agenda-files
+        '("../org/inbox.org"))))
+     ("n" "Agenda and all TODOs"
+      ((agenda "" nil)
+       (alltodo "" nil))
+      nil)))
  '(org-default-notes-file "~/.notes.org")
  '(org-directory "~/Dropbox/notes")
  '(org-export-backends '(ascii html icalendar latex md odt))
@@ -137,7 +172,7 @@
    '(("gnu" . "https://elpa.gnu.org/packages/")
      ("melpa-stable" . "https://stable.melpa.org/packages/")))
  '(package-selected-packages
-   '(gptel csv-mode ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(json-mode gptel csv-mode ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
            (defun yorba-dev
@@ -198,6 +233,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-blue ((t (:background "#2fafff" :foreground "#2fafcf"))))
  '(lsp-ui-peek-line-number ((t (:inherit shadow))))
+ '(org-upcoming-deadline ((t (:foreground "cyan"))))
  '(tty-menu-disabled-face ((t (:background "#2277bb" :foreground "gray70"))))
  '(tty-menu-enabled-face ((t (:background "#2277bb" :foreground "gray85" :weight bold))))
  '(tty-menu-selected-face ((t (:background "#449bce")))))
