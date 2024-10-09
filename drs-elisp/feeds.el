@@ -318,7 +318,11 @@
         ("https://prescheme.org/rss.xml" clojure comp-sci)
         ("https://chsmc.org/feed.xml" bloggers sts) ; shared different itnernet
         ("https://www.dbreunig.com/feed.xml" bloggers sts) ; cultural anthropology, computer science, and media.
-        ("https://joshleeb.com/index.xml" bloggers comp-sci) ; shared different itnernet
+        ("https://joshleeb.com/index.xml" bloggers comp-sci) ; shared different internet
+        ("https://notes.brooklynzelenka.com/index.xml" irl comp-sci) ; Brooklyn Elizabeth Zelenka
+        ("https://www.horeca.it/rss" italian)
+        ("http://feeds.feedburner.com/s-usih") ; https://ooh.directory
+        ("http://www.erasmatazz.com/index.xml" atari) ; chris crawford
 
 ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
 ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type

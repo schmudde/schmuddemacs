@@ -10,8 +10,8 @@ network-security.data
 request/
 url/
 #init.el#
-config.el
 auto-save-list
+config.el
 .cache
 .sx
 init.el

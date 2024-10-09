@@ -35,8 +35,8 @@
 (defvar my-journal-show-day-history nil)
 (defvar my-journal-show-month-history nil)
 
-(defun my-journal-show--prompt (prompt-text history-symbol)
-  (let ((default (car (symbol-value history-symbol))))
+(defun my-journal-show--prompt (prompt-text history-symbol &optional default)
+  (let ((default (or default (car (symbol-value history-symbol)))))
     (read-string
      (format-prompt prompt-text default)
      nil
@@ -44,10 +44,10 @@
      default)))
 
 (defun my-journal-show-day-prompt ()
-  (my-journal-show--prompt "Number of day (e.g. 07): " 'my-journal-show-day-history))
+  (my-journal-show--prompt "Number of day (e.g. 07) " 'my-journal-show-day-history (format-time-string "%d")))
 
 (defun my-journal-show-month-prompt ()
-  (my-journal-show--prompt "Number of month (e.g. 07) " 'my-journal-show-month-history))
+  (my-journal-show--prompt "Number of month (e.g. 07) " 'my-journal-show-month-history (format-time-string "%m")))
 
 (defun my-journal-show--get-month-name (numeric-month)
   (alist-get numeric-month my-journal-show--months nil nil #'equal))
@@ -73,3 +73,5 @@
             (erase-buffer)
             (insert (mapconcat #'identity contents "\n\n* * *\n\n")))
         (message "Nothing found for day %s and month %s" day month)))))
+
+(provide 'journal-sort)

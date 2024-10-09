@@ -229,6 +229,18 @@ List passwords on the command line using ~pass~ and then use ~password-store-edi
 
 * Starting Emacs and Emacs Server
 
+#+begin_src emacs-lisp
+  (add-to-list 'load-path (locate-user-emacs-file "drs-elisp"))
+#+end_src
+
+#+begin_src emacs-lisp
+  (require 'journal-sort) ; using ~require~ > ~load-file~ to ensure it only evals once
+  (add-hook 'desktop-after-read-hook
+            (lambda () (drs-journal-show (format-time-string "%d") (format-time-string "%m"))))
+#+end_src
+
+---
+
 I like to have a single instance of Emacs running and open up multiple clients. The following tips are courtesy of [[https://github.com/susam/emfy#emacs-server][Susam]].
 
 #+begin_src emacs-lisp
@@ -457,7 +469,7 @@ The issue is ~C-c l~ is a prefix for lsp-mode, which is why I haven't made this 
 
 Custom views
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 org-agenda-custom-commands
 #+end_src
 
@@ -670,10 +682,6 @@ HTML → Org via Pandoc
       (kill-new
        (shell-command-to-string
         (format "pandoc -f html -i %s -t org" tmp-file)))))
-#+end_src
-
-#+begin_src emacs-lisp
-  (add-to-list 'load-path (locate-user-emacs-file "drs-elisp"))
 #+end_src
 
 ** CSV Mode
@@ -1062,7 +1070,7 @@ Other commands
 - ~n~: when it's a library. It may even write the stuff to a .jar
 - ~lsp-describe-session~: what projects does the server work with?
 
-The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-ui][~lsp-ui~]]. This is configured in *[LSP Headerline]                     LSP support for headerline* (e.g. ~lsp-headerline-breadcrumb-path-face~).
+The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-ui][~lsp-ui~]]. This is configured in *[LSP Headerline] LSP support for headerline* (e.g. ~lsp-headerline-breadcrumb-path-face~).
 
 #+begin_src emacs-lisp
   (use-package lsp-mode
