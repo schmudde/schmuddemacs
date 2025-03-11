@@ -194,7 +194,7 @@
         ("https://blog.janetacarr.com/rss/" clojure)
         ("https://clojureverse.org/latest.rss" clojure)
         ("http://danlebrero.com/feed.rss")
-        ("https://clojure.org/feed.xml")
+        ("https://clojure.org/feed.xml") ;; Clojure Dref by Alex Miller
         ("http://blog.acolyer.org/feed/")
         ("http://blog.klipse.tech//feed.xml")
         ("http://www.more-magic.net/feed.atom")
@@ -315,15 +315,24 @@
         ("https://www.evalapply.org/index.xml" clojure)
         ("https://blog.m4ra.net/rss/" bloggers)
         ("https://www.nakedcapitalism.com/feed" real-news)
-        ("https://prescheme.org/rss.xml" clojure comp-sci)
+        ("https://prescheme.org/rss.xml" clojure informatics)
         ("https://chsmc.org/feed.xml" bloggers sts) ; shared different itnernet
         ("https://www.dbreunig.com/feed.xml" bloggers sts) ; cultural anthropology, computer science, and media.
-        ("https://joshleeb.com/index.xml" bloggers comp-sci) ; shared different internet
-        ("https://notes.brooklynzelenka.com/index.xml" irl comp-sci) ; Brooklyn Elizabeth Zelenka
+        ("https://joshleeb.com/index.xml" bloggers informatics) ; shared different internet
+        ("https://notes.brooklynzelenka.com/index.xml" irl informatics) ; Brooklyn Elizabeth Zelenka
         ("https://www.horeca.it/rss" italian)
         ("http://feeds.feedburner.com/s-usih") ; https://ooh.directory
         ("http://www.erasmatazz.com/index.xml" atari) ; chris crawford
-
+        ("https://lethain.com/feeds.xml" tech-news) ;; via amazing cto
+        ("https://www.flyingpenguin.com/?feed=rss2" irl)
+        ("https://berjon.com/feed.atom" networks)
+        ("https://gancio.cisti.org/feed/rss?show_recurrent=true" italian) ; todo in Turin
+        ("https://www.are.na/parker-gibbons/a-new-internet-fylzq4dvmue/feed/rss" networks)
+        ("https://hans.gerwitz.com/feeds/notes.rss" bloggers)
+        ("https://www.theculturium.com/feed/" culture) ;; Parabola-like
+        ("https://www.erininthemorning.com/rss" culture) ;; via Jenny (doubel check feed)
+        ("https://alexanderobenauer.com/assets/feed/rss.xml" networks) ; research via Taylor
+        ("https://arjandhakal.com.np/rss.xml" irl informatics)
 ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
 ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
 ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting

@@ -148,17 +148,18 @@ Note that it has the ~#+name~ reflected in the hyperlink.
 
 2. Create the Transclusion
 
-- Prefix ~#+transclude:~: ~#+transclude: [[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]~
+- Prefix ~#+transclude:~: ~#+transclude: [[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]~. There must be a space between ~#transclude:~ and the hyperlink.
 - Move the cursor over the text
 - ~M-x org-transclusion-add~
+
+#+transclude: [[/home/schmudde/.emacs.d/drs-elisp/transclude-example.org::quote-example][transclusion example]]
 
 #+name: quote-example
 #+begin_quote
 Ted Nelson would be proud.
 #+end_quote
 
-
-**** Specifics Instructions
+**** Specific Instructions
 
 Note: the transclusion package seems to struggle with the links copied within a Denote file.
 
@@ -1218,7 +1219,7 @@ version 1.10.7
 
 ** Personal eMail Addesses
 
-~mu init --maildir=/home/schmudde/.local/share/mail --my-address=a@example.com b@example.com~
+~mu init --maildir=/home/schmudde/.local/share/mail --my-address=d@schmud.de schmudde@yorba.co admin@schmud.de~
 
 +-------------------+----------------------------------+
 | maildir           | /home/schmudde/.local/share/mail |
@@ -1227,13 +1228,23 @@ version 1.10.7
 +-------------------+----------------------------------+
 | schema-version    | 466                              |
 +-------------------+----------------------------------+
-....
+| max-message-size  | 100000000                        |
 +-------------------+----------------------------------+
-| created           | Fri 01 Mar 2024 06:03:36 PM CET  |
+| batch-size        | 50000                            |
 +-------------------+----------------------------------+
-| personal-address  | a@example.com                    |
+| created           | Sat 07 Dec 2024 04:52:40 PM CST  |
 +-------------------+----------------------------------+
-| personal-address  | b@example.com                    |
+| personal-address  | d@schmud.de                      |
++-------------------+----------------------------------+
+| personal-address  | schmudde@yorba.co                |
++-------------------+----------------------------------+
+| personal-address  | admin@schmud.de                  |
++-------------------+----------------------------------+
+| messages in store | 0                                |
++-------------------+----------------------------------+
+| last-change       | never                            |
++-------------------+----------------------------------+
+| last-index        | never                            |
 +-------------------+----------------------------------+
 
 - ~database created; use the 'index' command to fill/update it.~
@@ -1266,6 +1277,7 @@ Commands
 2. ~muw sync personal~ where ~personal~ is an account name [switch steps #2 and #3 if necessary]
 3. ~muw mu-init~ to setup database store
 4. ~mu index~ to index for search (Xapian), also to rebuild the index
+5. Re-read the init or reboot Emacs to see the new address(es) in the mu4e context list
 
 #+BEGIN_SRC shell :results drawer
 muw list
@@ -1273,6 +1285,7 @@ muw list
 
 #+RESULTS:
 :results:
+BtF
 personal
 yorba
 :end:
@@ -1312,9 +1325,9 @@ mu info
 #+RESULTS:
 :results:
 +-------------------+----------------------------------+
-| maildir           | /.../.local/share/mail           |
+| maildir           | /home/schmudde/.local/share/mail |
 +-------------------+----------------------------------+
-| database-path     | /.../.cache/mu/xapian            |
+| database-path     | /home/schmudde/.cache/mu/xapian  |
 +-------------------+----------------------------------+
 | schema-version    | 466                              |
 +-------------------+----------------------------------+
@@ -1322,13 +1335,17 @@ mu info
 +-------------------+----------------------------------+
 | batch-size        | 50000                            |
 +-------------------+----------------------------------+
-| created           | Fri 01 Sep 2023 05:12:47 PM CEST |
+| created           | Fri 01 Mar 2024 11:03:36 AM CST  |
 +-------------------+----------------------------------+
-| messages in store | 33955                            |
+| personal-address  | schmudde@yoba.co                 |
 +-------------------+----------------------------------+
-| last-change       | Fri 01 Mar 2024 05:48:38 PM CET  |
+| personal-address  | d@schmud.de                      |
 +-------------------+----------------------------------+
-| last-index        | Fri 01 Mar 2024 05:48:39 PM CET  |
+| messages in store | 39456                            |
++-------------------+----------------------------------+
+| last-change       | Sat 07 Dec 2024 04:31:13 PM CST  |
++-------------------+----------------------------------+
+| last-index        | Sat 07 Dec 2024 04:31:13 PM CST  |
 +-------------------+----------------------------------+
 :end:
 
