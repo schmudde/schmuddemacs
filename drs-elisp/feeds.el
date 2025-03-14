@@ -16,7 +16,6 @@
         ("https://lord.io/feed.xml" bloggers informatics)
         ("http://www.thinktankwatch.com/feeds/posts/default" real-news)
         ("http://www.dlederle.com/feed.xml" sts informatics bloggers)
-        ("https://www.zylstra.org/blog/feed/" identity bloggers)
         ("https://blog.khinsen.net/feeds/all.rss.xml" bloggers commons sts)
         ("https://everybodyslibraries.com/feed" commons)
         ("http://www.craigmurray.org.uk/feed/")
@@ -51,9 +50,7 @@
         ("http://metaredux.com/feed.xml")
         ("http://blog.computationalcomplexity.org/feeds/posts/default")
         ("https://subconscious.substack.com/feed/")
-        ("http://www.windley.com/rss.xml" identity)
         ("http://nat.sakimura.org/feed/")
-        ("http://blogs.law.harvard.edu/doc/feed/" identity)
         ("http://lockstep.com.au/blog/rss")
         ("https://reb00ted.org/index.xml")
         ("https://kyledenhartog.com/feed.xml")
@@ -230,8 +227,6 @@
         ("https://tirkarthi.github.io/feed.xml" clojure)
         ("http://rss.slashdot.org/Slashdot/slashdot" tech-news)
         ("https://wise.readwise.io/feed/" tech-news bloggers)
-        ("https://doc.searls.com/feed" networks identity)
-        ("http://projectvrm.org/feed/" networks identity)
         ("https://www.customerfutures.com/feed/" networks)
         ("https://queue.acm.org/rss/feeds/articles.xml" informatics)
         ("https://spectrum.ieee.org/feeds/feed.rss" informatics)
@@ -256,7 +251,6 @@
         ("https://tuxar.uk/feed/" informatics) ;; beautiful turing essays
         ("https://omar.website/posts/index.xml" networks culture bloggers digital-art) ;; https://folk.computer via Adrian KTC
         ("https://feeds.pinboard.in/rss/u:vorizi/" informatics chicago) ;; via Komar and Melamid net.art on pinboard
-        ("https://informationaccountability.org/iaf-blog/rss" identity)
         ("https://donotresearch.substack.com/feed" digital-art)
         ("https://interconnected.org/home/feed" networks) ;; via Samuel Arbesman
         ("https://maggieappleton.com/rss.xml" networks bloggers) ;; via indieweb
@@ -285,12 +279,9 @@
         ("https://www.calmabiding.me/rss" irl clojure)  ;; Stephen Castro-Starkey
         ("https://audreywatters.com/feed" bloggers) ; via Wallingford
         ("https://www.grazielelautenschlaeger.com/feed/" digital-art irl) ;; xCoAx 2024
-
         ("https://biosrhythm.com/?feed=comments-rss2" irl atari)
         ("http://www.preservationsound.com/?feed=rss2")
         ("http://alarmingdevelopment.org/?feed=rss2")
-        ("http://www.identitywoman.net/?feed=rss2" identity)
-        ("http://self-issued.info/?feed=rss2" identity)
         ("http://www.mkbergman.com/?feed=rss2")
         ("http://eugene-wei.squarespace.com/blog?format=rss" bloggers networks)
         ("https://goto10.substack.com/feed?utm_source=substack&utm_medium=email" atari)
@@ -309,7 +300,6 @@
         ("https://morrick.me/feed" bloggers) ;; italian
         ("https://blog.archive.org/author/jasonscott/feed/" sts) ;; preservation
         ("https://blog.dshr.org/feeds/posts/default?alt=rss" sts)  ;; preservation
-        ("https://hendersoni.substack.com/feed" identity) ;; via Doc
         ("https://9to5linux.com/feed/atom" tech-news)
         ("https://paleofuture.com/blog?format=rss" sts)
         ("https://www.evalapply.org/index.xml" clojure)
@@ -333,7 +323,19 @@
         ("https://www.erininthemorning.com/rss" culture) ;; via Jenny (doubel check feed)
         ("https://alexanderobenauer.com/assets/feed/rss.xml" networks) ; research via Taylor
         ("https://arjandhakal.com.np/rss.xml" irl informatics)
-;; ("http://modulolotus.net/feed.xml" irl) certificate issue
+        ("https://blog.weareopen.coop/feed" networks) ;; Doug Belshaw
+        ("https://dougbelshaw.com/blog/feed" irl networks) ;; Doug Belshaw
+        ("https://informationaccountability.org/iaf-blog/rss" identity)
+        ("https://www.zylstra.org/blog/feed/" identity bloggers)
+        ("http://www.windley.com/rss.xml" identity)
+        ("http://blogs.law.harvard.edu/doc/feed/" identity)
+        ("https://doc.searls.com/feed" networks identity)
+        ("http://projectvrm.org/feed/" networks identity)
+        ("http://www.identitywoman.net/?feed=rss2" identity)
+        ("http://self-issued.info/?feed=rss2" identity)
+        ("https://hendersoni.substack.com/feed" identity) ;; via Doc
+
+        ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
 ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
 ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
 ;; ("https://calumryan.com/feeds/articles/rss" bloggers) 400
@@ -355,5 +357,6 @@
         ("https://rknight.me/feed.xml" bloggers)
         ("https://sonnet.io/feed.xml" networks) ; taylor
         ("https://michal.sapka.me/index.xml" emacs bloggers)
-
-))
+        ("https://standardebooks.org/feeds/rss" culture commons)
+        )
+)
