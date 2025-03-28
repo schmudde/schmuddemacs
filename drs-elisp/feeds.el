@@ -25,7 +25,6 @@
         ("http://www.overgrownpath.com/feeds/posts/default" music)
         ("http://regenmag.com/feed/" music)
         ("http://audiocookbook.org/feed/" music-making)
-        ("http://www.falconproductions.us/blog/index.xml" music-making atari)
         ("http://feeds.feedburner.com/Post-punk" music)
         ("http://www.ribbonfarm.com/feed/")
         ("http://www.marginalrevolution.com/marginalrevolution/index.rdf" bloggers)
@@ -35,7 +34,6 @@
         ("http://scholars-stage.blogspot.com/feeds/posts/default")
         ("http://excessreturns.wordpress.com/feed/")
         ("http://www.systemsofromance.com/blog/feed/")
-        ("https://drewcoffman.com/rss")
         ("http://www.orderofthegooddeath.com/feed")
         ("http://slatestarcodex.com/feed/")
         ("https://sive.rs/tech.atom" bloggers)
@@ -57,7 +55,6 @@
         ("http://beltmag.com/feed/" chicago)
         ("https://blockclubchicago.org/feed/" chicago)
         ("http://www.publicbooks.org/tag/the-big-picture/feed" culture) ;; via arts & letters daily
-        ("http://www.aldaily.com/feed/" culture)
         ("http://weeklysift.com/feed/" bloggers real-news)
         ("http://pedestrianobservations.wordpress.com/feed/" bloggers transit)
         ("http://www.foxtrot.com/feed/" comics)
@@ -115,7 +112,6 @@
         ("https://le-strade.com/feed/" italy)
         ("https://italicsmag.com/feed/" italy)
         ("http://www.berlinartlink.com/feed/" germany)
-        ("https://berlinspectator.com/feed/" germany)
         ("http://digitalcosmonaut.com/feed/" germany)
         ("http://www.iheartberlin.de/feed/" germany)
         ("http://www.edge.org/feed" suchness)
@@ -146,8 +142,7 @@
         ("http://blog.veitheller.de/feed.rss" irl informatics)
         ("https://blog.emma.coop/read/feed/" irl)
         ("https://taylor.town/feed.xml" irl bloggers)
-        ("https://livelaugh.blog/rss" bloggers) ; Jenn Schiffer
-        ("http://naik.co/feed/" irl)
+        ("https://livelaugh.blog/rss.xml" bloggers) ; Jenn Schiffer
         ("https://www.hillelwayne.com/post/index.xml" informatics)
         ("https://southstreetdungeon.wordpress.com/feed/" irl music)
         ("http://artoftravelogue.blogspot.com/feeds/posts/default" irl music)
@@ -192,7 +187,6 @@
         ("https://clojureverse.org/latest.rss" clojure)
         ("http://danlebrero.com/feed.rss")
         ("https://clojure.org/feed.xml") ;; Clojure Dref by Alex Miller
-        ("http://blog.acolyer.org/feed/")
         ("http://blog.klipse.tech//feed.xml")
         ("http://www.more-magic.net/feed.atom")
         ("http://vvvvalvalval.github.io/feed.xml" clojure)
@@ -235,7 +229,7 @@
         ("https://thedialrss.com/combined-rss/" sts networks) ;; via nettime
         ("https://sirupsen.com/atom.xml" informatics) ;; via Readwise newsletter
         ("https://medium.com/feed/@sts-news" sts irl)
-        ("https://deprogrammaticaipsum.com/rss" sts)
+        ("https://deprogrammaticaipsum.com/index.xml" sts)
         ("https://www.inkandswitch.com/index.xml" informatics irl)
         ("https://newsletter.futureofcoding.org/rss.xml" informatics irl)
         ("https://blog.zgp.org/feed.xml" networks informatics) ;; via mastodon, VRM
@@ -265,13 +259,11 @@
         ("https://constantine.name/feed/" bloggers indieweb) ; BtF
         ("http://manuelmoreale.com/feed/rss" bloggers indieweb) ; people & blogs
         ("http://www.daemonology.net/hn-daily/index.rss" real-news)
-        ("https://en.wikipedia.org/wiki/RSS" clojure)
         ("https://stephango.com/feed.xml" bloggers) ; taylor
         ("https://www.benkuhn.net/index.xml" bloggers) ; taylor
-        ("https://atlasminor.com/atlasminor.com/feed" digital-art bloggers)
+        ("https://www.jamesreeves.co/rss/" digital-art bloggers)
         ("https://feeds.feedburner.com/blogspot/musingsbyken" suchness) ; Broken?
         ("https://rocks.guide/feed.rss") ; Broken?
-        ("https://www.triquarterly.org/feed" chicago)
         ("http://www.aaronsw.com/2002/feeds/pgessays.rss" tech-news informatics networks)
         ("https://techpolicy.press/rss/feed.xml" networks)
         ("https://musings.tychi.me/feed/" digital-art bloggers) ;; Solid artist
@@ -287,8 +279,6 @@
         ("https://goto10.substack.com/feed?utm_source=substack&utm_medium=email" atari)
         ("https://www.ben-evans.com/benedictevans?format=rss" informatics) ;; recommended by Adam Lofbomm
         ("https://www.menimagerie.com/a-glass-menagerie-of-insight?format=rss" bloggers networks)
-        ("https://www.forsalepeoriablog.com/blog-feed.xml" bloggers irl)
-        ("https://global.ilmanifesto.it/feed/" real-news)
         ("https://www.wheresyoured.at/rss/" tech-news)
         ("https://thedialrss.com/combined-rss/" culture)
         ("http://dhs.nu/rssnews.php" atari)
@@ -310,7 +300,6 @@
         ("https://www.dbreunig.com/feed.xml" bloggers sts) ; cultural anthropology, computer science, and media.
         ("https://joshleeb.com/index.xml" bloggers informatics) ; shared different internet
         ("https://notes.brooklynzelenka.com/index.xml" irl informatics) ; Brooklyn Elizabeth Zelenka
-        ("https://www.horeca.it/rss" italian)
         ("http://feeds.feedburner.com/s-usih") ; https://ooh.directory
         ("http://www.erasmatazz.com/index.xml" atari) ; chris crawford
         ("https://lethain.com/feeds.xml" tech-news) ;; via amazing cto
@@ -320,12 +309,11 @@
         ("https://www.are.na/parker-gibbons/a-new-internet-fylzq4dvmue/feed/rss" networks)
         ("https://hans.gerwitz.com/feeds/notes.rss" bloggers)
         ("https://www.theculturium.com/feed/" culture) ;; Parabola-like
-        ("https://www.erininthemorning.com/rss" culture) ;; via Jenny (doubel check feed)
+        ("https://www.erininthemorning.com/feed" culture) ;; via Jenny (doubel check feed)
         ("https://alexanderobenauer.com/assets/feed/rss.xml" networks) ; research via Taylor
         ("https://arjandhakal.com.np/rss.xml" irl informatics)
         ("https://blog.weareopen.coop/feed" networks) ;; Doug Belshaw
         ("https://dougbelshaw.com/blog/feed" irl networks) ;; Doug Belshaw
-        ("https://informationaccountability.org/iaf-blog/rss" identity)
         ("https://www.zylstra.org/blog/feed/" identity bloggers)
         ("http://www.windley.com/rss.xml" identity)
         ("http://blogs.law.harvard.edu/doc/feed/" identity)
@@ -344,7 +332,7 @@
 
 ;; opml export issue
 
-        ("https://leancrew.com/all-this/feed/")
+        ("https://leancrew.com/all-this/feed/" informatics)
         ("https://onetwoxu.de/language/en/feed/" music)
         ("https://buttondown.email/local-first/rss" local-first)
         ("https://petervanstudios.com/blog/rss" digtial-art bloggers)
@@ -357,6 +345,7 @@
         ("https://rknight.me/feed.xml" bloggers)
         ("https://sonnet.io/feed.xml" networks) ; taylor
         ("https://michal.sapka.me/index.xml" emacs bloggers)
-        ("https://standardebooks.org/feeds/rss" culture commons)
+        ("https://standardebooks.org/feeds/rss/new-releases" culture commons)
+        ("https://www-users.tebibyte.io/~yihanwu1024/feed" networks)
         )
 )
