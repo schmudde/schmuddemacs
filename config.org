@@ -1630,6 +1630,24 @@ If ~muw sync personal~ &rArr; ~error: failed to open store @ /home/schmudde/.cac
 
 Run ~muw mu-init~ to initialise the database first.
 
+**error in process sentinel**
+
+When trying to open mu4e in Emacs, I saw this message:
+
+#+begin_src
+error in process sentinel: mu4e--server-sentinel: mu server process ended with exit code 1
+error in process sentinel: mu server process ended with exit code 1
+#+end_src
+
+#+begin_src bash
+mu info
+#+end_src
+
+#+RESULTS:
+Expected block 18852 to be level 2, not 0
+
+Had to run the ~mu init~ command found in [[*Personal eMail Addesses][Personal eMail Addesses]] above and then ~mu index~. Then ~mu info~ works correct.
+
 ** Other Approaches
 
 - System Crafters videos: [[https://youtu.be/WiyqU7gmKsk][A good intro to eMail in Emacs video]], [[https://www.youtube.com/watch?v=yZRyEhi4y44][Streamline Your E-mail Management with mu4e]]

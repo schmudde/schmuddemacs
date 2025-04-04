@@ -322,16 +322,6 @@
         ("http://www.identitywoman.net/?feed=rss2" identity)
         ("http://self-issued.info/?feed=rss2" identity)
         ("https://hendersoni.substack.com/feed" identity) ;; via Doc
-
-        ;; ("http://modulolotus.net/feed.xml" irl) certificate issue
-;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
-;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
-;; ("https://calumryan.com/feeds/articles/rss" bloggers) 400
-;; ("https://www.therestisnoise.com/atom.xml" music) ;; 403
-;; ("http://rachelbythebay.com/w/atom.xml") ;; atom 403
-
-;; opml export issue
-
         ("https://leancrew.com/all-this/feed/" informatics)
         ("https://onetwoxu.de/language/en/feed/" music)
         ("https://buttondown.email/local-first/rss" local-first)
@@ -344,8 +334,21 @@
         ("https://blog.bmannconsulting.com/feed.xml" informatics irl)
         ("https://rknight.me/feed.xml" bloggers)
         ("https://sonnet.io/feed.xml" networks) ; taylor
-        ("https://michal.sapka.me/index.xml" emacs bloggers)
+        ("https://michal.sapka.pl/rss.xml" emacs bloggers)
         ("https://standardebooks.org/feeds/rss/new-releases" culture commons)
         ("https://www-users.tebibyte.io/~yihanwu1024/feed" networks)
+
+
+        ;; new
+
+        ("https://modulolotus.net/rss.xml" irl)
+        ("https://busterbenson.com/atom.xml" bloggers)
+
+        ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
+        ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
+        ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
+        ;; ("https://calumryan.com/feeds/articles/rss" bloggers) 400
+        ;; ("http://rachelbythebay.com/w/atom.xml") ;; atom 403
+
         )
-)
+      )
