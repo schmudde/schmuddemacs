@@ -343,6 +343,16 @@
 
         ("https://modulolotus.net/rss.xml" irl)
         ("https://busterbenson.com/atom.xml" bloggers)
+        ("https://dtinit.org/feed.xml" identity)
+        ("https://ciechanow.ski/atom.xml" informatics)
+        ("https://gwern.substack.com/feed" bloggers)
+        ("https://froghat.ca/feeds/blog.rss.xml" informatics)
+        ("https://macwright.com/rss.xml" bloggers)
+        ("https://rocco.substack.com/feed" irl)
+        ("https://rss.beehiiv.com/feeds/k9MJunEkZy.xml" culture) ;; ness labs
+        ("https://elpis.ws/rss.xml" networks)
+        ("https://brainwashed.com/index.php?option=com_content&view=category&layout=blog&id=167&Itemid=855&format=feed&type=rss" culture)
+
 
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type

@@ -129,6 +129,31 @@ Denote is a simple note-taking tool for Emacs. It is based on the idea that note
 
 ~denote-infer-keywords~ sets a controlled vocabulary for keywords/filetags (meaning they are predefined and do not proliferate). Keywords set in *Customize Group: Denote*.
 
+Patch for denote until I upgrade.
+
+#+begin_src emacs-lisp
+  (when (< emacs-major-version 29)
+    (defun date-to-time (date)
+      "Parse a string DATE that represents a date-time and return a time value.
+  DATE should be in one of the forms recognized by `parse-time-string'.
+  If DATE lacks time zone information, local time is assumed."
+      (condition-case err
+          ;; Parse DATE. If it contains a year, use defaults for other components.
+          ;; Then encode the result; this signals an error if the year is missing,
+          ;; because encode-time signals if crucial time components are nil.
+          ;; This heuristic uses local time if the string lacks time zone info,
+          ;; because encode-time treats a nil time zone as local time.
+          (let ((parsed (parse-time-string date)))
+            (when (decoded-time-year parsed)
+              (decoded-time-set-defaults parsed))
+            (encode-time parsed))
+        (error
+         (if (equal err '(error "Specified time is not representable"))
+             (signal (car err) (cdr err))
+           (error "Invalid date: %s" date)))))
+    )
+#+end_src
+
 *** [[https://github.com/nobiot/org-transclusion][org-transclusion]]                                       :installed:
 
 #+begin_src emacs-lisp
@@ -333,6 +358,12 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
     - With ~customize-face~: ~tty-menu-disabled-face~, ~tty-menu-enabled-face~, ~tty-menu-selected-face~
     - Or in Lisp: ~(set-face-attribute 'tty-menu-enabled-face  nil :background "black" :foreground "white")~
 
+I like to grep it grep it, I like to grep it grep it...
+
+#+begin_src emacs-lisp
+(grep-apply-setting 'grep-command "grep --color=auto --exclude-dir=\".*\" -nHri --null -e")
+#+end_src
+
 ** Keybindings
 
 I don't use ~suspend-frame~. And it's easy to invoke by executed extended command. It's bound to the valuable ~C-z~.
@@ -469,6 +500,16 @@ The issue is ~C-c l~ is a prefix for lsp-mode, which is why I haven't made this 
 [[/home/schmudde/Dropbox/notes/emacs-modes.org::72][org-capture shortcuts]]
 
 Custom views
+
+#+name: /usr/local/share/emacs/28.3/lisp/org/org-faces.el.gz
+#+begin_src emacs-lisp :tangle no
+(defface drs-org-deadline
+  '((((class color) (background light)) (:foreground "Purple" :underline f))
+    (((class color) (background dark)) (:foreground "Cyan" :underline f))
+    (f (:underline f)))
+  "Face for Deadlines."
+  :group 'org-faces)
+#+end_src
 
 #+begin_src emacs-lisp :tangle no
 org-agenda-custom-commands
