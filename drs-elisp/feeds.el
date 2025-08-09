@@ -15,7 +15,7 @@
         ("http://chrisblattman.com/feed/" bloggers real-news)
         ("https://lord.io/feed.xml" bloggers informatics)
         ("http://www.thinktankwatch.com/feeds/posts/default" real-news)
-        ("http://www.dlederle.com/feed.xml" sts informatics bloggers)
+        ("http://www.dlederle.com/feed.xml" sts informatics bloggers) ;; Gallery 404
         ("https://blog.khinsen.net/feeds/all.rss.xml" bloggers commons sts)
         ("https://everybodyslibraries.com/feed" commons)
         ("http://www.craigmurray.org.uk/feed/")
