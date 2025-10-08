@@ -340,7 +340,7 @@
 
 
         ;; new
-
+        ("file:///home/schmudde/Downloads/Tzei1YPK" sts)
         ("https://modulolotus.net/rss.xml" irl)
         ("https://busterbenson.com/atom.xml" bloggers)
         ("https://dtinit.org/feed.xml" identity)
@@ -352,6 +352,26 @@
         ("https://rss.beehiiv.com/feeds/k9MJunEkZy.xml" culture) ;; ness labs
         ("https://elpis.ws/rss.xml" networks)
         ("https://brainwashed.com/index.php?option=com_content&view=category&layout=blog&id=167&Itemid=855&format=feed&type=rss" culture)
+        ("file:///home/schmudde/Downloads/cEzFZGTm" informatics)
+        ("https://driesdepoorter.be/feed/" culture) ;; digital artist via Torino Tom
+        ("https://www.1bluebass.com/feed/" irl) ;; Nuria's husband
+        ("https://programmingsimplicity.substack.com/feed" informatics) ;; Future of Programming
+        ("https://fromthesuperhighway.com/rss.xml" networks) ;; indieweb
+        ("https://existentialcrunch.substack.com/feed" networks) ;; via sam arbesman
+        ("https://cybercultural.com/feed.xml" networks sts)
+        ("https://arcmag.org/feed/" culture) ;; via sam arbesman
+        ("https://www.asimov.press/feed?sectionId=178427" science) ;; via sam arbesman
+        ("https://emacsredux.com/atom.xml" emacs)
+        ("https://antigonejournal.com/feed/" culture)
+        ("https://languagehat.com/feed/" bloggers culture)
+        ("https://mjulius.com/feed/" bloggers culture)
+        ("http://www.comune.torino.it/bici/feed/" italy)
+        ("http://www.comune.torino.it/verdepubblico/feed/" italy)
+        ("https://www.exhibito.it/feed/" italy)
+        ("https://www.artnews.com/t/link-rot/feed/" culture commons) ; via Transfer Gallery
+        ("https://blog.jj5.net/blog/feed/" bloggers) ; BtF contact
+        ("http://app1.wastholm.com/?format=rss" bloggers) ; BtF contact
+        ("https://davidgasquez.com/rss.xml" informatics)
 
 
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403

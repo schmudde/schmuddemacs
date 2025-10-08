@@ -361,7 +361,7 @@ I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget command
 I like to grep it grep it, I like to grep it grep it...
 
 #+begin_src emacs-lisp
-(grep-apply-setting 'grep-command "grep --color=auto --exclude-dir=\".*\" -nHri --null -e")
+(grep-apply-setting 'grep-command "grep --color=auto -nHri --null -e")
 #+end_src
 
 ** Keybindings
