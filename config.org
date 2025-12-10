@@ -89,14 +89,14 @@ Corfu is my current buffer completion enhancement. I use terminal mode, so ~(glo
 
 *** [[https://jblevins.org/projects/deft/][deft]]                                                        :installed:
 
-How many research files do I have? List (single-column: ~-1~, hide-control-chars: ~-q~) and count the new lines.
+How many research files (text and rich media) do I have? List and count the new lines.
 
 #+begin_src shell
-ls -1q ~/.deft | wc -l
+find /home/schmudde/Dropbox/notes -type f -print | wc -l
 #+end_src
 
 #+RESULTS:
-: 158
+: 1193
 
 #+begin_src emacs-lisp
 (global-set-key (kbd "<f8>") 'deft)

@@ -122,9 +122,6 @@
  '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
  '(message-dont-reply-to-names nil)
  '(mu4e-compose-dont-reply-to-self t)
-
- '(org-agenda-files '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"))
- '(org-agenda-start-with-log-mode nil)
  '(org-agenda-custom-commands
    '(("w" "Weekly Review"
       ((agenda ""
@@ -155,6 +152,11 @@
       ((agenda "" nil)
        (alltodo "" nil))
       nil)))
+ '(org-agenda-files
+   '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org" "~/Dropbox/org/family.org"))
+ '(org-agenda-start-with-log-mode nil)
+ '(org-babel-python-command "python3")
+ '(org-babel-python-mode 'python3)
  '(org-default-notes-file "~/.notes.org")
  '(org-directory "~/Dropbox/notes")
  '(org-export-backends '(ascii html icalendar latex md odt))
@@ -170,9 +172,10 @@
    '((sequence "TODO(t)" "DOING(p)" "|" "ABANDONED(a)" "DONE(d)")))
  '(package-archives
    '(("gnu" . "https://elpa.gnu.org/packages/")
-     ("melpa-stable" . "https://stable.melpa.org/packages/")))
+     ("melpa-stable" . "https://stable.melpa.org/packages/")
+     ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-selected-packages
-   '(json-mode gptel csv-mode ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(copilot clomacs denote-org json-mode gptel csv-mode ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
  '(safe-local-variable-values
    '((eval progn
            (defun yorba-dev
@@ -233,6 +236,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-blue ((t (:background "#2fafff" :foreground "#2fafcf"))))
  '(lsp-ui-peek-line-number ((t (:inherit shadow))))
+ '(org-imminent-deadline ((t (:inherit drs-org-deadline))))
  '(org-upcoming-deadline ((t (:foreground "cyan"))))
  '(tty-menu-disabled-face ((t (:background "#2277bb" :foreground "gray70"))))
  '(tty-menu-enabled-face ((t (:background "#2277bb" :foreground "gray85" :weight bold))))

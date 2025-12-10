@@ -372,8 +372,12 @@
         ("https://blog.jj5.net/blog/feed/" bloggers) ; BtF contact
         ("http://app1.wastholm.com/?format=rss" bloggers) ; BtF contact
         ("https://davidgasquez.com/rss.xml" informatics)
-
-
+        ("https://jointhefreeworld.org/rss.xml" informatics)
+        ("https://www.soundsandwords.io//feed.xml" irl informatics) ; evan from Yorba
+        ("https://brianmckenna.org/blog/feed" informatics) ; old twitter follow
+        ("https://downtowncritic.net/rss" culture) ;; book on collecting art
+        ("https://ctosub.com/feed" informatics) ;; cto
+        ("https://akos.ma/index.xml" sts) ;; De Programmatica Ipsum
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
         ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
