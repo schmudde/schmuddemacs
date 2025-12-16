@@ -3,6 +3,9 @@
 #+LANGUAGE: en
 #+STARTUP: align indent fold
 
+
+
+
 Welcome to Schmuddemacs!
 
 My GNU Emacs configuration file is written to help me remember all the small decisions I made along the way and as a guide for any souls who might stumble upon this page.
@@ -1066,7 +1069,7 @@ But the following hooks do not work (CIDER 1.5, 1.6 freezes):
   ;; (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
 #+END_SRC
 
-**** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]] and [[https://github.com/clojure-emacs/cider][cider]]                                       :installed:
+**** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], clojure-ts-mode, and [[https://github.com/clojure-emacs/cider][cider]]                  :installed:
 
 #+begin_src emacs-lisp
   (global-set-key (kbd "C-c C-c c") 'cider-repl-clear-buffer)
@@ -1086,6 +1089,28 @@ But the following hooks do not work (CIDER 1.5, 1.6 freezes):
   (add-hook 'clojure-mode-hook #'drs-clojure-mode-hook)
 #+END_SRC
 ** LSP Mode                                                      :installed:
+
+I [[https://github.com/emacs-lsp/lsp-mode/issues/4940][filed a bug]] with Emacs 30.1 + lsp-mode 9.0.0 on [2025-12-16 Tue]:
+
+#+begin_quote
+Please version bump the f.el requirement to [[https://github.com/rejeep/f.el/releases/tag/v0.21.0][v0.21.0]]. The current requirement for LSP 9.0.0 is f-0.20.0. This created a problem when installing on Emacs 30.1:
+
+#+begin_src
+Compiling file .../elpa/lsp-mode-9.0.0/lsp-actionscript.el at Tue Dec 16 11:25:01 2025 Entering directory ‘.../elpa/lsp-mode-9.0.0/’ lsp-actionscript.el:27:11:
+
+Error: Eager macro-expansion failure: (error "Shortdoc f function ‘f-glob’: bad keyword ‘:noeval*’")
+#+end_src
+
+I updated f.el [[https://github.com/rejeep/f.el/pull/132/commits/5bd87c6eb4a8608bae5f0313d8c680aedb40dabd][to the following commit]]:
+
+#+begin_src
+(package-vc-install
+ '(f :url "https://github.com/rejeep/f.el"
+     :rev "5bd87c6eb4a8608bae5f0313d8c680aedb40dabd"))
+#+end_src
+
+to fix ~(f-shortdoc.el)~: changed keyword ~:noeval~ to ~:no-eval~. And it all worked.
+#+end_quote
 
 Install the [[https://clojure-lsp.io/][clojure-lsp]] GraalVM native executable for Linux
 
@@ -1115,18 +1140,19 @@ Other commands
 The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-ui][~lsp-ui~]]. This is configured in *[LSP Headerline] LSP support for headerline* (e.g. ~lsp-headerline-breadcrumb-path-face~).
 
 #+begin_src emacs-lisp
-  (use-package lsp-mode
-    :init
-    (setq lsp-keymap-prefix "C-c l")
-    :hook ((clojure-mode . lsp)
-           (typescript-mode . lsp)
-           (lsp-mode . lsp-enable-which-key-integration))
-    :commands lsp)
+    (use-package lsp-mode
+      :init
+      (setq lsp-keymap-prefix "C-c l")
+      :hook ((clojure-mode . lsp)
+             (clojure-ts-mode . lsp)
+             (typescript-mode . lsp)
+             (lsp-mode . lsp-enable-which-key-integration))
+      :commands lsp)
 
-  (use-package lsp-ui
-    :commands lsp-ui-mode
-    :config (define-key lsp-mode-map (kbd "C-c l d s") 'lsp-ui-doc-show)
-            (define-key lsp-mode-map (kbd "C-c l d h") 'lsp-ui-doc-hide))
+    (use-package lsp-ui
+      :commands lsp-ui-mode
+      :config (define-key lsp-mode-map (kbd "C-c l d s") 'lsp-ui-doc-show)
+              (define-key lsp-mode-map (kbd "C-c l d h") 'lsp-ui-doc-hide))
 #+end_src
 
 TODO: Note, ~lsp-ui~ was:
