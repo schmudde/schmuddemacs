@@ -61,7 +61,8 @@
  '(denote-directory "/home/schmudde/Dropbox/notes/zettelkasten")
  '(denote-infer-keywords nil)
  '(denote-known-keywords
-   '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs" "clojure" "art"))
+   '("sts" "doing" "personal" "informatics" "suchness" "tools" "emacs"
+     "clojure" "art"))
  '(desktop-restore-in-current-display t)
  '(desktop-save-mode t)
  '(doc-view-dvipdf-program "nil")
@@ -97,29 +98,29 @@
  '(gptel-use-curl nil)
  '(ignored-local-variable-values
    '((eval progn
-           (defun yorba-dev
-               (choice)
+           (defun yorba-dev (choice)
              (interactive
-              (let
-                  ((completion-ignore-case t))
+              (let ((completion-ignore-case t))
                 (list
                  (completing-read "Choose: "
-                                  '("start-server" "stop-server" "portal" "go" "stop" "reset" "portal-clear" "portal-close" "refresh")
+                                  '("start-server" "stop-server"
+                                    "portal" "go" "stop" "reset"
+                                    "portal-clear" "portal-close"
+                                    "refresh")
                                   nil t))))
-             (with-current-buffer
-                 (current-buffer)
-               (cider-interactive-eval
-                (format "(dev/%s)" choice))))
-           (setenv "GOOGLE_APPLICATION_CREDENTIALS" "/path/to/yorba-pubsub-resources.json"))))
+             (with-current-buffer (current-buffer)
+               (cider-interactive-eval (format "(dev/%s)" choice))))
+           (setenv "GOOGLE_APPLICATION_CREDENTIALS"
+                   "/path/to/yorba-pubsub-resources.json"))))
  '(ispell-dictionary nil)
  '(json-mode-indent-level 2)
  '(ledger-reports
-   '(("test" "ledger ")
-     ("bal" "%(binary) -f %(ledger-file) bal")
+   '(("test" "ledger ") ("bal" "%(binary) -f %(ledger-file) bal")
      ("reg" "%(binary) -f %(ledger-file) reg")
      ("payee" "%(binary) -f %(ledger-file) reg @%(payee)")
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
+ '(lsp-completion-provider :capf)
  '(message-dont-reply-to-names nil)
  '(mu4e-compose-dont-reply-to-self t)
  '(org-agenda-custom-commands
@@ -131,14 +132,14 @@
                  '(org-agenda-skip-entry-if 'nottodo 'done))))
        (agenda ""
                ((org-agenda-span 'week)
-                (org-agenda-overriding-header "Unfinished Scheduled Tasks")
+                (org-agenda-overriding-header
+                 "Unfinished Scheduled Tasks")
                 (org-agenda-skip-function
                  '(org-agenda-skip-entry-if 'todo 'done)))))
       nil nil)
      ("d" "Daily Agenda"
       ((agenda ""
-               ((org-agenda-span 'day)
-                (org-deadline-warning-days 1)))
+               ((org-agenda-span 'day) (org-deadline-warning-days 1)))
        (tags-todo "+PRIORITY=\"A\""
                   ((org-agenda-overriding-header "High Priority Tasks")))
        (tags-todo "+PRIORITY=\"C\""
@@ -146,26 +147,22 @@
       nil nil)
      ("u" "Untagged" tags-todo "-{.*}"
       ((org-agenda-overriding-header "Untagged Inbox Tasks")
-       (org-agenda-files
-        '("../org/inbox.org"))))
-     ("n" "Agenda and all TODOs"
-      ((agenda "" nil)
-       (alltodo "" nil))
+       (org-agenda-files '("../org/inbox.org"))))
+     ("n" "Agenda and all TODOs" ((agenda "" nil) (alltodo "" nil))
       nil)))
  '(org-agenda-files
-   '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org" "~/Dropbox/org/family.org"))
+   '("~/Dropbox/org/inbox.org" "~/Dropbox/org/yorba.org"
+     "~/Dropbox/org/family.org"))
  '(org-agenda-start-with-log-mode nil)
  '(org-babel-python-command "python3")
- '(org-babel-python-mode 'python3)
+ '(org-babel-python-mode 'python3 t)
  '(org-default-notes-file "~/.notes.org")
  '(org-directory "~/Dropbox/notes")
  '(org-export-backends '(ascii html icalendar latex md odt))
  '(org-extend-today-until 2)
  '(org-file-apps
-   '((auto-mode . emacs)
-     ("\\.mm\\'" . default)
-     ("\\.x?html?\\'" . default)
-     ("\\.pdf\\'" . default)))
+   '((auto-mode . emacs) ("\\.mm\\'" . default)
+     ("\\.x?html?\\'" . default) ("\\.pdf\\'" . default)))
  '(org-mobile-directory "~/Dropbox/Apps/MobileOrg")
  '(org-mobile-inbox-for-pull "~/Dropbox/notes/flagged.org")
  '(org-todo-keywords
@@ -175,47 +172,58 @@
      ("melpa-stable" . "https://stable.melpa.org/packages/")
      ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
  '(package-selected-packages
-   '(copilot clomacs denote-org json-mode gptel csv-mode ob-http org-transclusion denote jinx consult corfu marginalia orderless vertico elfeed org-pomodoro magit exec-path-from-shell clj-refactor clojure-snippets yasnippet paredit flycheck flycheck-clj-kondo flycheck-clojure flymake lsp-ui deft lsp-mode cider multiple-cursors typescript-mode projectile malyon which-key pinboard pocket-reader ob-restclient go-translate elpher pass use-package adaptive-wrap ledger-mode restclient htmlize cljsbuild-mode clojure-cheatsheet websocket spinner queue oauth2 markdown-preview-eww emojify circe alert))
+   '(adaptive-wrap alert cider circe citeproc citeproc-org clj-refactor
+                   cljsbuild-mode clojure-cheatsheet clojure-snippets
+                   clojure-ts-mode clomacs consult copilot corfu
+                   csv-mode deft denote denote-org elfeed elpher
+                   emojify exec-path-from-shell f flycheck
+                   flycheck-clj-kondo flycheck-clojure flymake gnugo
+                   go-translate gptel htmlize jinx json-mode
+                   ledger-mode lsp-mode lsp-ui magit malyon marginalia
+                   markdown-preview-eww multiple-cursors oauth2
+                   ob-http ob-restclient orderless org-pomodoro
+                   org-transclusion paredit pass pinboard
+                   pocket-reader projectile queue restclient spinner
+                   typescript-mode use-package vertico websocket
+                   which-key yasnippet))
+ '(package-vc-selected-packages
+   '((f :url "https://github.com/rejeep/f.el" :rev
+        "5bd87c6eb4a8608bae5f0313d8c680aedb40dabd")))
  '(safe-local-variable-values
    '((eval progn
-           (defun yorba-dev
-               (choice)
+           (defun yorba-dev (choice)
              (interactive
-              (let
-                  ((completion-ignore-case t))
+              (let ((completion-ignore-case t))
                 (list
                  (completing-read "Choose: "
-                                  '("start-server" "stop-server" "portal" "go" "stop" "reset" "portal-clear" "portal-close" "refresh")
+                                  '("start-server" "stop-server"
+                                    "portal" "go" "stop" "reset"
+                                    "portal-clear" "portal-close"
+                                    "refresh")
                                   nil t))))
-             (with-current-buffer
-                 (current-buffer)
-               (cider-interactive-eval
-                (format "(dev/%s)" choice))))
-           (setenv "GOOGLE_APPLICATION_CREDENTIALS" "/path/to/yorba-pubsub-resources.json"))
+             (with-current-buffer (current-buffer)
+               (cider-interactive-eval (format "(dev/%s)" choice))))
+           (setenv "GOOGLE_APPLICATION_CREDENTIALS"
+                   "/path/to/yorba-pubsub-resources.json"))
      (eval progn
-           (defun dev
-               (function-name)
+           (defun dev (function-name)
              "call dev(s) functions specifying function name"
              (interactive "sdev/function: ")
-             (with-current-buffer
-                 (current-buffer)
+             (with-current-buffer (current-buffer)
                (cider-interactive-eval
                 (format "(dev/%s)" function-name))))
-           (defun portal nil "call dev/portal"
-                  (interactive)
-                  (with-current-buffer
-                      (current-buffer)
-                    (cider-interactive-eval "(dev/portal)")))
-           (defun portal-clear nil "call dev/portal-clear"
-                  (interactive)
-                  (with-current-buffer
-                      (current-buffer)
-                    (cider-interactive-eval "(dev/portal-clear)")))
-           (defun portal-close nil "call dev/portal-close"
-                  (interactive)
-                  (with-current-buffer
-                      (current-buffer)
-                    (cider-interactive-eval "(dev/portal-close)"))))
+           (defun portal nil
+             "call dev/portal" (interactive)
+             (with-current-buffer (current-buffer)
+               (cider-interactive-eval "(dev/portal)")))
+           (defun portal-clear nil
+             "call dev/portal-clear" (interactive)
+             (with-current-buffer (current-buffer)
+               (cider-interactive-eval "(dev/portal-clear)")))
+           (defun portal-close nil
+             "call dev/portal-close" (interactive)
+             (with-current-buffer (current-buffer)
+               (cider-interactive-eval "(dev/portal-close)"))))
      (cider-refresh-after-fn . "server.repl/post-refresh")
      (cider-refresh-before-fn . "server.repl/pre-refresh")))
  '(send-mail-function 'smtpmail-send-it)

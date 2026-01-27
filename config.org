@@ -3,9 +3,6 @@
 #+LANGUAGE: en
 #+STARTUP: align indent fold
 
-
-
-
 Welcome to Schmuddemacs!
 
 My GNU Emacs configuration file is written to help me remember all the small decisions I made along the way and as a guide for any souls who might stumble upon this page.
@@ -19,6 +16,7 @@ This is currently loaded by my ~init.el~ using ~(org-babel-load-file (concat use
 The move to Org Mode is currently a work in progress!
 
 [[under-construction.gif]]
+
 
 * Package Overview
 
@@ -41,25 +39,34 @@ My current minibuffer enhancements
     - ~orderless~ accepts SPC but ~basic~ and ~partial-completion~ do not. ∴ ~wikidata_test.clj~ can be found when typing ~tes SPC~ even if the directory includes ~test.clj~.
 
 #+begin_src emacs-lisp
-    (savehist-mode 1)
+  (savehist-mode 1)
 
-    (use-package vertico
-      :ensure t
-      :config (vertico-mode 1)
-      ;; This works with `file-name-shadow-mode' enabled.  When you are in
-      ;; a sub-directory and use, say, `find-file' to go to your home '~/'
-      ;; or root '/' directory, Vertico will clear the old path to keep
-      ;; only your current input.
-      (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
+  (use-package vertico
+    :ensure t
+    :config (vertico-mode 1)
+    ;; This works with `file-name-shadow-mode' enabled.  When you are in
+    ;; a sub-directory and use, say, `find-file' to go to your home '~/'
+    ;; or root '/' directory, Vertico will clear the old path to keep
+    ;; only your current input.
+    (add-hook 'rfn-eshadow-update-overlay-hook #'vertico-directory-tidy))
 
-    ;;(use-package marginalia
-    ;;  :ensure t
-    ;;  :config (marginalia-mode 1))
+  ;;(use-package marginalia
+  ;;  :ensure t
+  ;;  :config (marginalia-mode 1))
 
-    (setq completion-styles '(orderless basic))
-    (setq completion-category-overrides
-          '((file (styles . (basic partial-completion orderless)))))
+  (setf completion-styles '(orderless basic flex)
+        completion-auto-select t ;; Show completion on first call
+        completion-auto-help 'visible ;; Display *Completions* upon first request
+        completions-format 'one-column ;; Use only one column
+        completions-sort 'historical ;; Order based on minibuffer history
+        completions-max-height 20 ;; Limit completions to 15 (completions start at line 5)
+        completion-ignore-case t)
+
+  (setq completion-category-overrides
+        '((file (styles . (basic partial-completion orderless)))))
 #+end_src
+
+There are many completion styles; builtin styles include ~flex~, which provides fuzzy completions.
 
 I experimented with recursive minibuffers, but so far haven't needed them. So I'm not adding them to the ~emacs-lisp~ evaluation.
 
@@ -134,7 +141,7 @@ Denote is a simple note-taking tool for Emacs. It is based on the idea that note
 
 Patch for denote until I upgrade.
 
-#+begin_src emacs-lisp
+#+begin_src
   (when (< emacs-major-version 29)
     (defun date-to-time (date)
       "Parse a string DATE that represents a date-time and return a time value.
@@ -388,6 +395,7 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
       (define-key map (kbd "c") 'org-capture)
       (define-key map (kbd "d") 'dictionary-search)
       (define-key map (kbd "y") 'yas-expand)
+      (define-key map (kbd "a") 'completion-at-point)
       map)
     "Schmudde's personal keymap")
 
@@ -1160,6 +1168,13 @@ TODO: Note, ~lsp-ui~ was:
 (global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide)
 
 ** Flycheck, flycheck-clojure, flycheck-clj-kondo                :installed:
+
+TODO:
+
+#+begin_quote
+Flycheck was giving wierd errors with LSP, replaced it with built in flymake and the errors reporting is spot on.
+#+end_quote
+
 ** Typescript                                                    :installed:
 
 ~typescript-mode~:
