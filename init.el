@@ -6,7 +6,6 @@
 
 ;; settings for .txt files
 (add-to-list 'auto-mode-alist '("\\.txt$" . text-mode))
-(add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'visual-line-mode)
 
 (let ((default-directory "~/.emacs.d/elpa"))
@@ -95,7 +94,7 @@
  '(eww-search-prefix "https://html.duckduckgo.com/html?q=")
 
  '(gptel-model "gpt-4o")
- '(gptel-use-curl nil)
+ '(gptel-use-curl t)
  '(ignored-local-variable-values
    '((eval progn
            (defun yorba-dev (choice)
@@ -121,6 +120,7 @@
      ("account" "%(binary) -f %(ledger-file) reg %(account)")))
  '(lsp-clojure-custom-server-command "/usr/local/bin/clojure-lsp")
  '(lsp-completion-provider :capf)
+ '(malyon-stories-directory "/home/schmudde/.emacs.d/z-code/")
  '(message-dont-reply-to-names nil)
  '(mu4e-compose-dont-reply-to-self t)
  '(org-agenda-custom-commands
@@ -184,8 +184,8 @@
                    ob-http ob-restclient orderless org-pomodoro
                    org-transclusion paredit pass pinboard
                    pocket-reader projectile queue restclient spinner
-                   typescript-mode use-package vertico websocket
-                   which-key yasnippet))
+                   treesit-auto typescript-mode use-package vertico
+                   websocket which-key yasnippet))
  '(package-vc-selected-packages
    '((f :url "https://github.com/rejeep/f.el" :rev
         "5bd87c6eb4a8608bae5f0313d8c680aedb40dabd")))

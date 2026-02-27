@@ -309,7 +309,7 @@
         ("https://www.are.na/parker-gibbons/a-new-internet-fylzq4dvmue/feed/rss" networks)
         ("https://hans.gerwitz.com/feeds/notes.rss" bloggers)
         ("https://www.theculturium.com/feed/" culture) ;; Parabola-like
-        ("https://www.erininthemorning.com/feed" culture) ;; via Jenny (doubel check feed)
+        ("https://www.erininthemorning.com/feed" culture) ;; via Jenny (double check feed)
         ("https://alexanderobenauer.com/assets/feed/rss.xml" networks) ; research via Taylor
         ("https://arjandhakal.com.np/rss.xml" irl informatics)
         ("https://blog.weareopen.coop/feed" networks) ;; Doug Belshaw
@@ -340,7 +340,13 @@
 
 
         ;; new
-        ("file:///home/schmudde/Downloads/Tzei1YPK" sts)
+        ("https://www.thenewhumanitarian.org/taxonomy/term/407/feed" real-news)  ; Am Prestige
+        ("https://www.thenewhumanitarian.org/taxonomy/term/275/feed" real-news) ; Am Prestige
+        ("https://www.thenewhumanitarian.org/taxonomy/term/10/feed" real-news) ; Am Prestige
+        ("https://www.thenewhumanitarian.org/taxonomy/term/5856/feed" real-news) ; Am Prestige
+        ("https://www.thenewhumanitarian.org/taxonomy/term/447/feed" real-news) ; Am Prestige
+        ("https://scottrichmond.me/feed/" sts) ; computer class
+        ("https://melbourneblogger.blogspot.com/feeds/posts/default?alt=rss" culture)
         ("https://modulolotus.net/rss.xml" irl)
         ("https://busterbenson.com/atom.xml" bloggers)
         ("https://dtinit.org/feed.xml" identity)
@@ -378,6 +384,7 @@
         ("https://downtowncritic.net/rss" culture) ;; book on collecting art
         ("https://ctosub.com/feed" informatics) ;; cto
         ("https://akos.ma/index.xml" sts) ;; De Programmatica Ipsum
+        ("https://worksinprogress.co/rss.xml" sts culture listen)
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
         ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting

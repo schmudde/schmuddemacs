@@ -1018,6 +1018,39 @@ https://github.com/hrs/engine-mode
   (define-key my-keymap (kbd "k") 'drs-kebab-string)
 #+end_src
 
+** Tree-sitter
+
+#+begin_example
+Warning (treesit): The installed language grammar for c cannot be located or has problems (version-mismatch): 15
+Warning (treesit): The installed language grammar for javascript cannot be located or has problems (version-mismatch): 15
+#+end_example
+
+This is because Ubuntu dependencies are too old. So I tried some monkey business:
+
+#+begin_src
+  (use-package treesit-auto
+    :ensure t
+    :custom (treesit-auto-install 'prompt)
+    :config (global-treesit-auto-mode)
+
+    (setq treesit-auto-langs (seq-remove
+                              (lambda (lang)
+                                (memq lang '(c javascript)))
+                              treesit-auto-langs))
+    (treesit-auto-add-to-auto-mode-alist 'all))
+#+end_src
+
+#+begin_quote
+[!TIP]
+But then I had issues with markdown-ts-mode not existing in Emacs 30.1. But this could work itself out if I upgrade to Emacs 31.
+#+end_quote
+
+In the meantime, use only Clojure-TS Mode:
+
+#+begin_src emacs-lisp
+(add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
+#+end_src
+
 ** Yorba
 
 #+begin_src emacs-lisp
@@ -1033,6 +1066,13 @@ https://github.com/hrs/engine-mode
 
 ** Programming Utilities
 
+#+begin_src emacs-lisp
+(defun drs-parse-json (x)
+  (let ((obj (json-parse-string x)))
+    (erase-buffer)
+    (insert (json-serialize obj))))
+#+end_src
+
 *** Restclient                                                     :installed:
 
 Also installed: ~ob-restclient.el~ for Emacs Restclient support in [[https://github.com/alf/ob-restclient.el][org-babel]]. Header arguments for ~:results~: ~raw|value|pure|table~
@@ -1042,11 +1082,6 @@ Also installed: ~ob-restclient.el~ for Emacs Restclient support in [[https://git
 - :considering:
     - ~helm-cider~
     - ~ivy-cider~
-
-**** Smartparens                                             :considering:
-[[https://github.com/Fuco1/smartparens/wiki/Paredit-and-smartparens][Smartparens (installed) vs. Paredit]]
-
-"By default smartparens is much less strict about the 'balancedness' of the buffer and it usually allows you to delete whatever you please. However, there are settings (like smartparens-strict-mode) you can use to have it behave more like paredit."
 
 **** Paredit                                                      :installed:
 
@@ -1075,6 +1110,7 @@ But the following hooks do not work (CIDER 1.5, 1.6 freezes):
   (global-set-key (kbd "<C-delete>") 'paredit-delete-region)
   ;; (add-hook 'cider-mode-hook #'enable-paredit-mode)
   ;; (add-hook 'cider-repl-mode-hook #'enable-paredit-mode)
+  (add-hook 'clojure-ts-mode-hook #'paredit-mode)
 #+END_SRC
 
 **** [[https://github.com/clojure-emacs/clojure-mode][clojure-mode]], clojure-ts-mode, and [[https://github.com/clojure-emacs/cider][cider]]                  :installed:
@@ -1166,14 +1202,6 @@ The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-
 TODO: Note, ~lsp-ui~ was:
 (global-set-key (kbd "C-c l d s") 'lsp-ui-doc-show)
 (global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide)
-
-** Flycheck, flycheck-clojure, flycheck-clj-kondo                :installed:
-
-TODO:
-
-#+begin_quote
-Flycheck was giving wierd errors with LSP, replaced it with built in flymake and the errors reporting is spot on.
-#+end_quote
 
 ** Typescript                                                    :installed:
 
