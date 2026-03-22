@@ -1,4 +1,5 @@
 ;;; -*- lisp-data -*-
-(("/home/schmudde/work/code/yorba/yorba-clj/")
+(("/home/schmudde/work/code/yorba/eulogy/")
+ ("/home/schmudde/work/code/yorba/yorba-clj/")
  ("/home/schmudde/bin/emacs-30.1/") ("/home/schmudde/work/code/blog/")
  ("/home/schmudde/.emacs.d/") ("/home/schmudde/.emacs.d/elpa/f/"))

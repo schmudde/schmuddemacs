@@ -17,7 +17,6 @@ The move to Org Mode is currently a work in progress!
 
 [[under-construction.gif]]
 
-
 * Package Overview
 
 Come winter, having a snow in my Emacs is an absolute necessity. ~snow.el~ is available in [[https://melpa.org/#/snow][MELPA]] or on [[https://github.com/alphapapa/snow.el][GitHub]]. Download the file, ~curl -O https://raw.githubusercontent.com/alphapapa/snow.el/master/snow.el~, open it in a buffer, ~eval-buffer~, and ~M-x snow RET~.
@@ -374,6 +373,16 @@ I like to grep it grep it, I like to grep it grep it...
 (grep-apply-setting 'grep-command "grep --color=auto -nHri --null -e")
 #+end_src
 
+I'm always opening windows from Emacs
+
+#+begin_src emacs-lisp
+(defun drs/xdg-open (path)
+  "Prompt for PATH and open it with xdg-open."
+  (interactive
+   (list (read-file-name "xdg-open: " nil nil t)))
+  (start-process "xdg-open" nil "xdg-open" (expand-file-name path)))
+#+end_src
+
 ** Keybindings
 
 I don't use ~suspend-frame~. And it's easy to invoke by executed extended command. It's bound to the valuable ~C-z~.
@@ -382,7 +391,7 @@ I don't use ~suspend-frame~. And it's easy to invoke by executed extended comman
 (describe-key (kbd "C-z"))
 #+end_src
 
-So I want to unbind it and then use it for something better. Fundamentally ~global-set-key~, ~local-set-key~, etc... call ~define-key~, so I'm going to use that for most of my keybindings. It
+So I want to unbind it and then use it for something better. Fundamentally ~global-set-key~, ~local-set-key~, etc... call ~define-key~, so I'm going to use that for most of my keybindings.
 
 #+begin_src emacs-lisp :results none
   (define-key global-map (kbd "C-z") nil) ; Unbind C-z
@@ -396,6 +405,7 @@ So I want to unbind it and then use it for something better. Fundamentally ~glob
       (define-key map (kbd "d") 'dictionary-search)
       (define-key map (kbd "y") 'yas-expand)
       (define-key map (kbd "a") 'completion-at-point)
+      (define-key map (kbd "o") 'drs/xdg-open)
       map)
     "Schmudde's personal keymap")
 
@@ -1162,11 +1172,12 @@ Install the [[https://clojure-lsp.io/][clojure-lsp]] GraalVM native executable f
 - Native binary (recommended): The binaries are available on [[https://github.com/clojure-lsp/clojure-lsp/releases][Github releases]] as ~clojure-lsp-native-<os>-<arch>.zip~, after downloading you just need to unzip it. Tried [[https://github.com/clojure-lsp/clojure-lsp/releases/download/2022.11.03-00.14.57/clojure-lsp-native-linux-amd64.zip][clojure-lsp-native-linux-amd64.zip]] under *Assets*.
 
 #+begin_src bash
-whereis clojure-lsp
+clojure-lsp --version
 #+end_src
 
-#+RESULTS: clojure-lsp-path
-: clojure-lsp: /usr/local/bin/clojure-lsp
+#+RESULTS:
+| clojure-lsp | 2026.02.20-16.08.58 |
+| clj-kondo   |          2026.01.19 |
 
 To configure Emacs to use the nREPL-enabled executable, run ~(setq lsp-clojure-custom-server-command '("/usr/local/bin/clojure-lsp"))~. To customize server path, you may find the variable using: ~M-x customize-group~ RET ~lsp-clojure-mode~.
 

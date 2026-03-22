@@ -384,7 +384,12 @@
         ("https://downtowncritic.net/rss" culture) ;; book on collecting art
         ("https://ctosub.com/feed" informatics) ;; cto
         ("https://akos.ma/index.xml" sts) ;; De Programmatica Ipsum
+        ("https://ellesho.me/page/rss.xml" bloggers)
+        ("https://hypertexthero.com/index.xml" bloggers)
         ("https://worksinprogress.co/rss.xml" sts culture listen)
+        ("https://www.shareable.net/feed/" commons)
+        ("https://www.june.kim/feed.xml" networks) ;; via VRM group
+        ("https://hailsandales.com/feed/" blogger)
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
         ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
