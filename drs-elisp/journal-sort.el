@@ -44,7 +44,7 @@
      default)))
 
 (defun my-journal-show-day-prompt ()
-  (my-journal-show--prompt "Number of day (e.g. 07) " 'my-journal-show-day-history (format-time-string "%d")))
+  (my-journal-show--prompt "Number of day (e.g. 7) " 'my-journal-show-day-history (string-trim-left (format-time-string "%e"))))
 
 (defun my-journal-show-month-prompt ()
   (my-journal-show--prompt "Number of month (e.g. 07) " 'my-journal-show-month-history (format-time-string "%m")))
