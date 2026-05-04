@@ -354,11 +354,19 @@ I like having the day, date, and time displayed in my modeline.
 (display-time-mode 1)
 #+END_SRC
 
-For the time being, simply use one of the default color themes. Can use ~M+x customize-theme~ to change themes.
++For the time being, simply use one of the default color themes. Can use ~M+x customize-theme~ to change themes.+
 
 #+BEGIN_SRC emacs-lisp
-(load-theme 'wheatgrass)
-#+END_SRC
+;; (load-theme 'wheatgrass)
+#+end_SRC
+
+#+begin_src emacs-lisp
+  ;; (add-to-list 'custom-theme-load-path "/home/schmudde/.emacs.d/themes/borland-blue-theme/")
+  ;; (load-theme 'borland-blue t)
+(use-package ef-themes
+  :config
+  (load-theme 'ef-deuteranopia-dark  :no-confirm))
+#+end_src
 
 I like to use the ~menu-bar-mode~, ~menu-bar-open~ (~F10~) when I forget commands. But the default colors don't really work. They are in two different places:
 

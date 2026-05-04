@@ -391,6 +391,7 @@
         ("https://www.june.kim/feed.xml" networks) ;; via VRM group
         ("https://hailsandales.com/feed/" blogger)
         ("https://ianchadwick.com/blog/feed/" blogger) ;; via goto 10
+        ("https://lofbomm.substack.com/feed" irl)
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
         ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
