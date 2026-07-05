@@ -1075,6 +1075,12 @@ In the meantime, use only Clojure-TS Mode:
   (load "/home/schmudde/.secrets/yorba-env-credentials.el" :no-error-if-missing)
 #+end_src
 
+#+begin_src emacs-lisp
+(use-package eca
+  :config
+  (keymap-unset eca-chat-mode-map "C-c C-l" t))
+#+end_src
+
 ** Shells
 
 #+begin_src emacs-lisp

@@ -2,13 +2,32 @@
       '(("https://meaningness.com/rss.xml")
         ("https://bengrosser.com/feed/")
         ("http://innovascapes.blogspot.com/feeds/posts/default")
-        ("http://feeds.feedburner.com/robinsloan")
+        ("http://www.craigmurray.org.uk/feed/")
+        ("http://www.bernardokastrup.com/feeds/posts/default")
+        ("http://feeds.feedburner.com/zenhabits")
+        ("https://conflatedautomatons.org/feed/")
+        ("https://seekingalpha.com/author/trading-places-research.xml")
+        ("http://www.fileformat.info/news/atom.xml")
+        ("https://computer.rip/rss.xml")
+        ("http://metaredux.com/feed.xml")
+        ("http://blog.computationalcomplexity.org/feeds/posts/default")
+        ("https://subconscious.substack.com/feed/")
+        ("http://nat.sakimura.org/feed/")
+        ("http://lockstep.com.au/blog/rss")
+        ("https://reb00ted.org/index.xml")
+        ("https://kyledenhartog.com/feed.xml")
+        ("https://flatjournal.com/feed/")
+        ("http://theartlawblog.blogspot.com/feeds/posts/default")
+        ("http://beautywelove.blogspot.com/feeds/posts/default")
+        ("http://feeds.feedburner.com/TheRhizomeBlogRss")
+        ("https://www.niio.com/blog/feed/")
+        ("http://www.aec.at/aeblog/en/feed/")
+        ("https://www.ilpost.it/feed/" italy)
+        ("http://feeds.feedburner.com/robinsloan" bloggers)
         ("https://www.robinsloan.com/feed.xml" networks culture)
         ("https://toshareproject.it/artmakerblog/feed" networks culture bloggers)
         ("https://medium.com/feed/@bruces" culture bloggers)
         ("https://publicdomainreview.org/rss.xml" culture)
-        ("http://www.bernardokastrup.com/feeds/posts/default")
-        ("http://feeds.feedburner.com/zenhabits")
         ("http://www.tbray.org/ongoing/ongoing.atom" networks bloggers)
         ("https://richardgwyn.me/feed/" bloggers)
         ("https://jonathangray.org/feed.xml" sts)
@@ -18,7 +37,6 @@
         ("http://www.dlederle.com/feed.xml" sts informatics bloggers) ;; Gallery 404
         ("https://blog.khinsen.net/feeds/all.rss.xml" bloggers commons sts)
         ("https://everybodyslibraries.com/feed" commons)
-        ("http://www.craigmurray.org.uk/feed/")
         ("https://www.charlieharrington.com/rss.xml")
         ("http://www.synthtopia.com/feed/" music-making)
         ("http://feeds2.feedburner.com/SlicingUpEyeballs" music)
@@ -36,22 +54,10 @@
         ("http://www.systemsofromance.com/blog/feed/")
         ("http://www.orderofthegooddeath.com/feed")
         ("http://slatestarcodex.com/feed/")
-        ("https://sive.rs/tech.atom" bloggers)
+        ("https://sive.rs/tech.xml" bloggers)
         ("http://boston.conman.org/index.atom")
         ("https://techlearningcollective.com/feed.xml" informatics sts)
         ("https://techlearningcollective.com/feed/events.xml" informatics sts)
-        ("https://conflatedautomatons.org/feed/")
-        ("https://seekingalpha.com/author/trading-places-research.xml")
-        ("http://lambda-the-ultimate.org/rss.xml")
-        ("http://www.fileformat.info/news/atom.xml")
-        ("https://computer.rip/rss.xml")
-        ("http://metaredux.com/feed.xml")
-        ("http://blog.computationalcomplexity.org/feeds/posts/default")
-        ("https://subconscious.substack.com/feed/")
-        ("http://nat.sakimura.org/feed/")
-        ("http://lockstep.com.au/blog/rss")
-        ("https://reb00ted.org/index.xml")
-        ("https://kyledenhartog.com/feed.xml")
         ("http://beltmag.com/feed/" chicago)
         ("https://blockclubchicago.org/feed/" chicago)
         ("http://www.publicbooks.org/tag/the-big-picture/feed" culture) ;; via arts & letters daily
@@ -61,14 +67,8 @@
         ("http://xkcd.com/rss.xml" comics)
         ("https://www.smbc-comics.com/comic/rss" comics)
         ("http://feeds.feedburner.com/PoorlyDrawnLines" comics)
-        ("http://garfieldminusgarfield.net/rss" comics)
+        ("https://garfieldminusgarfield.net/rss" comics)
         ("http://www.loadingartist.com/feed/" comics)
-        ("https://flatjournal.com/feed/")
-        ("http://theartlawblog.blogspot.com/feeds/posts/default")
-        ("http://beautywelove.blogspot.com/feeds/posts/default")
-        ("http://feeds.feedburner.com/TheRhizomeBlogRss")
-        ("https://www.niio.com/blog/feed/")
-        ("http://www.aec.at/aeblog/en/feed/")
         ("https://ocula.com/magazine/feed/" culture)
         ("https://jillianhess.substack.com/feed" suchness culture) ; notebooks
         ("http://feeds2.feedburner.com/ignant" culture)
@@ -109,7 +109,6 @@
         ("https://fsfe.org/news/news.en.rss")
         ("https://www.cyberforge.com/feed/cyberforge.xml" bloggers networks)
         ("http://www.turinepi.com/feeds/posts/default" italy)
-        ("https://le-strade.com/feed/" italy)
         ("https://italicsmag.com/feed/" italy)
         ("http://www.berlinartlink.com/feed/" germany)
         ("http://digitalcosmonaut.com/feed/" germany)
@@ -163,7 +162,7 @@
         ("https://www.os2museum.com/wp/feed/" atari)
         ("http://romchip.org/index.php/romchip-journal/gateway/plugin/WebFeedGatewayPlugin/atom" atari)
         ("http://www.vintagecomputing.com/index.php/feed/" atari)
-        ("http://www.insentricity.com/rss.cl")
+        ("https://www.insentricity.com/rss.cl" atari)
         ("https://hardcoresoftware.learningbyshipping.com/feed/" atari)
         ("http://contemporary-home-computing.org/1tb/feed")
         ("https://vintagecomputerstories.blogspot.com/feeds/posts/default" atari)
@@ -211,12 +210,12 @@
         ("http://www.filfre.net/feed/" sts)
         ("https://defector.com/feed/" sports)
         ("http://screenwritingfromiowa.wordpress.com/feed/" film)
+        ("http://www.aphotoeditor.com/feed/" film)
+        ("https://blcklst.substack.com/feed" film)
         ("https://draculadaily.substack.com/feed")
         ("http://www.davidbordwell.net/blog/feed/atom/")
-        ("http://www.aphotoeditor.com/feed/" film)
         ("http://gregmankiw.blogspot.com/feeds/posts/default")
         ("http://feeds.feedburner.com/ideamensch")
-        ("http://blog.blcklst.com/feed/")
         ("http://feeds.feedburner.com/MrMoneyMustache")
         ("https://tirkarthi.github.io/feed.xml" clojure)
         ("http://rss.slashdot.org/Slashdot/slashdot" tech-news)
@@ -299,7 +298,6 @@
         ("https://chsmc.org/feed.xml" bloggers sts) ; shared different itnernet
         ("https://www.dbreunig.com/feed.xml" bloggers sts) ; cultural anthropology, computer science, and media.
         ("https://joshleeb.com/index.xml" bloggers informatics) ; shared different internet
-        ("https://notes.brooklynzelenka.com/index.xml" irl informatics) ; Brooklyn Elizabeth Zelenka
         ("http://feeds.feedburner.com/s-usih") ; https://ooh.directory
         ("http://www.erasmatazz.com/index.xml" atari) ; chris crawford
         ("https://lethain.com/feeds.xml" tech-news) ;; via amazing cto
@@ -358,7 +356,7 @@
         ("https://rss.beehiiv.com/feeds/k9MJunEkZy.xml" culture) ;; ness labs
         ("https://elpis.ws/rss.xml" networks)
         ("https://brainwashed.com/index.php?option=com_content&view=category&layout=blog&id=167&Itemid=855&format=feed&type=rss" culture)
-        ("file:///home/schmudde/Downloads/cEzFZGTm" informatics)
+        ("https://bsky.app/profile/did:plc:oypgij57lv3ytni32p2jqbce/rss" bloggers informatics) ;; brooklyn zelenka
         ("https://driesdepoorter.be/feed/" culture) ;; digital artist via Torino Tom
         ("https://www.1bluebass.com/feed/" irl) ;; Nuria's husband
         ("https://programmingsimplicity.substack.com/feed" informatics) ;; Future of Programming
@@ -371,9 +369,9 @@
         ("https://antigonejournal.com/feed/" culture)
         ("https://languagehat.com/feed/" bloggers culture)
         ("https://mjulius.com/feed/" bloggers culture)
-        ("http://www.comune.torino.it/bici/feed/" italy)
         ("http://www.comune.torino.it/verdepubblico/feed/" italy)
         ("https://www.exhibito.it/feed/" italy)
+        ("https://www.ansa.it/sito/notizie/mondo/mondo_rss.xml" italy real-news)
         ("https://www.artnews.com/t/link-rot/feed/" culture commons) ; via Transfer Gallery
         ("https://blog.jj5.net/blog/feed/" bloggers) ; BtF contact
         ("http://app1.wastholm.com/?format=rss" bloggers) ; BtF contact
@@ -389,9 +387,14 @@
         ("https://worksinprogress.co/rss.xml" sts culture listen)
         ("https://www.shareable.net/feed/" commons)
         ("https://www.june.kim/feed.xml" networks) ;; via VRM group
-        ("https://hailsandales.com/feed/" blogger)
-        ("https://ianchadwick.com/blog/feed/" blogger) ;; via goto 10
+        ("https://hailsandales.com/feed/" bloggers)
+        ("https://ianchadwick.com/blog/feed/" bloggers) ;; via goto 10
         ("https://lofbomm.substack.com/feed" irl)
+        ("https://www.joanwestenberg.com/feed" bloggers networks) ;; via wallingf
+        ("https://helloruby.substack.com/feed" bloggers informatics)  ;; via wallingf
+        ("https://lucumr.pocoo.org/feed.atom" bloggers informatics) ;; lobsters
+        ("https://feedpress.me/baldurbjarnason" bloggers sts) ;; lobsters
+        ("https://ratfactor.com/atom.xml" bloggers suchness) ;; mastodon
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
         ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
