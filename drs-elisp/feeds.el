@@ -18,10 +18,9 @@
         ("https://kyledenhartog.com/feed.xml")
         ("https://flatjournal.com/feed/")
         ("http://theartlawblog.blogspot.com/feeds/posts/default")
-        ("http://beautywelove.blogspot.com/feeds/posts/default")
         ("http://feeds.feedburner.com/TheRhizomeBlogRss")
         ("https://www.niio.com/blog/feed/")
-        ("http://www.aec.at/aeblog/en/feed/")
+        ("https://ars.electronica.art/aeblog/en/feed/" digital-art)
         ("https://www.ilpost.it/feed/" italy)
         ("http://feeds.feedburner.com/robinsloan" bloggers)
         ("https://www.robinsloan.com/feed.xml" networks culture)
@@ -44,7 +43,7 @@
         ("http://regenmag.com/feed/" music)
         ("http://audiocookbook.org/feed/" music-making)
         ("http://feeds.feedburner.com/Post-punk" music)
-        ("http://www.ribbonfarm.com/feed/")
+        ("https://contraptions.venkateshrao.com/feed" sts)
         ("http://www.marginalrevolution.com/marginalrevolution/index.rdf" bloggers)
         ("http://fatherlouie.blogspot.com/feeds/posts/default")
         ("http://eclecticlight.co/feed/" bloggers)
@@ -92,7 +91,6 @@
         ("https://www.eff.org/rss/updates.xml" networks)
         ("http://intertwingled.org/feed/" networks)
         ("http://www.secretgeek.net/Rss")
-        ("http://feeds.feedburner.com/TechnopolisBlog-LangdonWinner")
         ("https://silasjelley.com/feeds/everything" bloggers)
         ("http://blog.jonudell.net/feed/" bloggers)
         ("http://www.jwz.org/blog/feed/" bloggers)
@@ -232,7 +230,7 @@
         ("https://www.inkandswitch.com/index.xml" informatics irl)
         ("https://newsletter.futureofcoding.org/rss.xml" informatics irl)
         ("https://blog.zgp.org/feed.xml" networks informatics) ;; via mastodon, VRM
-        ("https://www.steveherman.press/feed" real-news) ;; via mastodon
+        ("https://newsguy.substack.com/feed" real-news) ;; via mastodon
         ("https://parkerhiggins.net/feed.xml" sts) ;; via mastodon
         ("https://blog.sigplan.org/feed/" informatics)
         ("http://neural.it/customfeed/all.php" culture sts) ;; https://neural.it/rss-feeds/
@@ -311,7 +309,7 @@
         ("https://alexanderobenauer.com/assets/feed/rss.xml" networks) ; research via Taylor
         ("https://arjandhakal.com.np/rss.xml" irl informatics)
         ("https://blog.weareopen.coop/feed" networks) ;; Doug Belshaw
-        ("https://dougbelshaw.com/blog/feed" irl networks) ;; Doug Belshaw
+        ("https://substrate.dougbelshaw.com/feed.xml" irl bloggers networks) ;; Doug Belshaw
         ("https://www.zylstra.org/blog/feed/" identity bloggers)
         ("http://www.windley.com/rss.xml" identity)
         ("http://blogs.law.harvard.edu/doc/feed/" identity)
@@ -354,7 +352,6 @@
         ("https://macwright.com/rss.xml" bloggers)
         ("https://rocco.substack.com/feed" irl)
         ("https://rss.beehiiv.com/feeds/k9MJunEkZy.xml" culture) ;; ness labs
-        ("https://elpis.ws/rss.xml" networks)
         ("https://brainwashed.com/index.php?option=com_content&view=category&layout=blog&id=167&Itemid=855&format=feed&type=rss" culture)
         ("https://bsky.app/profile/did:plc:oypgij57lv3ytni32p2jqbce/rss" bloggers informatics) ;; brooklyn zelenka
         ("https://driesdepoorter.be/feed/" culture) ;; digital artist via Torino Tom
@@ -369,12 +366,12 @@
         ("https://antigonejournal.com/feed/" culture)
         ("https://languagehat.com/feed/" bloggers culture)
         ("https://mjulius.com/feed/" bloggers culture)
-        ("http://www.comune.torino.it/verdepubblico/feed/" italy)
         ("https://www.exhibito.it/feed/" italy)
         ("https://www.ansa.it/sito/notizie/mondo/mondo_rss.xml" italy real-news)
+        ("https://www.rainews.it/rss/esteri" italy real-news)
         ("https://www.artnews.com/t/link-rot/feed/" culture commons) ; via Transfer Gallery
         ("https://blog.jj5.net/blog/feed/" bloggers) ; BtF contact
-        ("http://app1.wastholm.com/?format=rss" bloggers) ; BtF contact
+        ("http://wastholm.com/?format=rss" bloggers) ; BtF contact
         ("https://davidgasquez.com/rss.xml" informatics)
         ("https://jointhefreeworld.org/rss.xml" informatics)
         ("https://www.soundsandwords.io//feed.xml" irl informatics) ; evan from Yorba
@@ -403,3 +400,29 @@
 
         )
       )
+
+(defun drs/open-feeds-filtered ()
+  "Open a new frame with elfeed-feeds-2, containing only certain tags."
+  (interactive)
+  (let* ((filtered (seq-filter
+                    (lambda (entry)
+                      (let ((tags (cdr entry)))
+                        (or ;; (memq 'italy tags)
+                            (memq 'digital-art tags)
+                            (memq 'suchness tags)
+                            (memq 'culture tags)
+                            (memq 'irl tags)
+                            (memq 'networks tags)
+                            (memq 'bloggers tags))))
+                    elfeed-feeds))
+         (buf (generate-new-buffer "*elfeed-feeds-2*"))
+         (frame (make-frame)))
+    (select-frame-set-input-focus frame)
+    (switch-to-buffer buf)
+    (insert "(setq elfeed-feeds-2\n      '(")
+    (dolist (entry filtered)
+      (insert "\n        ")
+      (prin1 entry (current-buffer)))
+    (insert "\n        ))\n")
+    (emacs-lisp-mode)
+    (goto-char (point-min))))
