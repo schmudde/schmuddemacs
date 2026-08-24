@@ -137,7 +137,6 @@
         ("http://blog.fogus.me/feed/" clojure informatics)
         ("http://esoteric.codes/rss" irl digital-art)
         ("http://blog.veitheller.de/feed.rss" irl informatics)
-        ("https://blog.emma.coop/read/feed/" irl)
         ("https://taylor.town/feed.xml" irl bloggers)
         ("https://livelaugh.blog/rss.xml" bloggers) ; Jenn Schiffer
         ("https://www.hillelwayne.com/post/index.xml" informatics)
@@ -234,7 +233,9 @@
         ("https://parkerhiggins.net/feed.xml" sts) ;; via mastodon
         ("https://blog.sigplan.org/feed/" informatics)
         ("http://neural.it/customfeed/all.php" culture sts) ;; https://neural.it/rss-feeds/
-        ("https://manuelmoreale.com/feed/rss" bloggers) ;; blogs and people
+        ("https://manuelmoreale.com/feed/rss" bloggers) ;; was blogs and people
+        ("https://zacharykai.net/assets/files/feeds/notes.xml" bloggers) ;; is now blogs and people
+        ("https://mxb.dev/feed.xml" bloggers)
         ("https://100r.co/links/rss.xml" culture informatics)
         ("https://battellemedia.com/feed" networks) ;; dot social podcast
         ("https://evanp.me/feed" networks) ;; dot social podcast
@@ -327,7 +328,6 @@
         ("https://solar.lowtechmagazine.com/feeds/all.rss.xml" networks sts)
         ("http://shkspr.mobi/blog/feed/" bloggers)
         ("https://www.sicpers.info/blog/rss" informatics)
-        ("https://blog.bmannconsulting.com/feed.xml" informatics irl)
         ("https://rknight.me/feed.xml" bloggers)
         ("https://sonnet.io/feed.xml" networks) ; taylor
         ("https://michal.sapka.pl/rss.xml" emacs bloggers)
@@ -387,11 +387,18 @@
         ("https://hailsandales.com/feed/" bloggers)
         ("https://ianchadwick.com/blog/feed/" bloggers) ;; via goto 10
         ("https://lofbomm.substack.com/feed" irl)
+        ("https://slrncl.com/blog/feed.xml" bloggers) ;; via peoples and blogs/manuelmoreale.com
         ("https://www.joanwestenberg.com/feed" bloggers networks) ;; via wallingf
         ("https://helloruby.substack.com/feed" bloggers informatics)  ;; via wallingf
         ("https://lucumr.pocoo.org/feed.atom" bloggers informatics) ;; lobsters
         ("https://feedpress.me/baldurbjarnason" bloggers sts) ;; lobsters
         ("https://ratfactor.com/atom.xml" bloggers suchness) ;; mastodon
+        ("https://tomasp.net/rss.xml" irl informatics)
+        ("https://balonso.com/feed/" bloggers)
+        ("https://meowni.ca/atom.xml" bloggers)
+        ("https://social.ayjay.org/feed.xml" bloggers)
+        ("https://www.strangeloopcanon.com/feed" bloggers) ;; via https://arbesman.substack.com
+        ("https://i15s.org/index.xml" networks) ;; via hackernews
         ;; ("https://www.therestisnoise.com/atom.xml" music) ;; was 403
         ;; ("http://tinysubversions.com/feed.xml" networks digital-art) unknown feed type
         ;; ("https://crookedtimber.org/feed/" bloggers pundits) ;; via jack: poor formatting
@@ -400,6 +407,33 @@
 
         )
       )
+
+;; 'dm/reddit-feeds
+(setq elfeed-feeds
+      (append elfeed-feeds
+              '(("https://lobste.rs/t/privacy.rss"        lobsters sts bbs)
+                ("https://lobste.rs/t/culture.rss"        lobsters sts bbs)
+                ("https://lobste.rs/t/historical.rss"     lobsters sts bbs)
+                ("https://lobste.rs/t/philosophy.rss"     lobsters suchness bbs)
+                ("https://lobste.rs/t/lisp.rss"           lobsters informatics bbs)
+                ("https://lobste.rs/t/clojure.rss"        lobsters informatics bbs)
+                ("https://lobste.rs/t/emacs.rss"          lobsters tools bbs)
+                ("https://lobste.rs/t/retrocomputing.rss" lobsters tools bbs)
+                ("https://forum.malleable.systems/latest.rss" informatics bbs)
+                ("https://clojureverse.org/latest.rss" informatics bbs)
+
+;;                ("http://www.metafilter.com/tags/privacy/rss"    metafilter sts bbs)
+;;                ("http://www.metafilter.com/tags/internet/rss"   metafilter sts bbs)
+;;                ("http://www.metafilter.com/tags/technology/rss" metafilter sts bbs)
+;;                ("http://www.metafilter.com/tags/media/rss"      metafilter sts bbs)
+;;                ("http://www.metafilter.com/tags/culture/rss"    metafilter sts bbs)
+;;                ("http://www.metafilter.com/tags/philosophy/rss"  metafilter suchness bbs)
+;;                ("http://www.metafilter.com/tags/sex/rss"        metafilter suchness bbs)
+;;                ("http://www.metafilter.com/tags/history/rss"    metafilter suchness bbs)
+
+
+
+                )))
 
 (defun drs/open-feeds-filtered ()
   "Open a new frame with elfeed-feeds-2, containing only certain tags."

@@ -453,6 +453,8 @@ n
     :ensure t
     :bind (:map elfeed-search-mode-map
                 ("g" . elfeed-update)))
+
+  (require 'distribution-manifest)
 #+end_src
 
 ** [[https://github.com/justbur/emacs-which-key][which-key]]                                                     :installed:
@@ -792,7 +794,7 @@ HTML → Org via Pandoc
 #+end_src
 
 #+begin_src emacs-lisp
-(defun drs-make-citation ()
+(defun drs/make-citation ()
   (format "%s /%s/ (%s)"
   (org-entry-get (point) "AUTHOR")
   (org-entry-get (point) "TITLE")
@@ -800,7 +802,7 @@ HTML → Org via Pandoc
 #+end_src
 
 #+begin_src emacs-lisp :tangle no
-(drs-make-citation)
+(drs/make-citation)
 #+end_src
 
 #+RESULTS:
@@ -1209,25 +1211,27 @@ Other commands
 The configuration includes custom support for [[https://emacs-lsp.github.io/lsp-ui][~lsp-ui~]]. This is configured in *[LSP Headerline] LSP support for headerline* (e.g. ~lsp-headerline-breadcrumb-path-face~).
 
 #+begin_src emacs-lisp
-    (use-package lsp-mode
-      :init
-      (setq lsp-keymap-prefix "C-c l")
-      :hook ((clojure-mode . lsp)
-             (clojure-ts-mode . lsp)
-             (typescript-mode . lsp)
-             (lsp-mode . lsp-enable-which-key-integration))
-      :commands lsp)
-
-    (use-package lsp-ui
-      :commands lsp-ui-mode
-      :config (define-key lsp-mode-map (kbd "C-c l d s") 'lsp-ui-doc-show)
-              (define-key lsp-mode-map (kbd "C-c l d h") 'lsp-ui-doc-hide))
+  (use-package lsp-mode
+    :init
+    (setq lsp-keymap-prefix "C-c l")
+    :hook ((clojure-mode . lsp)
+           (clojure-ts-mode . lsp)
+           (typescript-mode . lsp)
+           (lsp-mode . lsp-enable-which-key-integration))
+    :config
+    ;; the top-level binding in lsp-mode.el may have already fired with the
+    ;; default prefix; this runs strictly after load, so it always wins.
+    (define-key lsp-mode-map (kbd "C-c l") lsp-command-map)
+    :commands lsp)
 #+end_src
 
-TODO: Note, ~lsp-ui~ was:
-(global-set-key (kbd "C-c l d s") 'lsp-ui-doc-show)
-(global-set-key (kbd "C-c l d h") 'lsp-ui-doc-hide)
-
+#+begin_src emacs-lisp
+  (use-package lsp-ui
+    :commands lsp-ui-mode
+    :config
+    (define-key lsp-command-map (kbd "d s") #'lsp-ui-doc-show)
+    (define-key lsp-command-map (kbd "d h") #'lsp-ui-doc-hide))
+#+end_src
 ** Typescript                                                    :installed:
 
 ~typescript-mode~:
